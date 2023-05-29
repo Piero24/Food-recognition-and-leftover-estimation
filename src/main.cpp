@@ -75,58 +75,56 @@ int main(int argc, char** argv) {
         cv::Mat finalResult;
         result.copyTo(finalResult, 255 - mask2);
 
-        GaussianBlur(finalResult, blur, cv::Size(7, 7), 0);
-
-        cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
-        cv::erode(finalResult, finalResult, kernel2);
+        cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
+        cv::dilate(finalResult, finalResult, kernel2);
 
 
-        cv::imshow("Task" + std::to_string(i), blur);
+        //cv::imshow("Task" + std::to_string(i), finalResult);
+        //cv::waitKey(0);
+
+        // create Selective Search Segmentation Object using default parameters
+        cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation> ss = cv::ximgproc::segmentation::createSelectiveSearchSegmentation();
+
+        // set input image on which we will run segmentation
+        ss -> setBaseImage(finalResult);
+
+        std::string dd = "f";
+
+        if (dd == "f") {
+            // Switch to fast but low recall Selective Search method
+            ss -> switchToSelectiveSearchFast();
+
+        } else if (dd == "q") {
+            // Switch to high recall but slow Selective Search method
+            ss -> switchToSelectiveSearchQuality();
+        } else {
+            // if argument is neither f nor q print help message
+            help();
+            return -2;
+        }
+
+        // run selective search segmentation on input image
+        std::vector<cv::Rect> rects;
+        ss -> process(rects);
+        std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
+
+        // number of region proposals to show
+        int numShowRects = 25;
+
+         // create a copy of original image
+        cv::Mat imOut = img.clone();
+
+        size_t aa = rects.size();
+        for (size_t j = 0; j < aa; j++) {
+
+            if (j < numShowRects) {
+                rectangle(imOut, rects[j], cv::Scalar(0, 255, 0));
+            }
+            else {break;}
+        }
+
+        cv::imshow("Task" + std::to_string(i), imOut);
         cv::waitKey(0);
-
-        // // create Selective Search Segmentation Object using default parameters
-        // cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation> ss = cv::ximgproc::segmentation::createSelectiveSearchSegmentation();
-
-        // // set input image on which we will run segmentation
-        // ss -> setBaseImage(new_image);
-
-        // std::string dd = "f";
-
-        // if (dd == "f") {
-        //     // Switch to fast but low recall Selective Search method
-        //     ss -> switchToSelectiveSearchFast();
-
-        // } else if (dd == "q") {
-        //     // Switch to high recall but slow Selective Search method
-        //     ss -> switchToSelectiveSearchQuality();
-        // } else {
-        //     // if argument is neither f nor q print help message
-        //     help();
-        //     return -2;
-        // }
-
-        // // run selective search segmentation on input image
-        // std::vector<cv::Rect> rects;
-        // ss -> process(rects);
-        // std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
-
-        // // number of region proposals to show
-        // int numShowRects = 10;
-
-        //  // create a copy of original image
-        // cv::Mat imOut = img.clone();
-
-        // size_t aa = rects.size();
-        // for (size_t j = 0; j < aa; j++) {
-
-        //     if (j < numShowRects) {
-        //         rectangle(imOut, rects[j], cv::Scalar(0, 255, 0));
-        //     }
-        //     else {break;}
-        // }
-
-        // cv::imshow("Task" + std::to_string(i), imOut);
-        // cv::waitKey(0);
     }
 
 
