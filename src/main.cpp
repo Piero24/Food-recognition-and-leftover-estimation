@@ -41,8 +41,8 @@ int main(int argc, char** argv) {
     size_t ch = trayVector.size();
     for (size_t i = 0; i < ch; i++) {
 
-        //cv::Mat grayImage;
-        //cv::cvtColor(trayVector[i].clone(), grayImage, cv::COLOR_BGR2GRAY);
+        cv::Mat grayImage;
+        cv::cvtColor(trayVector[i].clone(), grayImage, cv::COLOR_BGR2GRAY);
 	    
         cv::Mat blur;
         cv::Mat img = trayVector[i].clone();
