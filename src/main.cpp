@@ -43,7 +43,7 @@ int main(int argc, char** argv) {
     size_t ch = trayVector.size();
     for (size_t i = 0; i < ch; i++) {
 
-        //cv::Mat grayImage;
+        cv::Mat grayImage;
         //cv::cvtColor(trayVector[i].clone(), grayImage, cv::COLOR_BGR2GRAY);
 	    
         cv::Mat blur;
@@ -63,7 +63,7 @@ int main(int argc, char** argv) {
         cv::Mat mask;
         mask = thresholdOtsu(blur);
 
-        
+        cv::adaptiveThreshold(grayImage, mask, 255,  cv::ADAPTIVE_THRESH_MEAN_C, cv::THRESH_BINARY_INV, 11, 15);
 
         //cv::imshow("Task" + std::to_string(i), new_image);
         //cv::waitKey(0);
