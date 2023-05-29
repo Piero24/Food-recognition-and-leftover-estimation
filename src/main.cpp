@@ -11,8 +11,6 @@
 
 #include "../include/Tasks.h"
 
-cv::Mat thresholdOtsu(cv::Mat img);
-
 
 static void help() {
     std::cout << std::endl <<
@@ -54,19 +52,37 @@ int main(int argc, char** argv) {
         // int beta = 100;
         // img.convertTo(light, -1, alpha, beta);
 
-        GaussianBlur(img, blur, cv::Size(7, 7), 0);
+        //GaussianBlur(img, blur, cv::Size(7, 7), 0);
         //GaussianBlur(img, blur, cv::Size(5, 5), 0);
 
-        cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9, 9));
-        cv::erode(blur, blur, kernel2);
+        cv::Mat cannyImg;
+        cv::Canny(img, cannyImg, 90, 100);
 
-        cv::Mat mask;
-        mask = thresholdOtsu(blur);
+        cv::Mat mask = 255 - cannyImg;
 
-        
+        // Applica la maschera all'immagine originale
+        cv::Mat result;
+        cv::bitwise_and(img, img, result, cannyImg);
 
-        //cv::imshow("Task" + std::to_string(i), new_image);
-        //cv::waitKey(0);
+        // Definisci il range dei pixel bianchi da rimuovere
+        cv::Scalar lowerBound(120, 120, 120); // Valori BGR minimi per bianco
+        cv::Scalar upperBound(255, 255, 255); // Valori BGR massimi per bianco
+
+        // Crea la maschera dei pixel bianchi nel range specificato
+        cv::Mat mask2;
+        cv::inRange(result, lowerBound, upperBound, mask2);
+
+        cv::Mat finalResult;
+        result.copyTo(finalResult, 255 - mask2);
+
+        GaussianBlur(finalResult, blur, cv::Size(7, 7), 0);
+
+        cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
+        cv::erode(finalResult, finalResult, kernel2);
+
+
+        cv::imshow("Task" + std::to_string(i), blur);
+        cv::waitKey(0);
 
         // // create Selective Search Segmentation Object using default parameters
         // cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation> ss = cv::ximgproc::segmentation::createSelectiveSearchSegmentation();
@@ -109,8 +125,8 @@ int main(int argc, char** argv) {
         //     else {break;}
         // }
 
-        cv::imshow("Task" + std::to_string(i), mask);
-        cv::waitKey(0);
+        // cv::imshow("Task" + std::to_string(i), imOut);
+        // cv::waitKey(0);
     }
 
 
@@ -136,18 +152,4 @@ int main(int argc, char** argv) {
     // std::cout << "Tasks terminated." << std::endl;
 
     return 0;
-}
-
-
-
-cv::Mat thresholdOtsu(cv::Mat img) {
-
-    cv::Mat imgGray;
-    cv::cvtColor(img, imgGray, cv::COLOR_RGB2GRAY);
-
-    // Apply treshold otsu
-    cv::Mat clonedImage = cv::Mat::zeros(img.size(), img.type());
-    cv::threshold(imgGray, clonedImage, 0, 255, cv::THRESH_OTSU);
-
-    return clonedImage;
 }
