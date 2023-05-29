@@ -41,11 +41,18 @@ int main(int argc, char** argv) {
     size_t ch = trayVector.size();
     for (size_t i = 0; i < ch; i++) {
 
-        cv::Mat grayImage;
-        cv::cvtColor(trayVector[i].clone(), grayImage, cv::COLOR_BGR2GRAY);
+
+
+        //cv::Mat grayImage;
+        //cv::cvtColor(trayVector[i].clone(), grayImage, cv::COLOR_BGR2GRAY);
 	    
         cv::Mat blur;
         cv::Mat img = trayVector[i].clone();
+
+        // Get the dimensions of the image
+        int imageWidth = img.cols;
+        int imageHeight = img.rows;
+        //std::cout << img.cols * img.rows << std::endl;
 
         // cv::Mat light = img.clone();
         // double alpha = 1.0;
@@ -78,7 +85,6 @@ int main(int argc, char** argv) {
         cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
         cv::dilate(finalResult, finalResult, kernel2);
 
-
         //cv::imshow("Task" + std::to_string(i), finalResult);
         //cv::waitKey(0);
 
@@ -109,16 +115,42 @@ int main(int argc, char** argv) {
         std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
 
         // number of region proposals to show
-        int numShowRects = 25;
+        int numShowRects = rects.size();
 
-         // create a copy of original image
+        // create a copy of original image
+        //cv::Mat imOut = img.clone();
         cv::Mat imOut = img.clone();
 
         size_t aa = rects.size();
         for (size_t j = 0; j < aa; j++) {
 
+            int areaRect = rects[j].width * rects[j].height;
+
             if (j < numShowRects) {
-                rectangle(imOut, rects[j], cv::Scalar(0, 255, 0));
+                if ((areaRect > 170800) && (areaRect  < 428800)) {
+
+                    int asseX = rects[j].x;
+                    int asseY = rects[j].y;
+
+                    cv::Rect roi(asseX, asseX, asseY, asseY);
+                    int nonBlackPixelCount = 0;
+
+                    for (int y = roi.y; y < roi.y + roi.height; y++) {
+                        for (int x = roi.x; x < roi.x + roi.width; x++) {
+                            if (finalResult.at<uchar>(y, x) != 0) { // Controllo se il pixel non è nero
+                                nonBlackPixelCount++;
+                            }
+                        }
+                    }
+
+                    double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
+
+                    if (density > 0.1) {
+                        std::cout << "Density: " << density << std::endl;
+                        rectangle(imOut, rects[j], cv::Scalar(0, 255, 0), 2);
+                        std::cout << "Rect: " << rects[j] << std::endl;
+                    }
+                }
             }
             else {break;}
         }
