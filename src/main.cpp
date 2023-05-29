@@ -47,7 +47,7 @@ int main(int argc, char** argv) {
         cv::Mat blur;
         cv::Mat img = trayVector[i].clone();
 
-        cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
+        cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(25, 25));
         cv::erode(img, blur, kernel2);
 
         GaussianBlur(blur, blur, cv::Size(5, 5), 0);
@@ -66,7 +66,7 @@ int main(int argc, char** argv) {
         }
 
         //Number of clusters
-        int K = 4;
+        int K = 3;
         // Output vector
         cv::Mat labels;
         cv::Mat centers;
