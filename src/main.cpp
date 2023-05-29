@@ -43,7 +43,12 @@ int main(int argc, char** argv) {
 
         //cv::Mat grayImage;
         //cv::cvtColor(trayVector[i].clone(), grayImage, cv::COLOR_BGR2GRAY);
-
+	cv::Mat light = img.clone();
+	double alpha = 1.0;
+	int beta = 200;
+	img.convertTo(light, -1, alpha, beta);
+	
+	    
         cv::Mat blur;
         cv::Mat img = trayVector[i].clone();
 
