@@ -5,10 +5,7 @@
 
 int main(int argc, char** argv) {
 
-    std::vector<cv::Mat> imagesProjected;
-	std::vector<cv::Mat> descriptors;
-	std::vector<std::vector<cv::KeyPoint>> keypoints;
-
+    std::vector<cv::Mat> trayVector;
 	std::vector<cv::String> fileInFolderVec;
 
     cv::glob(argv[1], fileInFolderVec, false);
@@ -20,9 +17,24 @@ int main(int argc, char** argv) {
             fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".bmp") {
 
             cv::Mat img = cv::imread(fileInFolderVec[i]);
-            imagesProjected.push_back(img);
+            trayVector.push_back(img);
         }
     }
+
+
+
+
+    
+
+    size_t ch = trayVector.size();
+    for (size_t i = 0; i < ch; i++) {
+
+        cv::imshow("Task" + std::to_string(i), trayVector[i]);
+        cv::waitKey(0);
+
+
+    }
+
 
     // char in;
     // std::cout << "Press enter to start:" << std::endl;
