@@ -11,14 +11,7 @@
 
 #include "../include/Tasks.h"
 
-
-static void help() {
-    std::cout << std::endl <<
-    "Usage:" << std::endl <<
-    "./ssearch input_image (f|q)" << std::endl <<
-    "f=fast, q=quality" << std::endl <<
-    "Use l to display less rects, m to display more rects, q to quit" << std::endl;
-}
+cv::Mat segmentationOperation(cv::Mat img, int i);
 
 int main(int argc, char** argv) {
 
@@ -41,121 +34,14 @@ int main(int argc, char** argv) {
     size_t ch = trayVector.size();
     for (size_t i = 0; i < ch; i++) {
 
-
-
-        //cv::Mat grayImage;
-        //cv::cvtColor(trayVector[i].clone(), grayImage, cv::COLOR_BGR2GRAY);
-	    
-        cv::Mat blur;
         cv::Mat img = trayVector[i].clone();
 
-        // Get the dimensions of the image
-        int imageWidth = img.cols;
-        int imageHeight = img.rows;
-        //std::cout << img.cols * img.rows << std::endl;
+        cv::Mat imgOut = segmentationOperation(img, i);
 
-        // cv::Mat light = img.clone();
-        // double alpha = 1.0;
-        // int beta = 100;
-        // img.convertTo(light, -1, alpha, beta);
+        cv::Mat combined;
+        cv::hconcat(img, imgOut, combined);
 
-        //GaussianBlur(img, blur, cv::Size(7, 7), 0);
-        //GaussianBlur(img, blur, cv::Size(5, 5), 0);
-
-        cv::Mat cannyImg;
-        cv::Canny(img, cannyImg, 90, 100);
-
-        cv::Mat mask = 255 - cannyImg;
-
-        // Applica la maschera all'immagine originale
-        cv::Mat result;
-        cv::bitwise_and(img, img, result, cannyImg);
-
-        // Definisci il range dei pixel bianchi da rimuovere
-        cv::Scalar lowerBound(120, 120, 120); // Valori BGR minimi per bianco
-        cv::Scalar upperBound(255, 255, 255); // Valori BGR massimi per bianco
-
-        // Crea la maschera dei pixel bianchi nel range specificato
-        cv::Mat mask2;
-        cv::inRange(result, lowerBound, upperBound, mask2);
-
-        cv::Mat finalResult;
-        result.copyTo(finalResult, 255 - mask2);
-
-        cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
-        cv::dilate(finalResult, finalResult, kernel2);
-
-        //cv::imshow("Task" + std::to_string(i), finalResult);
-        //cv::waitKey(0);
-
-        // create Selective Search Segmentation Object using default parameters
-        cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation> ss = cv::ximgproc::segmentation::createSelectiveSearchSegmentation();
-
-        // set input image on which we will run segmentation
-        ss -> setBaseImage(finalResult);
-
-        std::string dd = "f";
-
-        if (dd == "f") {
-            // Switch to fast but low recall Selective Search method
-            ss -> switchToSelectiveSearchFast();
-
-        } else if (dd == "q") {
-            // Switch to high recall but slow Selective Search method
-            ss -> switchToSelectiveSearchQuality();
-        } else {
-            // if argument is neither f nor q print help message
-            help();
-            return -2;
-        }
-
-        // run selective search segmentation on input image
-        std::vector<cv::Rect> rects;
-        ss -> process(rects);
-        std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
-
-        // number of region proposals to show
-        int numShowRects = rects.size();
-
-        // create a copy of original image
-        //cv::Mat imOut = img.clone();
-        cv::Mat imOut = img.clone();
-
-        size_t aa = rects.size();
-        for (size_t j = 0; j < aa; j++) {
-
-            int areaRect = rects[j].width * rects[j].height;
-
-            if (j < numShowRects) {
-                if ((areaRect > 170800) && (areaRect  < 428800)) {
-
-                    int asseX = rects[j].x;
-                    int asseY = rects[j].y;
-
-                    cv::Rect roi(asseX, asseX, asseY, asseY);
-                    int nonBlackPixelCount = 0;
-
-                    for (int y = roi.y; y < roi.y + roi.height; y++) {
-                        for (int x = roi.x; x < roi.x + roi.width; x++) {
-                            if (finalResult.at<uchar>(y, x) != 0) { // Controllo se il pixel non è nero
-                                nonBlackPixelCount++;
-                            }
-                        }
-                    }
-
-                    double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
-
-                    if (density > 0.1) {
-                        std::cout << "Density: " << density << std::endl;
-                        rectangle(imOut, rects[j], cv::Scalar(0, 255, 0), 2);
-                        std::cout << "Rect: " << rects[j] << std::endl;
-                    }
-                }
-            }
-            else {break;}
-        }
-
-        cv::imshow("Task" + std::to_string(i), imOut);
+        cv::imshow("Task" + std::to_string(i), combined);
         cv::waitKey(0);
     }
 
@@ -182,4 +68,218 @@ int main(int argc, char** argv) {
     // std::cout << "Tasks terminated." << std::endl;
 
     return 0;
+}
+
+
+
+cv::Mat segmentationOperation(cv::Mat img, int i) {
+    
+    int imageWidth = img.cols;
+    int imageHeight = img.rows;
+    //std::cout << img.cols * img.rows << std::endl;
+
+
+    // TODO: BISOGNA LAVORE SUL BLUE YOUGURTH E PANTALONI TRAY5
+    // Rimuove blue
+    // cv::Scalar lowerBoundBlue(30, 20, 5);
+    // cv::Scalar upperBoundBlue(255, 170, 120);
+
+    // cv::Mat maskBlue;
+    // cv::inRange(img, lowerBoundBlue, upperBoundBlue, maskBlue);
+
+    // cv::Mat postMaskBlue;
+    // img.copyTo(postMaskBlue, 255 - maskBlue);
+
+
+
+
+
+
+
+    // Sbianca
+    cv::Mat light;
+    double alpha = 1.0;
+    int beta = 80;
+    img.convertTo(light, -1, alpha, beta);
+
+
+    // Canny
+    cv::Mat cannyImg;
+    cv::Canny(light, cannyImg, 70, 80);
+
+
+
+    // Tiene su originale solo le cose del canny
+    cv::Mat resultAfterCanny;
+    cv::bitwise_and(img, img, resultAfterCanny, cannyImg);
+
+
+
+    // Rimuove bianco
+    cv::Scalar lowerBound(170, 170, 170);
+    cv::Scalar upperBound(255, 255, 255);
+
+    cv::Mat mask;
+    cv::inRange(resultAfterCanny, lowerBound, upperBound, mask);
+
+    cv::Mat postMask;
+    resultAfterCanny.copyTo(postMask, 255 - mask);
+
+
+
+
+
+
+
+    // Rimuove grigio
+    lowerBound = cv::Scalar(50, 50, 50);
+    upperBound = cv::Scalar(190, 190, 190);
+
+    mask.setTo(cv::Scalar(0, 0, 0));
+    cv::inRange(postMask, lowerBound, upperBound, mask);
+
+    cv::Mat finalBeforDilate;
+    postMask.copyTo(finalBeforDilate, 255 - mask);
+
+
+
+
+
+
+    // Dilatazione finale
+    cv::Mat dilatedImg;
+    cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
+    cv::dilate(finalBeforDilate, dilatedImg, kernel2);
+
+
+    // Rimuove bianco
+    lowerBound = cv::Scalar(170, 170, 170);
+    upperBound = cv::Scalar(255, 255, 255);
+
+    mask.setTo(cv::Scalar(0, 0, 0));
+    cv::inRange(dilatedImg, lowerBound, upperBound, mask);
+
+    postMask.setTo(cv::Scalar(0, 0, 0));
+    dilatedImg.copyTo(postMask, 255 - mask);
+
+
+
+
+    // Rimuove grigio
+    lowerBound = cv::Scalar(50, 50, 50);
+    upperBound = cv::Scalar(180, 180, 180);
+
+    mask.setTo(cv::Scalar(0, 0, 0));
+    cv::inRange(postMask, lowerBound, upperBound, mask);
+
+    cv::Mat finalResult;
+    postMask.copyTo(finalResult, 255 - mask);
+
+
+
+    // Rimuove grigio
+    lowerBound = cv::Scalar(0, 0, 0);
+    upperBound = cv::Scalar(60, 60, 60);
+
+    mask.setTo(cv::Scalar(0, 0, 0));
+    cv::inRange(finalResult, lowerBound, upperBound, mask);
+
+
+    cv::Mat finalResultTmp;
+    finalResult.copyTo(finalResultTmp, 255 - mask);
+
+
+    cv::Mat kernel3 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5));
+    finalResult.setTo(cv::Scalar(0, 0, 0));
+    cv::dilate(finalResultTmp, finalResult, kernel2);
+
+
+
+
+
+
+    
+    //return finalResult;
+
+
+
+
+
+
+    // create Selective Search Segmentation Object using default parameters
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation> ss = cv::ximgproc::segmentation::createSelectiveSearchSegmentation();
+
+
+    // Creazione delle strategie di segmentazione
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor> colorStrategy = cv::ximgproc::segmentation::createSelectiveSearchSegmentationStrategyColor();
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture> textureStrategy = cv::ximgproc::segmentation::createSelectiveSearchSegmentationStrategyTexture();
+
+    // Creazione della strategia multipla
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple> multipleStrategy = cv::ximgproc::segmentation::createSelectiveSearchSegmentationStrategyMultiple(colorStrategy, textureStrategy);
+
+    // Impostazione della strategia multipla per l'algoritmo di selezione selettiva
+    ss -> addStrategy(multipleStrategy);
+
+
+    // set input image on which we will run segmentation
+    ss -> setBaseImage(finalResult);
+
+    std::string dd = "f";
+
+    if (dd == "f") {
+        // Switch to fast but low recall Selective Search method
+        ss -> switchToSelectiveSearchFast();
+
+    } else {
+        // Switch to high recall but slow Selective Search method
+        ss -> switchToSelectiveSearchQuality();
+    }
+
+    // run selective search segmentation on input image
+    std::vector<cv::Rect> rects;
+    ss -> process(rects);
+    std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
+
+    // number of region proposals to show
+    int numShowRects = rects.size();
+
+    // create a copy of original image
+    //cv::Mat imOut = img.clone();
+    cv::Mat imOut = finalResult.clone();
+
+    size_t aa = rects.size();
+    for (size_t j = 0; j < aa; j++) {
+
+        int areaRect = rects[j].width * rects[j].height;
+
+        if (j < numShowRects) {
+            if ((areaRect > 170800) && (areaRect  < 428800)) {
+
+                int asseX = rects[j].x;
+                int asseY = rects[j].y;
+
+                cv::Rect roi(asseX, asseX, asseY, asseY);
+                int nonBlackPixelCount = 0;
+
+                for (int y = roi.y; y < roi.y + roi.height; y++) {
+                    for (int x = roi.x; x < roi.x + roi.width; x++) {
+                        if (finalResult.at<uchar>(y, x) != 0) { // Controllo se il pixel non è nero
+                            nonBlackPixelCount++;
+                        }
+                    }
+                }
+
+                double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
+                std::cout << "Density: " << density << std::endl;
+
+                rectangle(imOut, rects[j], cv::Scalar(0, 255, 0), 2);
+                std::cout << "Rect: " << rects[j] << std::endl;
+            }
+        }
+        else {
+            break;
+        }
+    }
+
+    return imOut;
 }
