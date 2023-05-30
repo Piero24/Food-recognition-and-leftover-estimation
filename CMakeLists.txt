@@ -4,7 +4,16 @@ project(Food-Recognition VERSION 0.1.0)
 find_package(OpenCV REQUIRED)
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-add_executable( ${PROJECT_NAME} src/main.cpp src/task1.cpp src/task2.cpp src/task3.cpp src/task4.cpp src/task5.cpp)
+add_executable( ${PROJECT_NAME} 
+    src/main.cpp 
+    src/uploadImage.cpp 
+    src/imagePreprocessing.cpp 
+    src/performImageSegmentation.cpp 
+    src/firstSegmentator.cpp 
+    src/secondSegmentator.cpp 
+    src/thirdSegmentator.cpp
+    src/outputCombined.cpp
+)
 
 target_link_libraries( ${PROJECT_NAME} ${OpenCV_LIBS} )
 
