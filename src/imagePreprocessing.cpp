@@ -49,9 +49,9 @@ std::vector<int> imgDimensions(cv::Mat img) {
     dimensions.push_back(img.rows);   // Image height
     dimensions.push_back(area);       // Image Area
 
-    std::cout << "Image width : " << dimensions[0] << std::endl;
-    std::cout << "Image height : " << dimensions[0] << std::endl;
-    std::cout << "Image area : " << dimensions[0] << std::endl;
+    //std::cout << "Image width : " << dimensions[0] << std::endl;
+    //std::cout << "Image height : " << dimensions[1] << std::endl;
+    //std::cout << "Image area : " << dimensions[2] << std::endl;
 
     return dimensions;
 }

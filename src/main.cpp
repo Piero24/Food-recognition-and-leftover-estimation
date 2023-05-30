@@ -92,7 +92,7 @@ int main(int argc, char** argv) {
 
     cv::Mat combinedImage = pushOutTray(hcombinedVec);
 
-    cv::imwrite("Comple Tray1.jpg", combinedImage);
+    cv::imwrite("Comple Tray2.jpg", combinedImage);
     cv::imshow("Comple Tray", combinedImage);
     cv::waitKey(0);
 
