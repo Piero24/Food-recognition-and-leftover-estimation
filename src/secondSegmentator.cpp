@@ -18,10 +18,10 @@ cv::Mat secondSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
     
     std::sort(rects.begin(), rects.end(), compareRectangles);
 
-    std::vector<cv::Rect> noToBig = pushOut(rects);
+    std::vector<cv::Rect> noToBigNoToSmall = pushOut(rects);
 
     // Rimuovi i rettangoli interni
-    std::vector<cv::Rect> outerRectangles = removeInnerRectangles(noToBig);
+    std::vector<cv::Rect> outerRectangles = removeInnerRectangles(noToBigNoToSmall);
 
     // Stampa i rettangoli esterni
     // for (const cv::Rect& rect2 : outerRectangles) {
@@ -39,30 +39,20 @@ cv::Mat secondSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
 
         if (j < numShowRects) {
 
-            // Total aprox image area 1228800
-            if ((areaRect > 50800) && (areaRect  < 428800)) {
+            cv::Rect roi = outerRectangles[j];
+            int nonBlackPixelCount = 0;
 
-                cv::Rect roi = outerRectangles[j];
-                int nonBlackPixelCount = 0;
-
-                for (int y = roi.y; y < roi.y + roi.height; y++) {
-                    for (int x = roi.x; x < roi.x + roi.width; x++) {
-                        if (imgOut.at<uchar>(y, x) != 0) {
-                            nonBlackPixelCount++;
-                        }
+            for (int y = roi.y; y < roi.y + roi.height; y++) {
+                for (int x = roi.x; x < roi.x + roi.width; x++) {
+                    if (imgOut.at<uchar>(y, x) != 0) {
+                        nonBlackPixelCount++;
                     }
                 }
-
-
-                double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
-                //std::cout << "Density: " << density << std::endl;
-                
-                if ((density < 0.1)) {
-
-                    std::cout << "\U0001F7E2" << "  Rect: " << rects[j] << " Density: " << density << std::endl;
-                    rectangle(imgOut, outerRectangles[j], cv::Scalar(0, 255, 0), 2);
-                }
             }
+
+            double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
+            std::cout << "\U0001F7E2" << "  Rect: " << rects[j] << " Density: " << density << std::endl;
+            rectangle(imgOut, outerRectangles[j], cv::Scalar(0, 255, 0), 2);
         }
         else {
             break;
@@ -116,7 +106,7 @@ std::vector<cv::Rect> pushOut(const std::vector<cv::Rect>& rectangles) {
     for (const cv::Rect& rect : rectangles) {
         int areaRect = rect.width*rect.width;
         //if ((areaRect > 50800) && (areaRect  < 428800)) {
-        if (areaRect  < 428800) {
+        if ((areaRect > 20800) && (areaRect < 428800)) {
 
             result.push_back(rect);
 

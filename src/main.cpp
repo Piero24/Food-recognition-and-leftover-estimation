@@ -10,6 +10,9 @@
 #include "opencv2/ximgproc/segmentation.hpp"
 
 #include "../include/uploadImage.h"
+
+#include "../include/prePTester.h"
+
 #include "../include/imagePreprocessing.h"
 #include "../include/performImageSegmentation.h"
 
@@ -57,10 +60,15 @@ int main(int argc, char** argv) {
     std::vector<cv::Mat> trayVector = imgUploader(argc, argv);
    
     size_t ch = trayVector.size();
-    for (size_t i = 0; i < ch; i++) {
-    //for (size_t i = 0; i < 1; i++) {
+    //for (size_t i = 0; i < ch; i++) {
+    for (size_t i = 0; i < 1; i++) {
+
+        std::cout << "######################################## START IMAGE N: " << i + 1 << std::endl;
 
         cv::Mat img = trayVector[i].clone();
+
+        testPreProcessing(img);
+
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
         std::vector<cv::Rect> rects = recSegmentation(imagePreprocessed, "f");
@@ -92,7 +100,7 @@ int main(int argc, char** argv) {
 
     cv::Mat combinedImage = pushOutTray(hcombinedVec);
 
-    cv::imwrite("Comple Tray2.jpg", combinedImage);
+    cv::imwrite("Comple Tray.jpg", combinedImage);
     cv::imshow("Comple Tray", combinedImage);
     cv::waitKey(0);
 

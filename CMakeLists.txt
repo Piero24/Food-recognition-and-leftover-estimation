@@ -7,6 +7,7 @@ include_directories( ${OpenCV_INCLUDE_DIRS} )
 add_executable( ${PROJECT_NAME} 
     src/main.cpp 
     src/uploadImage.cpp 
+    src/prePTester.cpp
     src/imagePreprocessing.cpp 
     src/performImageSegmentation.cpp 
     src/firstSegmentator.cpp 

@@ -8,10 +8,7 @@
 
 #include "../include/thirdSegmentator.h"
 
-// Pallino blu:
-//     Codice Unicode: \U0001F535
-//     Valore RGB: (0, 0, 255)
-//     Valore BGR: (255, 0, 0)
+
 
 cv::Mat thirdSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
 

@@ -16,20 +16,22 @@
 //     Valore RGB: (255, 0, 0)
 //     Valore BGR: (0, 0, 255)
 
+// Pallino blu:
+//     Codice Unicode: \U0001F535
+//     Valore RGB: (0, 0, 255)
+//     Valore BGR: (255, 0, 0)
+
 
 cv::Mat firstSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
 
     int numShowRects = rects.size();
-
     cv::Mat imgOut = img.clone();
-
     size_t aa = rects.size();
-    for (size_t j = 0; j < aa; j++) {
 
+    for (size_t j = 0; j < aa; j++) {
         int areaRect = rects[j].width * rects[j].height;
 
         if (j < numShowRects) {
-
             // Total aprox image area 1228800
             if ((areaRect > 50800) && (areaRect  < 428800)) {
 
@@ -52,6 +54,10 @@ cv::Mat firstSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
 
                     std::cout << "\U0001F534" << "  Rect: " << rects[j] << " Density: " << density << std::endl;
                     rectangle(imgOut, rects[j], cv::Scalar(0, 0, 255), 2);
+                } else {
+
+                    std::cout << "\U0001F535" << "  Rect: " << rects[j] << " Density: " << density << std::endl;
+                    rectangle(imgOut, rects[j], cv::Scalar(255, 0, 0), 2);
                 }
             }
         }
