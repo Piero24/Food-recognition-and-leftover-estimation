@@ -9,7 +9,6 @@ add_executable( ${PROJECT_NAME}
     src/uploadImage.cpp 
     src/prePTester.cpp
     src/imagePreprocessing.cpp 
-    src/performImageSegmentation.cpp 
     src/firstSegmentator.cpp 
     src/secondSegmentator.cpp 
     src/thirdSegmentator.cpp

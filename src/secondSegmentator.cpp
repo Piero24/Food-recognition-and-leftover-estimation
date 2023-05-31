@@ -24,7 +24,12 @@
 //     Valore BGR: (255, 0, 0)
 
 
-cv::Mat secondSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
+cv::Mat secondSegmentationFunc(cv::Mat img) {
+
+    cv::Mat clonedImg = img.clone();
+    std::vector<cv::Rect> rects = recSegmentation(clonedImg, "f");
+
+    std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
     
     std::sort(rects.begin(), rects.end(), compareRectangles);
     std::vector<cv::Rect> noToBigNoToSmall = pushOut(rects);
@@ -177,5 +182,29 @@ cv::Mat allRectangles(cv::Mat img, std::vector<cv::Rect> rects) {
     }
 
     return imgOut;
+}
 
+
+std::vector<cv::Rect> recSegmentation(cv::Mat img, std::string quality) {
+
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentation> ss = cv::ximgproc::segmentation::createSelectiveSearchSegmentation();
+
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyColor> colorStrategy = cv::ximgproc::segmentation::createSelectiveSearchSegmentationStrategyColor();
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyTexture> textureStrategy = cv::ximgproc::segmentation::createSelectiveSearchSegmentationStrategyTexture();
+    cv::Ptr<cv::ximgproc::segmentation::SelectiveSearchSegmentationStrategyMultiple> multipleStrategy = cv::ximgproc::segmentation::createSelectiveSearchSegmentationStrategyMultiple(colorStrategy, textureStrategy);
+
+    ss -> addStrategy(multipleStrategy);
+    ss -> setBaseImage(img);
+
+    if (quality == "f") {
+        ss -> switchToSelectiveSearchFast();
+
+    } else {
+        ss -> switchToSelectiveSearchQuality();
+    }
+
+    std::vector<cv::Rect> rects;
+    ss -> process(rects);
+
+    return rects;
 }

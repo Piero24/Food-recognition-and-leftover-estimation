@@ -14,7 +14,6 @@
 #include "../include/prePTester.h"
 
 #include "../include/imagePreprocessing.h"
-#include "../include/performImageSegmentation.h"
 
 #include "../include/firstSegmentator.h"
 #include "../include/secondSegmentator.h"
@@ -44,7 +43,6 @@
 //     Valore RGB: (139, 69, 19)
 //     Valore BGR: (19, 69, 139)
 
-cv::Mat segmentationOperation(cv::Mat img, int numShowRects, std::vector<cv::Rect> rects);
 
 int main(int argc, char** argv) {
 
@@ -59,29 +57,13 @@ int main(int argc, char** argv) {
 
         cv::Mat img = trayVector[i].clone();
 
-        removeYellow(img);
-
         //testPreProcessing(img);
 
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
-        std::vector<cv::Rect> rects = recSegmentation(imagePreprocessed, "f");
-
-        // number of region proposals to show
-        int numShowRects = rects.size();
-        std::cout << "Total Number of Region Proposals: " << numShowRects << std::endl;
-
-        // create a copy of original image
-        //cv::Mat imgOut = img.clone();
-        cv::Mat tmpImg = imagePreprocessed.clone();
-
-
-        cv::Mat firstImgOut = firstSegmentationFunc(tmpImg, rects);
-        cv::Mat secondImgOut = secondSegmentationFunc(firstImgOut, rects);
-        cv::Mat thirdImgOut = thirdSegmentationFunc(secondImgOut, rects);
-
-        //cv::Mat outImg = segmentationOperation(tmpImg, firstRectVec);
-
+        cv::Mat firstImgOut = firstSegmentationFunc(img);
+        //cv::Mat secondImgOut = secondSegmentationFunc(imagePreprocessed);
+        cv::Mat thirdImgOut = thirdSegmentationFunc(img);
 
         cv::Mat combined;
         cv::hconcat(img, thirdImgOut, combined);
@@ -98,52 +80,4 @@ int main(int argc, char** argv) {
     cv::waitKey(0);
 
     return 0;
-}
-
-
-
-cv::Mat segmentationOperation(cv::Mat img, std::vector<cv::Rect> rects) {
-
-    int numShowRects = rects.size();
-    cv::Mat imOut = img.clone();
-
-    size_t aa = rects.size();
-    for (size_t j = 0; j < aa; j++) {
-
-        int areaRect = rects[j].width * rects[j].height;
-
-        if (j < numShowRects) {
-
-            // Total aprox image area 1228800
-            if ((areaRect > 50800) && (areaRect  < 428800)) {
-
-                cv::Rect roi = rects[j];
-                int nonBlackPixelCount = 0;
-
-                for (int y = roi.y; y < roi.y + roi.height; y++) {
-                    for (int x = roi.x; x < roi.x + roi.width; x++) {
-                        if (imOut.at<uchar>(y, x) != 0) { // Controllo se il pixel non è nero
-                            nonBlackPixelCount++;
-                        }
-                    }
-                }
-
-
-                double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
-                //std::cout << "Density: " << density << std::endl;
-                
-                if ((density < 0.1)) {
-
-                    std::cout << "Density: " << density << std::endl;
-                    rectangle(imOut, rects[j], cv::Scalar(0, 255, 0), 2);
-                    std::cout << "Rect: " << rects[j] << std::endl;
-                }
-            }
-        }
-        else {
-            break;
-        }
-    }
-
-    return imOut;
 }

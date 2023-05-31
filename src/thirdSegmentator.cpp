@@ -13,7 +13,7 @@
 //     Valore RGB: (128, 0, 128)
 //     Valore BGR: (128, 0, 128)
 
-cv::Mat thirdSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
+cv::Mat thirdSegmentationFunc(cv::Mat img) {
 
     std::cout << "\U0001F7E3  WARNING: the thirdSegmentationFunc() method isn't complete" << std::endl;
 

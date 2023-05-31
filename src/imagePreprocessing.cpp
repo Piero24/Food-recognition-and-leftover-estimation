@@ -14,8 +14,9 @@ cv::Mat segmentationPreprocessing(cv::Mat img) {
     std::vector<int> dimensions = imgDimensions(img);
 
     cv::Mat noBlueImg = removeBlue(img);
-    cv::Mat lighterImager = lightIncreaser(img);
-    cv::Mat resultAfterCanny = cannyPreprocessing(img, 70, 80);
+    cv::Mat yellowImg = removeYellow(img);
+    cv::Mat lighterImager = lightIncreaser(yellowImg);
+    cv::Mat resultAfterCanny = cannyPreprocessing(yellowImg, 70, 80);
 
     // Remove white from the image
     cv::Mat noWhiteImg = removeColor(resultAfterCanny, cv::Scalar(170, 170, 170), cv::Scalar(255, 255, 255));
@@ -78,8 +79,10 @@ cv::Mat removeBlue(cv::Mat img) {
 
 cv::Mat removeYellow(cv::Mat img) {
 
-    cv::Scalar lowerBoundYellow(1, 57, 76);
-    cv::Scalar upperBoundYellow(64, 212, 202);
+    cv::Mat clonedImg = img.clone();
+
+    cv::Scalar lowerBoundYellow(0, 60, 80);
+    cv::Scalar upperBoundYellow(95, 220, 220);
 
     cv::Mat maskYellow;
     cv::inRange(img, lowerBoundYellow, upperBoundYellow, maskYellow);
@@ -102,12 +105,15 @@ cv::Mat removeYellow(cv::Mat img) {
     cv::Mat fout;
     postMaskYellow.copyTo(fout, 255 - cannyImg);
 
-    cv::imshow("Comple Tray", fout);
-    cv::waitKey(0);
+    cv::Mat finalOut;
+    cv::subtract(clonedImg, fout, finalOut);
+
+    //cv::imshow("Tray", finalOut);
+    //cv::waitKey(0);
 
     std::cout << "\u26A0  WARNING: the removeYellow() method isn't complete" << std::endl;
 
-    return  fout;
+    return  finalOut;
 
 }
 

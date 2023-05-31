@@ -9,6 +9,6 @@
 #include "opencv2/ximgproc/segmentation.hpp"
 
 
-cv::Mat thirdSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects);
+cv::Mat thirdSegmentationFunc(cv::Mat img);
 
 #endif
