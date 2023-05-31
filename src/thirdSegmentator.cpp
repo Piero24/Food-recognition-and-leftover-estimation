@@ -17,5 +17,7 @@ cv::Mat thirdSegmentationFunc(cv::Mat img) {
 
     std::cout << "\U0001F7E3  WARNING: the thirdSegmentationFunc() method isn't complete" << std::endl;
 
+    // https://docs.opencv.org/3.4/d7/d1c/tutorial_js_watershed.html
+
     return img;
 }
