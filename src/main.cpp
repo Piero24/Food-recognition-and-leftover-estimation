@@ -60,8 +60,8 @@ int main(int argc, char** argv) {
     std::vector<cv::Mat> trayVector = imgUploader(argc, argv);
    
     size_t ch = trayVector.size();
-    //for (size_t i = 0; i < ch; i++) {
-    for (size_t i = 0; i < 1; i++) {
+    for (size_t i = 0; i < ch; i++) {
+    //for (size_t i = 0; i < 1; i++) {
 
         std::cout << "######################################## START IMAGE N: " << i + 1 << std::endl;
 

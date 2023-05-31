@@ -34,7 +34,7 @@ cv::Mat segmentationPreprocessing(cv::Mat img) {
     // Remove dark gray from the image
     cv:: Mat noDarkGrayImg = removeColor(noGrayImg, cv::Scalar(0, 0, 0), cv::Scalar(60, 60, 60));
 
-    cv::Mat finalResult = imageDilate(noGrayImg, 5);
+    cv::Mat finalResult = imageDilate(noDarkGrayImg, 5);
 
     return finalResult;
 
