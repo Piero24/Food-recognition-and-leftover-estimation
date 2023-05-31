@@ -49,9 +49,9 @@ std::vector<int> imgDimensions(cv::Mat img) {
     dimensions.push_back(img.rows);   // Image height
     dimensions.push_back(area);       // Image Area
 
-    //std::cout << "Image width : " << dimensions[0] << std::endl;
-    //std::cout << "Image height : " << dimensions[1] << std::endl;
-    //std::cout << "Image area : " << dimensions[2] << std::endl;
+    // std::cout << "Image width : " << dimensions[0] << std::endl;
+    // std::cout << "Image height : " << dimensions[1] << std::endl;
+    // std::cout << "Image area : " << dimensions[2] << std::endl;
 
     return dimensions;
 }
@@ -72,6 +72,42 @@ cv::Mat removeBlue(cv::Mat img) {
     std::cout << "\u26A0  WARNING: the removeBlue() method isn't complete" << std::endl;
 
     return  img;
+
+}
+
+
+cv::Mat removeYellow(cv::Mat img) {
+
+    cv::Scalar lowerBoundYellow(1, 57, 76);
+    cv::Scalar upperBoundYellow(64, 212, 202);
+
+    cv::Mat maskYellow;
+    cv::inRange(img, lowerBoundYellow, upperBoundYellow, maskYellow);
+
+    cv::Mat postMaskYellow;
+    img.copyTo(postMaskYellow, maskYellow);
+
+    cv::Mat grayImage;
+    cv::cvtColor(postMaskYellow, grayImage, cv::COLOR_BGR2GRAY);
+
+    cv::Mat lighterImage;
+    double alpha = 3.28;
+    int beta = 0;
+    grayImage.convertTo(lighterImage, -1, alpha, beta);
+
+
+    cv::Mat cannyImg;
+    cv::Canny(lighterImage, cannyImg, 8, 7);
+
+    cv::Mat fout;
+    postMaskYellow.copyTo(fout, 255 - cannyImg);
+
+    cv::imshow("Comple Tray", fout);
+    cv::waitKey(0);
+
+    std::cout << "\u26A0  WARNING: the removeYellow() method isn't complete" << std::endl;
+
+    return  fout;
 
 }
 

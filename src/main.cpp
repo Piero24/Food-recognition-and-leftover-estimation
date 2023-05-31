@@ -22,20 +22,12 @@
 
 #include "../include/outputCombined.h"
 
-// Pallino giallo:
-//     Codice Unicode: \U0001F7E1
-//     Valore RGB: (255, 255, 0)
-//     Valore BGR: (0, 255, 255)
+
 
 // Pallino arancione:
 //     Codice Unicode: \U0001F7E0
 //     Valore RGB: (255, 165, 0)
 //     Valore BGR: (0, 165, 255)
-
-// Pallino viola:
-//     Codice Unicode: \U0001F7E3
-//     Valore RGB: (128, 0, 128)
-//     Valore BGR: (128, 0, 128)
 
 // Pallino nero:
 //     Codice Unicode: \U000026AB
@@ -63,11 +55,13 @@ int main(int argc, char** argv) {
     for (size_t i = 0; i < ch; i++) {
     //for (size_t i = 0; i < 1; i++) {
 
-        std::cout << "######################################## START IMAGE N: " << i + 1 << std::endl;
+        std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
 
         cv::Mat img = trayVector[i].clone();
 
-        testPreProcessing(img);
+        removeYellow(img);
+
+        //testPreProcessing(img);
 
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
@@ -86,8 +80,7 @@ int main(int argc, char** argv) {
         cv::Mat secondImgOut = secondSegmentationFunc(firstImgOut, rects);
         cv::Mat thirdImgOut = thirdSegmentationFunc(secondImgOut, rects);
 
-        //int firstNumShowRects = firstRectVec.size();
-        //cv::Mat outImg = segmentationOperation(tmpImg, firstNumShowRects, firstRectVec);
+        //cv::Mat outImg = segmentationOperation(tmpImg, firstRectVec);
 
 
         cv::Mat combined;
@@ -109,8 +102,9 @@ int main(int argc, char** argv) {
 
 
 
-cv::Mat segmentationOperation(cv::Mat img, int numShowRects, std::vector<cv::Rect> rects) {
+cv::Mat segmentationOperation(cv::Mat img, std::vector<cv::Rect> rects) {
 
+    int numShowRects = rects.size();
     cv::Mat imOut = img.clone();
 
     size_t aa = rects.size();

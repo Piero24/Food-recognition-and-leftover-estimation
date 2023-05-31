@@ -13,14 +13,21 @@
 //     Valore RGB: (0, 255, 0)
 //     Valore BGR: (0, 255, 0)
 
+// Pallino rosso:
+//     Codice Unicode: \U0001F534
+//     Valore RGB: (255, 0, 0)
+//     Valore BGR: (0, 0, 255)
+
+// Pallino blu:
+//     Codice Unicode: \U0001F535
+//     Valore RGB: (0, 0, 255)
+//     Valore BGR: (255, 0, 0)
+
 
 cv::Mat secondSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
     
     std::sort(rects.begin(), rects.end(), compareRectangles);
-
     std::vector<cv::Rect> noToBigNoToSmall = pushOut(rects);
-
-    // Rimuovi i rettangoli interni
     std::vector<cv::Rect> outerRectangles = removeInnerRectangles(noToBigNoToSmall);
 
     // Stampa i rettangoli esterni
@@ -28,11 +35,12 @@ cv::Mat secondSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
     //     std::cout << "Outer Rectangle: " << rect2 << std::endl;
     // }
 
-    int numShowRects = outerRectangles.size();
-
+    //cv::Mat imgOut = allRectangles(img, rects);
     cv::Mat imgOut = img.clone();
 
+    int numShowRects = outerRectangles.size();
     size_t aa = outerRectangles.size();
+
     for (size_t j = 0; j < aa; j++) {
 
         int areaRect = outerRectangles[j].width * outerRectangles[j].height;
@@ -42,17 +50,26 @@ cv::Mat secondSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
             cv::Rect roi = outerRectangles[j];
             int nonBlackPixelCount = 0;
 
-            for (int y = roi.y; y < roi.y + roi.height; y++) {
-                for (int x = roi.x; x < roi.x + roi.width; x++) {
-                    if (imgOut.at<uchar>(y, x) != 0) {
+            for (int y = roi.y; y < (roi.y + roi.height); y++) {
+                for (int x = roi.x; x < (roi.x + roi.width); x++) {
+                    cv::Vec3b pixel = imgOut.at<cv::Vec3b>(y, x);
+                    if (pixel != cv::Vec3b(0, 0, 0)) {
                         nonBlackPixelCount++;
                     }
                 }
             }
 
             double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
-            std::cout << "\U0001F7E2" << "  Rect: " << rects[j] << " Density: " << density << std::endl;
-            rectangle(imgOut, outerRectangles[j], cv::Scalar(0, 255, 0), 2);
+
+            if (density > 0.3) {
+                std::cout << "\U0001F7E2" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                rectangle(imgOut, outerRectangles[j], cv::Scalar(0, 255, 0), 3);
+
+            } else {
+                std::cout << "\U0001F534" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                rectangle(imgOut, outerRectangles[j], cv::Scalar(0, 0, 255), 3);
+            }
+            
         }
         else {
             break;
@@ -104,15 +121,61 @@ std::vector<cv::Rect> pushOut(const std::vector<cv::Rect>& rectangles) {
     std::vector<cv::Rect> result;
 
     for (const cv::Rect& rect : rectangles) {
-        int areaRect = rect.width*rect.width;
+        int areaRect = rect.width * rect.width;
         //if ((areaRect > 50800) && (areaRect  < 428800)) {
         if ((areaRect > 20800) && (areaRect < 428800)) {
-
             result.push_back(rect);
-
         }
-        
+    }
+    return result;
+}
+
+
+cv::Mat allRectangles(cv::Mat img, std::vector<cv::Rect> rects) {
+
+    int numShowRects = rects.size();
+    cv::Mat imgOut = img.clone();
+    size_t aa = rects.size();
+
+    for (size_t j = 0; j < aa; j++) {
+        int areaRect = rects[j].width * rects[j].height;
+
+        if (j < numShowRects) {
+            // Total aprox image area 1228800
+            if ((areaRect > 50800) && (areaRect  < 428800)) {
+
+                cv::Rect roi = rects[j];
+                int nonBlackPixelCount = 0;
+
+                for (int y = roi.y; y < (roi.y + roi.height); y++) {
+                    for (int x = roi.x; x < (roi.x + roi.width); x++) {
+                        cv::Vec3b pixel = imgOut.at<cv::Vec3b>(y, x);
+                        if (pixel != cv::Vec3b(0, 0, 0)) {
+                            nonBlackPixelCount++;
+                        }
+                    }
+                }
+
+
+                double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
+                //std::cout << "Density: " << density << std::endl;
+                
+                if (density < 0.5) {
+
+                    std::cout << "\U0001F534" << "  Rect: " << rects[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                    rectangle(imgOut, rects[j], cv::Scalar(0, 0, 255), 3);
+                } else {
+
+                    std::cout << "\U0001F535" << "  Rect: " << rects[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                    rectangle(imgOut, rects[j], cv::Scalar(255, 0, 0), 3);
+                }
+            }
+        }
+        else {
+            break;
+        }
     }
 
-    return result;
+    return imgOut;
+
 }

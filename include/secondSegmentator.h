@@ -16,6 +16,7 @@ bool isOverlap(const cv::Rect& rect1, const cv::Rect& rect2);
 // Funzione per rimuovere i rettangoli interni
 std::vector<cv::Rect> removeInnerRectangles(const std::vector<cv::Rect>& rectangles);
 std::vector<cv::Rect> pushOut(const std::vector<cv::Rect>& rectangles);
+cv::Mat allRectangles(cv::Mat img, std::vector<cv::Rect> rects);
 
 
 #endif

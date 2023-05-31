@@ -8,11 +8,14 @@
 
 #include "../include/thirdSegmentator.h"
 
-
+// Pallino viola:
+//     Codice Unicode: \U0001F7E3
+//     Valore RGB: (128, 0, 128)
+//     Valore BGR: (128, 0, 128)
 
 cv::Mat thirdSegmentationFunc(cv::Mat img, std::vector<cv::Rect> rects) {
 
-    std::cout << "\u26A0  WARNING: the thirdSegmentationFunc() method isn't complete" << std::endl;
+    std::cout << "\U0001F7E3  WARNING: the thirdSegmentationFunc() method isn't complete" << std::endl;
 
     return img;
 }
