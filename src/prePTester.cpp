@@ -23,7 +23,8 @@ std::vector<cv::Mat> convertToGray(std::vector<cv::Mat> imgVector, int value);
 std::vector<cv::Mat> cannyConvert(std::vector<cv::Mat> imgVector, int value1, int value2);
 std::vector<cv::Mat> noWhiteOnImg(std::vector<cv::Mat> imgVector, int value1, int value2);
 std::vector<cv::Mat> dilateImg(std::vector<cv::Mat> imgVector, int value);
-std::vector<cv::Mat> noBlueOnImg(std::vector<cv::Mat> imgVector, int value1, int value2);
+std::vector<cv::Mat> noBlueOnImg(std::vector<cv::Mat> imgVector, int valueB1, int valueB2, int valueG1, int valueG2, int valueR1, int valueR2);
+std::vector<cv::Mat> noPostitOnImg(std::vector<cv::Mat> imgVector, int valuePB1, int valuePB2, int valuePG1, int valuePG2, int valuePR1, int valuePR2);
 int printShow(std::vector<cv::Mat> imgVector, int value);
 
 
@@ -59,11 +60,60 @@ int no_white_lower_5 = 11;
 int no_white_upper_5 = 79;
 int no_white_max = 255;
 
+int no_blueB_lower_0 = 16;
+int no_blueB_upper_0 = 253;
+int no_blueB_max = 255;
 
-int no_blue_lower;
-int no_blue_upper;
-int no_blue_max = 255;
+int no_blueG_lower_0 = 2;
+int no_blueG_upper_0 = 232;
+int no_blueG_max = 255;
 
+int no_blueR_lower_0 = 0;
+int no_blueR_upper_0 = 83;
+int no_blueR_max = 200;
+
+int no_blueB_lower_1 = 120;
+int no_blueB_upper_1 = 255;
+
+int no_blueG_lower_1 = 95;
+int no_blueG_upper_1 = 250;
+
+int no_blueR_lower_1 = 69;
+int no_blueR_upper_1 = 185;
+
+
+int no_postitB_lower_0 = 0;
+int no_postitB_upper_0 = 110;
+int no_postitB_max = 150;
+
+int no_postitG_lower_0 = 115;
+int no_postitG_upper_0 = 255;
+int no_postitG_max = 255;
+
+int no_postitR_lower_0 = 115;
+int no_postitR_upper_0 = 255;
+int no_postitR_max = 255;
+
+int no_postitB_lower_1 = 40;
+int no_postitB_upper_1 = 90;
+
+int no_postitG_lower_1 = 50;
+int no_postitG_upper_1 = 80;
+
+int no_postitR_lower_1 = 60;
+int no_postitR_upper_1 = 90;
+
+/*int no_ticketB_lower_0 = 110;
+int no_ticketB_upper_0 = 159;
+int no_ticketB_max = 200;
+
+int no_ticketG_lower_0 = 135;
+int no_ticketG_upper_0 = 195;
+int no_ticketG_max = 220;
+
+int no_ticketR_lower_0 = 180;
+int no_ticketR_upper_0 = 255;
+int no_ticketR_max = 255;*/
 
 int dilate_kernel = 8;
 int dilate_kernel_max = 100;
@@ -123,11 +173,17 @@ static void on_trackbar(int, void*) {
     std::vector<cv::Mat> NoWhiteStack5 = noWhiteOnImg(NoWhiteStack4, no_white_lower_5, no_white_upper_5);
 
 
-    //std::vector<cv::Mat> NoBlueStack = noBlueOnImg(NoWhiteStack5, no_blue_lower, no_blue_upper);
+    std::vector<cv::Mat> NoBlueStack0 = noBlueOnImg(NoWhiteStack5, no_blueB_lower_0, no_blueB_upper_0, no_blueG_lower_0, no_blueG_upper_0, no_blueR_lower_0, no_blueR_upper_0);
+    
+    std::vector<cv::Mat> NoBlueStack1 = noBlueOnImg(NoBlueStack0, no_blueB_lower_1, no_blueB_upper_1, no_blueG_lower_1, no_blueG_upper_1, no_blueR_lower_1, no_blueR_upper_1);
+    
+    std::vector<cv::Mat> NoPostitStack0 = noPostitOnImg(NoBlueStack1, no_postitB_lower_0, no_postitB_upper_0, no_postitG_lower_0, no_postitG_upper_0, no_postitR_lower_0, no_postitR_upper_0);
+    
+    std::vector<cv::Mat> NoPostitStack1 = noPostitOnImg(NoPostitStack0, no_postitB_lower_1, no_postitB_upper_1, no_postitG_lower_1, no_postitG_upper_1, no_postitR_lower_1, no_postitR_upper_1);
+    
+    //std::vector<cv::Mat> NoTicketStack0 = noPostitOnImg(NoPostitStack1, no_ticketB_lower_0, no_ticketB_upper_0, no_ticketG_lower_0, no_ticketG_upper_0, no_ticketR_lower_0, no_ticketR_upper_0);
 
-
-
-    std::vector<cv::Mat> NoBlueStack;
+    //std::vector<cv::Mat> NoBlueStack;
     std::vector<cv::Scalar> colorRanges;
     colorRanges.push_back(cv::Scalar(15, 6, 0));
     colorRanges.push_back(cv::Scalar(175, 155, 141));
@@ -160,13 +216,13 @@ static void on_trackbar(int, void*) {
             }
         }
 
-        NoBlueStack.push_back(modifiedImg);
+        NoPostitStack1.push_back(modifiedImg);
     }
 
 
 
 
-    std::vector<cv::Mat> DilateStack = dilateImg(NoBlueStack, dilate_kernel);
+    std::vector<cv::Mat> DilateStack = dilateImg(NoPostitStack1, dilate_kernel);
 
 
 
@@ -193,35 +249,35 @@ std::vector<cv::Mat> multipleTestPreProcessing(std::vector<cv::Mat> imgVector) {
     cv::namedWindow("Img Due", cv::WINDOW_NORMAL);
     cv::namedWindow("Img Tre", cv::WINDOW_NORMAL);
 
-    cv::namedWindow("Trackbar");
+    cv::namedWindow("Trackbar", cv::WINDOW_NORMAL);
 
     // Imposta le dimensioni iniziali della finestra
-    int windowWidth = 100;
-    int windowHeight = 600;
-    cv::resizeWindow("Img Zero", windowWidth, windowHeight);
-    cv::resizeWindow("Img Uno", windowWidth, windowHeight);
-    cv::resizeWindow("Img Due", windowWidth, windowHeight);
-    cv::resizeWindow("Img Tre", windowWidth, windowHeight);
+    //int windowWidth = 100;
+    //int windowHeight = 600;
+    //cv::resizeWindow("Img Zero", windowWidth, windowHeight);
+    //cv::resizeWindow("Img Uno", windowWidth, windowHeight);
+    //cv::resizeWindow("Img Due", windowWidth, windowHeight);
+    //cv::resizeWindow("Img Tre", windowWidth, windowHeight);
 
     
     
     
-    cv::createTrackbar("Gray0", "Trackbar", &gray0, gray_max, on_trackbar);
-    cv::createTrackbar("Canny01", "Trackbar", &canny0_1, canny_max, on_trackbar);
-    cv::createTrackbar("Canny02", "Trackbar", &canny0_2, canny_max, on_trackbar);
-    cv::createTrackbar("NWL0", "Trackbar", &no_white_lower_0, no_white_max, on_trackbar);
-    cv::createTrackbar("NWU0", "Trackbar", &no_white_upper_0, no_white_max, on_trackbar);
+    //cv::createTrackbar("Gray0", "Trackbar", &gray0, gray_max, on_trackbar);
+    //cv::createTrackbar("Canny01", "Trackbar", &canny0_1, canny_max, on_trackbar);
+    //cv::createTrackbar("Canny02", "Trackbar", &canny0_2, canny_max, on_trackbar);
+    //cv::createTrackbar("NWL0", "Trackbar", &no_white_lower_0, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWU0", "Trackbar", &no_white_upper_0, no_white_max, on_trackbar);
     
 
 
 
 
 
-    cv::createTrackbar("Gray1", "Trackbar", &gray1, gray_max, on_trackbar);
+    //cv::createTrackbar("Gray1", "Trackbar", &gray1, gray_max, on_trackbar);
     // cv::createTrackbar("Canny11", "Trackbar", &canny1_1, canny_max, on_trackbar);
     // cv::createTrackbar("Canny12", "Trackbar", &canny1_2, canny_max, on_trackbar);
-    cv::createTrackbar("NWL1", "Trackbar", &no_white_lower_1, no_white_max, on_trackbar);
-    cv::createTrackbar("NWU1", "Trackbar", &no_white_upper_1, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWL1", "Trackbar", &no_white_lower_1, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWU1", "Trackbar", &no_white_upper_1, no_white_max, on_trackbar);
     
     
 
@@ -229,32 +285,65 @@ std::vector<cv::Mat> multipleTestPreProcessing(std::vector<cv::Mat> imgVector) {
 
 
     
-    cv::createTrackbar("Gray2", "Trackbar", &gray2, gray_max, on_trackbar);
+    //cv::createTrackbar("Gray2", "Trackbar", &gray2, gray_max, on_trackbar);
     // cv::createTrackbar("Canny21", "Trackbar", &canny2_1, canny_max, on_trackbar);
     // cv::createTrackbar("Canny22", "Trackbar", &canny2_2, canny_max, on_trackbar);
-    cv::createTrackbar("NWL2", "Trackbar", &no_white_lower_2, no_white_max, on_trackbar);
-    cv::createTrackbar("NWU2", "Trackbar", &no_white_upper_2, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWL2", "Trackbar", &no_white_lower_2, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWU2", "Trackbar", &no_white_upper_2, no_white_max, on_trackbar);
     
     
 
 
 
     
-    cv::createTrackbar("Gray3", "Trackbar", &gray3, gray_max, on_trackbar);
+    //cv::createTrackbar("Gray3", "Trackbar", &gray3, gray_max, on_trackbar);
     // cv::createTrackbar("Canny31", "Trackbar", &canny3_1, canny_max, on_trackbar);
     // cv::createTrackbar("Canny32", "Trackbar", &canny3_2, canny_max, on_trackbar);
-    cv::createTrackbar("NWL3", "Trackbar", &no_white_lower_3, no_white_max, on_trackbar);
-    cv::createTrackbar("NWU3", "Trackbar", &no_white_upper_3, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWL3", "Trackbar", &no_white_lower_3, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWU3", "Trackbar", &no_white_upper_3, no_white_max, on_trackbar);
 
 
-    cv::createTrackbar("NWL4", "Trackbar", &no_white_lower_4, no_white_max, on_trackbar);
-    cv::createTrackbar("NWU4", "Trackbar", &no_white_upper_4, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWL4", "Trackbar", &no_white_lower_4, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWU4", "Trackbar", &no_white_upper_4, no_white_max, on_trackbar);
 
-    cv::createTrackbar("NWL5", "Trackbar", &no_white_lower_5, no_white_max, on_trackbar);
-    cv::createTrackbar("NWU5", "Trackbar", &no_white_upper_5, no_white_max, on_trackbar);
-
-    cv::createTrackbar("NBL", "Trackbar", &no_blue_lower, no_blue_max, on_trackbar);
-    cv::createTrackbar("NBU", "Trackbar", &no_blue_upper, no_blue_max, on_trackbar);
+    //cv::createTrackbar("NWL5", "Trackbar", &no_white_lower_5, no_white_max, on_trackbar);
+    //cv::createTrackbar("NWU5", "Trackbar", &no_white_upper_5, no_white_max, on_trackbar);
+    
+    
+    cv::createTrackbar("NBBL0", "Trackbar", &no_blueB_lower_0, no_blueB_max, on_trackbar);
+    cv::createTrackbar("NBBU0", "Trackbar", &no_blueB_upper_0, no_blueB_max, on_trackbar);
+    cv::createTrackbar("NBGL0", "Trackbar", &no_blueG_lower_0, no_blueG_max, on_trackbar);
+    cv::createTrackbar("NBGU0", "Trackbar", &no_blueG_upper_0, no_blueG_max, on_trackbar);
+    cv::createTrackbar("NBRL0", "Trackbar", &no_blueR_lower_0, no_blueR_max, on_trackbar);
+    cv::createTrackbar("NBRU0", "Trackbar", &no_blueR_upper_0, no_blueR_max, on_trackbar);
+    
+    cv::createTrackbar("NBBL1", "Trackbar", &no_blueB_lower_1, no_blueB_max, on_trackbar);
+    cv::createTrackbar("NBBU1", "Trackbar", &no_blueB_upper_1, no_blueB_max, on_trackbar);
+    cv::createTrackbar("NBGL1", "Trackbar", &no_blueG_lower_1, no_blueG_max, on_trackbar);
+    cv::createTrackbar("NBGU1", "Trackbar", &no_blueG_upper_1, no_blueG_max, on_trackbar);
+    cv::createTrackbar("NBRL1", "Trackbar", &no_blueR_lower_1, no_blueR_max, on_trackbar);
+    cv::createTrackbar("NBRU1", "Trackbar", &no_blueR_upper_1, no_blueR_max, on_trackbar);
+    
+    cv::createTrackbar("PostitBL0", "Trackbar", &no_postitB_lower_0, no_postitB_max, on_trackbar);
+    cv::createTrackbar("PostitBU0", "Trackbar", &no_postitB_upper_0, no_postitB_max, on_trackbar);
+    cv::createTrackbar("PostitGL0", "Trackbar", &no_postitG_lower_0, no_postitG_max, on_trackbar);
+    cv::createTrackbar("PostitGU0", "Trackbar", &no_postitG_upper_0, no_postitG_max, on_trackbar);
+    cv::createTrackbar("PostitRL0", "Trackbar", &no_postitR_lower_0, no_postitR_max, on_trackbar);
+    cv::createTrackbar("PostitRU0", "Trackbar", &no_postitR_upper_0, no_postitR_max, on_trackbar);
+    
+    cv::createTrackbar("PostitBL1", "Trackbar", &no_postitB_lower_1, no_postitB_max, on_trackbar);
+    cv::createTrackbar("PostitBU1", "Trackbar", &no_postitB_upper_1, no_postitB_max, on_trackbar);
+    cv::createTrackbar("PostitGL1", "Trackbar", &no_postitG_lower_1, no_postitG_max, on_trackbar);
+    cv::createTrackbar("PostitGU1", "Trackbar", &no_postitG_upper_1, no_postitG_max, on_trackbar);
+    cv::createTrackbar("PostitRL1", "Trackbar", &no_postitR_lower_1, no_postitR_max, on_trackbar);
+    cv::createTrackbar("PostitRU1", "Trackbar", &no_postitR_upper_1, no_postitR_max, on_trackbar);
+    
+    /*cv::createTrackbar("TicketBL0", "Trackbar", &no_ticketB_lower_0, no_ticketB_max, on_trackbar);
+    cv::createTrackbar("TicketBU0", "Trackbar", &no_ticketB_upper_0, no_ticketB_max, on_trackbar);
+    cv::createTrackbar("TicketGL0", "Trackbar", &no_ticketG_lower_0, no_ticketG_max, on_trackbar);
+    cv::createTrackbar("TicketGU0", "Trackbar", &no_ticketG_upper_0, no_ticketG_max, on_trackbar);
+    cv::createTrackbar("TicketRL0", "Trackbar", &no_ticketR_lower_0, no_ticketR_max, on_trackbar);
+    cv::createTrackbar("TicketRU0", "Trackbar", &no_ticketR_upper_0, no_ticketR_max, on_trackbar);*/
 
     cv::createTrackbar("Dilate", "Trackbar", &dilate_kernel, dilate_kernel_max, on_trackbar);
 
@@ -300,6 +389,12 @@ cv::Mat testPreProcessing(cv::Mat img) {
     cv::createTrackbar("Canny02", "Trackbar", &canny0_2, canny_max, on_trackbar);
     cv::createTrackbar("NWL0", "Trackbar", &no_white_lower_0, no_white_max, on_trackbar);
     cv::createTrackbar("NWU0", "Trackbar", &no_white_upper_0, no_white_max, on_trackbar);
+    cv::createTrackbar("NBBL0", "Trackbar", &no_blueB_lower_0, no_blueB_max, on_trackbar);
+    cv::createTrackbar("NBBU0", "Trackbar", &no_blueB_upper_0, no_blueB_max, on_trackbar);
+    cv::createTrackbar("NBGL0", "Trackbar", &no_blueG_lower_0, no_blueG_max, on_trackbar);
+    cv::createTrackbar("NBGU0", "Trackbar", &no_blueG_upper_0, no_blueG_max, on_trackbar);
+    cv::createTrackbar("NBRL0", "Trackbar", &no_blueR_lower_0, no_blueR_max, on_trackbar);
+    cv::createTrackbar("NBRU0", "Trackbar", &no_blueR_upper_0, no_blueR_max, on_trackbar);
     
 
 
@@ -342,8 +437,8 @@ cv::Mat testPreProcessing(cv::Mat img) {
     cv::createTrackbar("NWL5", "Trackbar", &no_white_lower_5, no_white_max, on_trackbar);
     cv::createTrackbar("NWU5", "Trackbar", &no_white_upper_5, no_white_max, on_trackbar);
 
-    cv::createTrackbar("NBL", "Trackbar", &no_blue_lower, no_blue_max, on_trackbar);
-    cv::createTrackbar("NBU", "Trackbar", &no_blue_upper, no_blue_max, on_trackbar);
+    //cv::createTrackbar("NBL", "Trackbar", &no_blue_lower, no_blue_max, on_trackbar);
+    //cv::createTrackbar("NBU", "Trackbar", &no_blue_upper, no_blue_max, on_trackbar);
 
     cv::createTrackbar("Dilate", "Trackbar", &dilate_kernel, dilate_kernel_max, on_trackbar);
 
@@ -492,33 +587,49 @@ std::vector<cv::Mat> dilateImg(std::vector<cv::Mat> imgVector, int value) {
 }
 
 
-// std::vector<cv::Mat> noBlueOnImg(std::vector<cv::Mat> imgVector, int value1, int value2) {
+std::vector<cv::Mat> noBlueOnImg(std::vector<cv::Mat> imgVector, int valueB1, int valueB2, int valueG1, int valueG2, int valueR1, int valueR2) {
 
+     std::vector<cv::Mat> VecToReturn;
+     
+     size_t ch = imgVector.size();
+     for (size_t i = 0; i < ch; i++) {
 
-//     // DA FIXARE
+        cv::Mat tempImg = imgVector[i].clone();
 
-//     std::vector<cv::Mat> VecToReturn;
+         // Creazione della maschera per il canale blu
+         cv::Mat noBlueImg;
+	 cv::inRange(tempImg , cv::Scalar(valueB1, valueG1, valueR1), cv::Scalar(valueB2, valueG2, valueR2), noBlueImg);
+	 cv::Mat postMask;
+         tempImg.copyTo(postMask, 255 - noBlueImg);
 
-//     for (const cv::Mat& img : imgVector) {
-//         std::vector<cv::Mat> channels;
-//         cv::split(img, channels);
+        VecToReturn.push_back(postMask);
 
-//         // Creazione della maschera per il canale blu
-//         cv::Mat blueMask;
-//         cv::inRange(channels[0], value1, value2, blueMask);
+     }
 
-//         // Applicazione della maschera per il canale blu all'immagine originale
-//         cv::Mat result;
-//         img.copyTo(result);
-//         result.setTo(cv::Scalar(0, 0, 0), blueMask);
+     return VecToReturn;
+ }
 
-//         VecToReturn.push_back(result);
-//     }
+std::vector<cv::Mat> noPostitOnImg(std::vector<cv::Mat> imgVector, int valuePB1, int valuePB2, int valuePG1, int valuePG2, int valuePR1, int valuePR2){
 
-//     return VecToReturn;
-// }
+     std::vector<cv::Mat> VecToReturn;
+     
+     size_t ch = imgVector.size();
+     for (size_t i = 0; i < ch; i++) {
 
+        cv::Mat tempImg = imgVector[i].clone();
 
+         // Creazione della maschera per il postit
+         cv::Mat noPostitImg;
+	 cv::inRange(tempImg , cv::Scalar(valuePB1, valuePG1, valuePR1), cv::Scalar(valuePB2, valuePG2, valuePR2), noPostitImg);
+	 cv::Mat postMask;
+         tempImg.copyTo(postMask, 255 - noPostitImg);
+
+        VecToReturn.push_back(postMask);
+
+     }
+
+     return VecToReturn;
+ }
 
 int printShow(std::vector<cv::Mat> imgVector, int value) {
 
