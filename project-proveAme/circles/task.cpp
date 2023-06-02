@@ -2,15 +2,22 @@
 #include <opencv2/imgproc.hpp> 
 #include <opencv2/highgui.hpp> 
 #include <iostream> 
+
+
+// g++ task.cpp -o task -I/usr/local/include/opencv4 -lopencv_highgui -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -lopencv_features2d
+
+// ./task leftover1.jpg
+
  
 using namespace std; 
 using namespace cv; 
  
 cv::Mat img; 
 cv::Mat resultImage; 
- 
-int minRadius = 190; 
-int maxRadius = 400; 
+//ceramica 62-71
+//vetro 48-54
+int minRadius = 62; 
+int maxRadius = 71; 
  
 void detectCircles(int, void*) { 
     cv::Mat grayImage; 
@@ -23,7 +30,7 @@ void detectCircles(int, void*) {
     cv::GaussianBlur(cannyImg, aftGauss, cv::Size(5, 5), 0); 
  
     std::vector<cv::Vec3f> circles; 
-    cv::HoughCircles(aftGauss, circles, cv::HOUGH_GRADIENT, 1, 1, 100, 30, minRadius, maxRadius); 
+    cv::HoughCircles(aftGauss, circles, cv::HOUGH_GRADIENT, 1, 1, 100, 20, minRadius, maxRadius); 
  
     std::vector<cv::Vec3f> outerCircles; 
     for (const cv::Vec3f& circ : circles) { 
@@ -79,13 +86,15 @@ int main(int argc, char* argv[]) {
         return 0; 
     } 
  
+ //resize a 320 e 240
     Mat src = imread(i1); 
+    resize(src, src, cv::Size(320,240));
     img = src.clone(); 
     resultImage = img.clone(); 
  
     cv::namedWindow("Result"); 
-    cv::createTrackbar("Min Radius", "Result", &minRadius, 500, onMinRadiusChange); 
-    cv::createTrackbar("Max Radius", "Result", &maxRadius, 500, onMaxRadiusChange); 
+    cv::createTrackbar("Min Radius", "Result", &minRadius, 300, onMinRadiusChange); 
+    cv::createTrackbar("Max Radius", "Result", &maxRadius, 300, onMaxRadiusChange); 
  
     detectCircles(0, 0); 
  
