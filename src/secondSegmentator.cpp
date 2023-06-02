@@ -24,9 +24,9 @@
 //     Valore BGR: (255, 0, 0)
 
 
-cv::Mat secondSegmentationFunc(cv::Mat img) {
+cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2) {
 
-    cv::Mat clonedImg = img.clone();
+    cv::Mat clonedImg = img2.clone();
     std::vector<cv::Rect> rects = recSegmentation(clonedImg, "f");
 
     std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
@@ -57,7 +57,7 @@ cv::Mat secondSegmentationFunc(cv::Mat img) {
 
             for (int y = roi.y; y < (roi.y + roi.height); y++) {
                 for (int x = roi.x; x < (roi.x + roi.width); x++) {
-                    cv::Vec3b pixel = imgOut.at<cv::Vec3b>(y, x);
+                    cv::Vec3b pixel = clonedImg.at<cv::Vec3b>(y, x);
                     if (pixel != cv::Vec3b(0, 0, 0)) {
                         nonBlackPixelCount++;
                     }

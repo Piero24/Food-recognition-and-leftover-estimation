@@ -48,6 +48,9 @@ int main(int argc, char** argv) {
 
     std::vector<cv::Mat> hcombinedVec;
     std::vector<cv::Mat> trayVector = imgUploader(argc, argv);
+
+    // hcombinedVec = multipleTestPreProcessing(trayVector);
+    // return 0;
    
     size_t ch = trayVector.size();
     for (size_t i = 0; i < ch; i++) {
@@ -57,13 +60,13 @@ int main(int argc, char** argv) {
 
         cv::Mat img = trayVector[i].clone();
 
-        //testPreProcessing(img);
+        cv::Mat iii = testPreProcessing(img);
 
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
-        cv::Mat firstImgOut = firstSegmentationFunc(img);
-        //cv::Mat secondImgOut = secondSegmentationFunc(imagePreprocessed);
-        cv::Mat thirdImgOut = thirdSegmentationFunc(img);
+        //cv::Mat firstImgOut = firstSegmentationFunc(img);
+        cv::Mat secondImgOut = secondSegmentationFunc(img, iii);
+        cv::Mat thirdImgOut = thirdSegmentationFunc(secondImgOut);
 
         cv::Mat combined;
         cv::hconcat(img, thirdImgOut, combined);

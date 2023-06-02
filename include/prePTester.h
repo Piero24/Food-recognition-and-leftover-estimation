@@ -8,5 +8,6 @@
 
 static void on_trackbar(int, void*);
 cv::Mat testPreProcessing(cv::Mat img);
+std::vector<cv::Mat> multipleTestPreProcessing(std::vector<cv::Mat> imgVector);
 
 #endif
