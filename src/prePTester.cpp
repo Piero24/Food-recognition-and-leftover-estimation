@@ -45,7 +45,6 @@ int canny3_2;
 int canny_max = 1000;
 
 
-
 int no_white_lower_0 = 182;
 int no_white_upper_0 = 255;
 int no_white_lower_1 = 142;
@@ -64,11 +63,6 @@ int no_white_max = 255;
 int no_blue_lower;
 int no_blue_upper;
 int no_blue_max = 255;
-
-
-
-
-
 
 
 int dilate_kernel = 8;
@@ -130,6 +124,8 @@ static void on_trackbar(int, void*) {
 
 
     //std::vector<cv::Mat> NoBlueStack = noBlueOnImg(NoWhiteStack5, no_blue_lower, no_blue_upper);
+
+
 
     std::vector<cv::Mat> NoBlueStack;
     std::vector<cv::Scalar> colorRanges;

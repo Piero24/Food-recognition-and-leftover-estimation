@@ -9,7 +9,7 @@
 #include "opencv2/ximgproc/segmentation.hpp"
 
 
-cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2);
+cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2, std::vector<cv::Rect>& identifiedRegions);
 bool compareRectangles(const cv::Rect& rect1, const cv::Rect& rect2);
 // Funzione per controllare se due rettangoli si sovrappongono
 bool isOverlap(const cv::Rect& rect1, const cv::Rect& rect2);

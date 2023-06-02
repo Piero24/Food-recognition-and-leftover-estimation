@@ -13,6 +13,7 @@ add_executable( ${PROJECT_NAME}
     src/secondSegmentator.cpp 
     src/thirdSegmentator.cpp
     src/outputCombined.cpp
+    src/detector.cpp
 )
 
 target_link_libraries( ${PROJECT_NAME} ${OpenCV_LIBS} )

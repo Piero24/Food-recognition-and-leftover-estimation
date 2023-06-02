@@ -19,6 +19,8 @@
 #include "../include/secondSegmentator.h"
 #include "../include/thirdSegmentator.h"
 
+#include "../include/detector.h"
+
 #include "../include/outputCombined.h"
 
 
@@ -61,12 +63,16 @@ int main(int argc, char** argv) {
         cv::Mat img = trayVector[i].clone();
 
         cv::Mat iii = testPreProcessing(img);
-
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
-        //cv::Mat firstImgOut = firstSegmentationFunc(img);
-        cv::Mat secondImgOut = secondSegmentationFunc(img, iii);
-        cv::Mat thirdImgOut = thirdSegmentationFunc(secondImgOut);
+
+        std::vector<cv::Rect> identifiedRegions;
+
+        cv::Mat firstImgOut = firstSegmentationFunc(img);
+        //cv::Mat secondImgOut = secondSegmentationFunc(img, iii, identifiedRegions);
+        cv::Mat thirdImgOut = thirdSegmentationFunc(firstImgOut);
+
+        cv::Mat noBackgroundImg = subjectIsolator(img, identifiedRegions);
 
         cv::Mat combined;
         cv::hconcat(img, thirdImgOut, combined);
