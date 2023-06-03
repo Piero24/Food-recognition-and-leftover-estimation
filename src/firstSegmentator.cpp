@@ -28,6 +28,7 @@ int maxRadiusH = 305;
 int minRadius = 200; 
 int maxRadius = 230; 
 
+
 float distance(cv::Vec3f a, cv::Vec3f b);
 std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float threshold, int thresholdForCluster, int numberToReturn, std::vector<cv::Vec3f>* biggerCircles = nullptr);
 
@@ -58,23 +59,33 @@ cv::Mat firstSegmentationFunc(cv::Mat img) {
     for (const auto& circle : clusteredCircles) {
         cv::Point center(circle[0], circle[1]);
         int radius = circle[2];
-        cv::circle(tmpImg, center, radius, cv::Scalar(0, 0, 0), -1);  // Disegna un cerchio nero sul cerchio corrispondente
+        cv::circle(tmpImg, center, radius, cv::Scalar(0, 0, 0), -1);
+        cv::circle(tmpImg, center, radius, cv::Scalar(0, 0, 255), 10);  // Disegna un cerchio nero sul cerchio corrispondente
     }
-    
+
+    cv::Mat noGrayImg;
+    cv::inRange(tmpImg, cv::Scalar(0, 0, 0), cv::Scalar(135, 135, 135), noGrayImg);
+    cv::Mat postGray;
+    tmpImg.copyTo(postGray, 255 - noGrayImg);
+
     cv::Mat grayTmpImage;
-    cv::cvtColor(tmpImg, grayTmpImage, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(postGray, grayTmpImage, cv::COLOR_BGR2GRAY);
 
     cv::Mat cannyTmpImg;
-    cv::Canny(grayTmpImage, cannyTmpImg, 44, 264);
+    cv::Canny(grayTmpImage, cannyTmpImg, 20, 164);
 
     cv::Mat aftTmpGauss;
     cv::GaussianBlur(cannyTmpImg, aftTmpGauss, cv::Size(5, 5), 0);
 
     std::vector<cv::Vec3f> smallerCircles;
-    cv::HoughCircles(aftTmpGauss, smallerCircles, cv::HOUGH_GRADIENT, 1, 1, 100, 20, minRadius, maxRadius);
+    cv::HoughCircles(aftTmpGauss, smallerCircles, cv::HOUGH_GRADIENT, 1, 1, 100, 30, minRadius, maxRadius);
     std::sort(smallerCircles.begin(), smallerCircles.end(), compareCircles);
 
-    std::vector<cv::Vec3f> clusteredSmallerCircles = kmeansCircles(smallerCircles, threshold, thresholdForCluster, 1, &circles);
+
+    threshold = 180.0;
+    thresholdForCluster = 10;
+
+    std::vector<cv::Vec3f> clusteredSmallerCircles = kmeansCircles(smallerCircles, threshold, thresholdForCluster, 1, &clusteredCircles);
 
     cv::Mat resultImage = image.clone();
     for (const auto& circle : smallerCircles) {
@@ -118,7 +129,7 @@ bool compareCircles(const cv::Vec3f& circ1, const cv::Vec3f& circ2) {
 }
 
 
-bool isInnerCircle(const cv::Vec3f& innerCircle, const cv::Vec3f& externalCircle) {
+bool isInnerCircle(const cv::Vec3f& innerCircle, const cv::Vec3f& externalCircle, std::vector<cv::Vec3f>& clustersExcluded) {
     cv::Point2f center1(innerCircle[0], innerCircle[1]);
     cv::Point2f center2(externalCircle[0], externalCircle[1]);
     float radius1 = innerCircle[2];
@@ -126,7 +137,9 @@ bool isInnerCircle(const cv::Vec3f& innerCircle, const cv::Vec3f& externalCircle
 
     float distance = cv::norm(center1 - center2);
 
-    return (distance + radius1) <= radius2;
+    //std::cout << distance + radius1 << "               " << radius2 << "                             " << ((distance + radius1) <= radius2) << std::endl;
+
+    return (distance + radius1) <= radius2+ 150;
 }
 
 
@@ -213,17 +226,54 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
         if (sortedClusters.size() < numberToReturn) {
 
             if (biggerCircles != nullptr) {
+                std::cout << "Ciao " << (biggerCircles != nullptr) << std::endl;
+                std::vector<cv::Vec3f> clustersExcluded;
+
+
+                int flag = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                 for (const auto& externalCircle : *biggerCircles) {
-                   bool isInner = isInnerCircle(clusterInfo.cluster, externalCircle);
+                   bool isInner = isInnerCircle(clusterInfo.cluster, externalCircle, clustersExcluded);
 
-                   std::cout << (clusterInfo.clusterSize >= thresholdForCluster)  << ", " << isInner << std::endl;
+                   if (isInner) {
+                    flag ++;
+                   }
+                }
 
-                   if ((clusterInfo.clusterSize >= thresholdForCluster) && !isInner) {
-                        std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
+                if ((clusterInfo.clusterSize >= thresholdForCluster) && (flag < 1)) {
+                        //std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
                         sortedClusters.push_back(clusterInfo.cluster);
                     }
-                }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
             } else {
+                std::cout << "Ciao " << (biggerCircles != nullptr) << std::endl;
                 if (clusterInfo.clusterSize >= thresholdForCluster) {
                     std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
                     sortedClusters.push_back(clusterInfo.cluster);
@@ -240,6 +290,7 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
         
     }
 
+    std::cout << "################################################################## END" << std::endl;
     return sortedClusters;
 
 } 
