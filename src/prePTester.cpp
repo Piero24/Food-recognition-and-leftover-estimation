@@ -7,7 +7,73 @@
 
 #include "../include/prePTester.h"
 
+/*
+Dati col ticket
+int no_blueB_lower_0 = 16;
+int no_blueB_upper_0 = 253;
+int no_blueB_max = 255;
 
+int no_blueG_lower_0 = 2;
+int no_blueG_upper_0 = 232;
+int no_blueG_max = 255;
+
+int no_blueR_lower_0 = 0;
+int no_blueR_upper_0 = 83;
+int no_blueR_max = 200;
+
+int no_blueB_lower_1 = 120;
+int no_blueB_upper_1 = 255;
+
+int no_blueG_lower_1 = 95;
+int no_blueG_upper_1 = 250;
+
+int no_blueR_lower_1 = 69;
+int no_blueR_upper_1 = 185;
+
+
+int no_postitB_lower_0 = 0;
+int no_postitB_upper_0 = 110;
+int no_postitB_max = 150;
+
+int no_postitG_lower_0 = 115;
+int no_postitG_upper_0 = 255;
+int no_postitG_max = 255;
+
+int no_postitR_lower_0 = 115;
+int no_postitR_upper_0 = 255;
+int no_postitR_max = 255;
+
+int no_postitB_lower_1 = 40;
+int no_postitB_upper_1 = 90;
+
+int no_postitG_lower_1 = 50;
+int no_postitG_upper_1 = 80;
+
+int no_postitR_lower_1 = 60;
+int no_postitR_upper_1 = 90;
+
+int no_ticketB_lower_0 = 110;
+int no_ticketB_upper_0 = 180;
+int no_ticketB_max = 200;
+
+int no_ticketG_lower_0 = 130;
+int no_ticketG_upper_0 = 195;
+int no_ticketG_max = 220;
+
+int no_ticketR_lower_0 = 185;
+int no_ticketR_upper_0 = 255;
+int no_ticketR_max = 255;
+
+int no_ticketB_lower_1 = 0;
+int no_ticketB_upper_1 = 95;
+
+int no_ticketG_lower_1 = 55;
+int no_ticketG_upper_1 = 115;
+
+int no_ticketR_lower_1 = 110;
+int no_ticketR_upper_1 = 205;
+
+*/
 
 cv::Mat startImg0;
 cv::Mat startImg1;
@@ -44,6 +110,7 @@ int canny2_2;
 int canny3_1;
 int canny3_2;
 int canny_max = 1000;
+
 
 
 int no_white_lower_0 = 182;
@@ -103,17 +170,26 @@ int no_postitG_upper_1 = 80;
 int no_postitR_lower_1 = 60;
 int no_postitR_upper_1 = 90;
 
-/*int no_ticketB_lower_0 = 110;
-int no_ticketB_upper_0 = 159;
+int no_ticketB_lower_0 = 110;
+int no_ticketB_upper_0 = 180;
 int no_ticketB_max = 200;
 
-int no_ticketG_lower_0 = 135;
+int no_ticketG_lower_0 = 130;
 int no_ticketG_upper_0 = 195;
 int no_ticketG_max = 220;
 
-int no_ticketR_lower_0 = 180;
+int no_ticketR_lower_0 = 185;
 int no_ticketR_upper_0 = 255;
-int no_ticketR_max = 255;*/
+int no_ticketR_max = 255;
+
+int no_ticketB_lower_1 = 0;
+int no_ticketB_upper_1 = 95;
+
+int no_ticketG_lower_1 = 55;
+int no_ticketG_upper_1 = 115;
+
+int no_ticketR_lower_1 = 110;
+int no_ticketR_upper_1 = 205;
 
 int dilate_kernel = 8;
 int dilate_kernel_max = 100;
@@ -181,9 +257,10 @@ static void on_trackbar(int, void*) {
     
     std::vector<cv::Mat> NoPostitStack1 = noPostitOnImg(NoPostitStack0, no_postitB_lower_1, no_postitB_upper_1, no_postitG_lower_1, no_postitG_upper_1, no_postitR_lower_1, no_postitR_upper_1);
     
-    //std::vector<cv::Mat> NoTicketStack0 = noPostitOnImg(NoPostitStack1, no_ticketB_lower_0, no_ticketB_upper_0, no_ticketG_lower_0, no_ticketG_upper_0, no_ticketR_lower_0, no_ticketR_upper_0);
+    std::vector<cv::Mat> NoTicketStack0 = noPostitOnImg(NoPostitStack1, no_ticketB_lower_0, no_ticketB_upper_0, no_ticketG_lower_0, no_ticketG_upper_0, no_ticketR_lower_0, no_ticketR_upper_0);
+    
+    std::vector<cv::Mat> NoTicketStack1 = noPostitOnImg(NoTicketStack0, no_ticketB_lower_1, no_ticketB_upper_1, no_ticketG_lower_1, no_ticketG_upper_1, no_ticketR_lower_1, no_ticketR_upper_1);
 
-    //std::vector<cv::Mat> NoBlueStack;
     std::vector<cv::Scalar> colorRanges;
     colorRanges.push_back(cv::Scalar(15, 6, 0));
     colorRanges.push_back(cv::Scalar(175, 155, 141));
@@ -216,13 +293,13 @@ static void on_trackbar(int, void*) {
             }
         }
 
-        NoPostitStack1.push_back(modifiedImg);
+        NoTicketStack1.push_back(modifiedImg);
     }
 
 
 
 
-    std::vector<cv::Mat> DilateStack = dilateImg(NoPostitStack1, dilate_kernel);
+    std::vector<cv::Mat> DilateStack = dilateImg(NoTicketStack1, dilate_kernel);
 
 
 
@@ -310,7 +387,7 @@ std::vector<cv::Mat> multipleTestPreProcessing(std::vector<cv::Mat> imgVector) {
     //cv::createTrackbar("NWU5", "Trackbar", &no_white_upper_5, no_white_max, on_trackbar);
     
     
-    cv::createTrackbar("NBBL0", "Trackbar", &no_blueB_lower_0, no_blueB_max, on_trackbar);
+    /*cv::createTrackbar("NBBL0", "Trackbar", &no_blueB_lower_0, no_blueB_max, on_trackbar);
     cv::createTrackbar("NBBU0", "Trackbar", &no_blueB_upper_0, no_blueB_max, on_trackbar);
     cv::createTrackbar("NBGL0", "Trackbar", &no_blueG_lower_0, no_blueG_max, on_trackbar);
     cv::createTrackbar("NBGU0", "Trackbar", &no_blueG_upper_0, no_blueG_max, on_trackbar);
@@ -336,14 +413,21 @@ std::vector<cv::Mat> multipleTestPreProcessing(std::vector<cv::Mat> imgVector) {
     cv::createTrackbar("PostitGL1", "Trackbar", &no_postitG_lower_1, no_postitG_max, on_trackbar);
     cv::createTrackbar("PostitGU1", "Trackbar", &no_postitG_upper_1, no_postitG_max, on_trackbar);
     cv::createTrackbar("PostitRL1", "Trackbar", &no_postitR_lower_1, no_postitR_max, on_trackbar);
-    cv::createTrackbar("PostitRU1", "Trackbar", &no_postitR_upper_1, no_postitR_max, on_trackbar);
+    cv::createTrackbar("PostitRU1", "Trackbar", &no_postitR_upper_1, no_postitR_max, on_trackbar);*/
     
-    /*cv::createTrackbar("TicketBL0", "Trackbar", &no_ticketB_lower_0, no_ticketB_max, on_trackbar);
+    cv::createTrackbar("TicketBL0", "Trackbar", &no_ticketB_lower_0, no_ticketB_max, on_trackbar);
     cv::createTrackbar("TicketBU0", "Trackbar", &no_ticketB_upper_0, no_ticketB_max, on_trackbar);
     cv::createTrackbar("TicketGL0", "Trackbar", &no_ticketG_lower_0, no_ticketG_max, on_trackbar);
     cv::createTrackbar("TicketGU0", "Trackbar", &no_ticketG_upper_0, no_ticketG_max, on_trackbar);
     cv::createTrackbar("TicketRL0", "Trackbar", &no_ticketR_lower_0, no_ticketR_max, on_trackbar);
-    cv::createTrackbar("TicketRU0", "Trackbar", &no_ticketR_upper_0, no_ticketR_max, on_trackbar);*/
+    cv::createTrackbar("TicketRU0", "Trackbar", &no_ticketR_upper_0, no_ticketR_max, on_trackbar);
+    
+    cv::createTrackbar("TicketBL1", "Trackbar", &no_ticketB_lower_1, no_ticketB_max, on_trackbar);
+    cv::createTrackbar("TicketBU1", "Trackbar", &no_ticketB_upper_1, no_ticketB_max, on_trackbar);
+    cv::createTrackbar("TicketGL1", "Trackbar", &no_ticketG_lower_1, no_ticketG_max, on_trackbar);
+    cv::createTrackbar("TicketGU1", "Trackbar", &no_ticketG_upper_1, no_ticketG_max, on_trackbar);
+    cv::createTrackbar("TicketRL1", "Trackbar", &no_ticketR_lower_1, no_ticketR_max, on_trackbar);
+    cv::createTrackbar("TicketRU1", "Trackbar", &no_ticketR_upper_1, no_ticketR_max, on_trackbar);
 
     cv::createTrackbar("Dilate", "Trackbar", &dilate_kernel, dilate_kernel_max, on_trackbar);
 
@@ -355,9 +439,9 @@ std::vector<cv::Mat> multipleTestPreProcessing(std::vector<cv::Mat> imgVector) {
 
 
     on_trackbar(0, 0);
-    //cv::waitKey(0);
+    cv::waitKey(0);
 
-    //std::cout << "Gray: " << gray1<< std::endl;
+    std::cout << "Gray: " << gray1<< std::endl;
     
     return toReturn;
 }
@@ -450,7 +534,7 @@ cv::Mat testPreProcessing(cv::Mat img) {
     on_trackbar(0, 0);
 
 
-    //std::cout << "Gray: " << gray1<< std::endl;
+    std::cout << "Gray: " << gray1<< std::endl;
     
     return finalImg0;
 }

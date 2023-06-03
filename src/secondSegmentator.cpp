@@ -24,7 +24,7 @@
 //     Valore BGR: (255, 0, 0)
 
 
-cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2, std::vector<cv::Rect>& identifiedRegions) {
+cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2) {
 
     cv::Mat clonedImg = img2.clone();
     std::vector<cv::Rect> rects = recSegmentation(clonedImg, "f");
@@ -66,10 +66,9 @@ cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2, std::vector<cv::Rect>&
 
             double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
 
-            if (density > 0.3) {
+            if (density > 0.22) {
                 std::cout << "\U0001F7E2" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
                 rectangle(imgOut, outerRectangles[j], cv::Scalar(0, 255, 0), 3);
-                identifiedRegions.push_back(outerRectangles[j]);
 
             } else {
                 std::cout << "\U0001F534" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
@@ -166,7 +165,7 @@ cv::Mat allRectangles(cv::Mat img, std::vector<cv::Rect> rects) {
                 double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
                 //std::cout << "Density: " << density << std::endl;
                 
-                if (density < 0.5) {
+                /*if (density < 0.5) {
 
                     std::cout << "\U0001F534" << "  Rect: " << rects[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
                     rectangle(imgOut, rects[j], cv::Scalar(0, 0, 255), 3);
@@ -174,7 +173,7 @@ cv::Mat allRectangles(cv::Mat img, std::vector<cv::Rect> rects) {
 
                     std::cout << "\U0001F535" << "  Rect: " << rects[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
                     rectangle(imgOut, rects[j], cv::Scalar(255, 0, 0), 3);
-                }
+                }*/
             }
         }
         else {
