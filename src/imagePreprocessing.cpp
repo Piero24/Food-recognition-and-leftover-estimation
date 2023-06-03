@@ -5,7 +5,6 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/ximgproc/segmentation.hpp"
 
-
 #include "../include/imagePreprocessing.h"
 
 
@@ -15,30 +14,14 @@ cv::Mat segmentationPreprocessing(cv::Mat img) {
 
     cv::Mat noBlueImg = removeBlue(img);
     cv::Mat yellowImg = removeYellow(img);
-    cv::Mat lighterImager = lightIncreaser(yellowImg);
+
     cv::Mat resultAfterCanny = cannyPreprocessing(yellowImg, 70, 80);
 
-    // Remove white from the image
     cv::Mat noWhiteImg = removeColor(resultAfterCanny, cv::Scalar(170, 170, 170), cv::Scalar(255, 255, 255));
-    // Remove gray from the image
-    cv::Mat noGrayImg = removeColor(noWhiteImg, cv::Scalar(50, 50, 50), cv::Scalar(190, 190, 190));
 
-    cv::Mat dilatedImg = imageDilate(noGrayImg, 7);
+    cv::Mat dilatedImg = imageDilate(resultAfterCanny, 7);
 
-    // Remove white from the image
-    noWhiteImg.setTo(cv::Scalar(0, 0, 0));
-    noWhiteImg = removeColor(dilatedImg, cv::Scalar(170, 170, 170), cv::Scalar(255, 255, 255));
-    // Remove gray from the image
-    noGrayImg.setTo(cv::Scalar(0, 0, 0));
-    noGrayImg = removeColor(noWhiteImg, cv::Scalar(50, 50, 50), cv::Scalar(190, 190, 190));
-
-    // Remove dark gray from the image
-    cv:: Mat noDarkGrayImg = removeColor(noGrayImg, cv::Scalar(0, 0, 0), cv::Scalar(60, 60, 60));
-
-    cv::Mat finalResult = imageDilate(noDarkGrayImg, 5);
-
-    return finalResult;
-
+    return img;
 }
 
 
@@ -59,110 +42,35 @@ std::vector<int> imgDimensions(cv::Mat img) {
 
 
 cv::Mat removeBlue(cv::Mat img) {
-
-    // TODO: BISOGNA LAVORE SUL BLUE YOUGURTH E PANTALONI TRAY5
-    cv::Scalar lowerBoundBlue(30, 20, 5);
-    cv::Scalar upperBoundBlue(255, 170, 120);
-
-    cv::Mat maskBlue;
-    cv::inRange(img, lowerBoundBlue, upperBoundBlue, maskBlue);
-
-    cv::Mat postMaskBlue;
-    img.copyTo(postMaskBlue, 255 - maskBlue);
-
     std::cout << "\u26A0  WARNING: the removeBlue() method isn't complete" << std::endl;
-
     return  img;
-
 }
 
 
 cv::Mat removeYellow(cv::Mat img) {
-
-    cv::Mat clonedImg = img.clone();
-
-    cv::Scalar lowerBoundYellow(0, 60, 80);
-    cv::Scalar upperBoundYellow(95, 220, 220);
-
-    cv::Mat maskYellow;
-    cv::inRange(img, lowerBoundYellow, upperBoundYellow, maskYellow);
-
-    cv::Mat postMaskYellow;
-    img.copyTo(postMaskYellow, maskYellow);
-
-    cv::Mat grayImage;
-    cv::cvtColor(postMaskYellow, grayImage, cv::COLOR_BGR2GRAY);
-
-    cv::Mat lighterImage;
-    double alpha = 3.28;
-    int beta = 0;
-    grayImage.convertTo(lighterImage, -1, alpha, beta);
-
-
-    cv::Mat cannyImg;
-    cv::Canny(lighterImage, cannyImg, 8, 7);
-
-    cv::Mat fout;
-    postMaskYellow.copyTo(fout, 255 - cannyImg);
-
-    cv::Mat finalOut;
-    cv::subtract(clonedImg, fout, finalOut);
-
-    //cv::imshow("Tray", finalOut);
-    //cv::waitKey(0);
-
     std::cout << "\u26A0  WARNING: the removeYellow() method isn't complete" << std::endl;
-
-    return  finalOut;
-
-}
-
-
-cv::Mat lightIncreaser(cv::Mat img) {
-
-    cv::Mat lighterImage;
-    double alpha = 1.0;
-    int beta = 80;
-    img.convertTo(lighterImage, -1, alpha, beta);
-
-    return  lighterImage;
-
+    return  img;
 }
 
 
 cv::Mat cannyPreprocessing(cv::Mat img, int alpha1, int alpha2) {
 
-    cv::Mat cannyImg;
-    cv::Canny(img, cannyImg, alpha1, alpha2);
-
-    // Only keep the selected item from Canny
-    cv::Mat resultAfterCanny;
-    cv::bitwise_and(img, img, resultAfterCanny, cannyImg);
-
-    return resultAfterCanny;
+    std::cout << "\u26A0  WARNING: the cannyPreprocessing() method isn't complete" << std::endl;
+    return  img;
 
 }
 
 
 cv::Mat removeColor(cv::Mat img, cv::Scalar lowerBound, cv::Scalar upperBound) {
 
-    cv::Mat mask;
-    cv::inRange(img, lowerBound, upperBound, mask);
-
-    cv::Mat postMask;
-    img.copyTo(postMask, 255 - mask);
-
-    return  postMask;
-
+    std::cout << "\u26A0  WARNING: the removeColor() method isn't complete" << std::endl;
+    return  img;
 }
+
 
 cv::Mat imageDilate(cv::Mat img, int kernelSize) {
 
-    cv::Mat dilatedImg;
-    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(kernelSize, kernelSize));
-    cv::dilate(img, dilatedImg, kernel);
-
-    return dilatedImg;
-
+    std::cout << "\u26A0  WARNING: the imageDilate() method isn't complete" << std::endl;
+    return img;
 }
 

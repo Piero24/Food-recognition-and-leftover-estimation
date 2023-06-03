@@ -1,6 +1,4 @@
-// make
-// ./Food-Recognition ./Food-recognition-and-leftover-estimation/dataset/tray1/
-// ./Food-Recognition ./Food-recognition-and-leftover-estimation/dataset/tray2/
+// clear && make && ./Food-Recognition ./Food-recognition-and-leftover-estimation/dataset/tray1/
 
 #include <iostream>
 #include "opencv2/core.hpp"
@@ -48,20 +46,19 @@
 
 int main(int argc, char** argv) {
 
-    std::vector<cv::Mat> hcombinedVec;
+
+    std::vector<cv::Mat> horizontalCombinedVector;
     std::vector<cv::Mat> trayVector = imgUploader(argc, argv);
 
     // hcombinedVec = multipleTestPreProcessing(trayVector);
     // return 0;
    
-    size_t ch = trayVector.size();
-    for (size_t i = 0; i < ch; i++) {
-    //for (size_t i = 0; i < 1; i++) {
+    size_t trayVectorSize = trayVector.size();
+    for (size_t i = 0; i < trayVectorSize; i++) {
 
         std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
 
         cv::Mat img = trayVector[i].clone();
-
         cv::Mat iii = testPreProcessing(img);
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
@@ -90,11 +87,11 @@ int main(int argc, char** argv) {
         cv::hconcat(img, thirdImgOut, combined);
         //cv::imshow("Task" + std::to_string(i), combined);
         //cv::waitKey(0);
-        hcombinedVec.push_back(combined);
+        horizontalCombinedVector.push_back(combined);
 
     }
 
-    cv::Mat combinedImage = pushOutTray(hcombinedVec);
+    cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
 
     cv::imwrite("Comple Tray.jpg", combinedImage);
     cv::imshow("Comple Tray", combinedImage);
