@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
 
         cv::Mat img = trayVector[i].clone();
 
-        cv::Mat iii = testPreProcessing(img);
+        //cv::Mat iii = testPreProcessing(img);
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
 
@@ -90,3 +90,12 @@ int main(int argc, char** argv) {
 
     return 0;
 }
+
+// 1 ok
+// 2 ok
+// 3 ok
+// 4 no 2 
+// 5 ok
+// 6 ok
+// 7 ok
+// 8 ok

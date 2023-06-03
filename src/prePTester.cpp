@@ -355,9 +355,9 @@ std::vector<cv::Mat> multipleTestPreProcessing(std::vector<cv::Mat> imgVector) {
 
 
     on_trackbar(0, 0);
-    cv::waitKey(0);
+    //cv::waitKey(0);
 
-    std::cout << "Gray: " << gray1<< std::endl;
+    //std::cout << "Gray: " << gray1<< std::endl;
     
     return toReturn;
 }
@@ -450,7 +450,7 @@ cv::Mat testPreProcessing(cv::Mat img) {
     on_trackbar(0, 0);
 
 
-    std::cout << "Gray: " << gray1<< std::endl;
+    //std::cout << "Gray: " << gray1<< std::endl;
     
     return finalImg0;
 }
