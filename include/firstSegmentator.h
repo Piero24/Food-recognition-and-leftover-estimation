@@ -2,6 +2,7 @@
 #define FIRSTSEGMENTATOR_H
 
 #include <iostream>
+
 #include "opencv2/core.hpp"
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
@@ -9,9 +10,20 @@
 #include "opencv2/ximgproc/segmentation.hpp"
 
 
-cv::Mat firstSegmentationFunc(cv::Mat img);
+struct ClusterInfo {
+    cv::Vec3f cluster;
+    int clusterSize;
+};
+
+
+
+std::vector<cv::Vec3f> firstSegmentationFunc(cv::Mat img);
 bool compareCircles(const cv::Vec3f& circ1, const cv::Vec3f& circ2);
-bool isOverlap(const cv::Vec3f& circ1, const cv::Vec3f& circ2);
-std::vector<cv::Vec3f> removeInnerCircles(const std::vector<cv::Vec3f>& circles);
+bool isInnerCircle(const cv::Vec3f& innerCircle, const cv::Vec3f& externalCircle, std::vector<cv::Vec3f>& clustersExcluded);
+float distance(cv::Vec3f a, cv::Vec3f b);
+//bool compareClusterSize(const ClusterInfo& c1, const ClusterInfo& c2);
+std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float threshold, int thresholdForCluster, int numberToReturn, std::vector<cv::Vec3f>* biggerCircles = nullptr);
 
 #endif
+
+

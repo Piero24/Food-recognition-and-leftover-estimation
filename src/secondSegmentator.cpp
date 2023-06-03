@@ -24,7 +24,9 @@
 //     Valore BGR: (255, 0, 0)
 
 
-cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2) {
+std::vector<cv::Rect> secondSegmentationFunc(cv::Mat img, cv::Mat img2) {
+
+    std::vector<cv::Rect> finalVector;
 
     cv::Mat clonedImg = img2.clone();
     std::vector<cv::Rect> rects = recSegmentation(clonedImg, "f");
@@ -69,6 +71,7 @@ cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2) {
             if (density > 0.22) {
                 std::cout << "\U0001F7E2" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
                 rectangle(imgOut, outerRectangles[j], cv::Scalar(0, 255, 0), 3);
+                finalVector.push_back(outerRectangles[j]);
 
             } else {
                 std::cout << "\U0001F534" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
@@ -81,7 +84,7 @@ cv::Mat secondSegmentationFunc(cv::Mat img, cv::Mat img2) {
         }
     }
 
-    return imgOut;
+    return finalVector;
 }
 
 

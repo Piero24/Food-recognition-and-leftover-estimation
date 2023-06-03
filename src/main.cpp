@@ -62,17 +62,29 @@ int main(int argc, char** argv) {
 
         cv::Mat img = trayVector[i].clone();
 
-        //cv::Mat iii = testPreProcessing(img);
+        cv::Mat iii = testPreProcessing(img);
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
 
-        std::vector<cv::Rect> identifiedRegions;
+        std::vector<cv::Vec3f> circlesVector = firstSegmentationFunc(img);
+        std::vector<cv::Rect> rectanglesVector = secondSegmentationFunc(img, iii);
 
-        cv::Mat firstImgOut = firstSegmentationFunc(img);
-        //cv::Mat secondImgOut = secondSegmentationFunc(img, iii, identifiedRegions);
-        cv::Mat thirdImgOut = thirdSegmentationFunc(firstImgOut);
+        cv::Mat img2 = img.clone();
 
-        cv::Mat noBackgroundImg = subjectIsolator(img, identifiedRegions);
+        for (const auto& circle : circlesVector) {
+            cv::Point center(cvRound(circle[0]), cvRound(circle[1]));
+            cv::circle(img2, center,  cvRound(circle[2]), cv::Scalar(0, 0, 255), 10);
+        }
+
+        for (const auto& rect : rectanglesVector) {
+            rectangle(img2, rect, cv::Scalar(0, 255, 0), 5);
+        }
+
+
+
+        cv::Mat thirdImgOut = thirdSegmentationFunc(img2);
+
+        //cv::Mat noBackgroundImg = subjectIsolator(img, identifiedRegions);
 
         cv::Mat combined;
         cv::hconcat(img, thirdImgOut, combined);
