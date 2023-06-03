@@ -175,17 +175,17 @@ int no_ticketB_upper_0 = 180;
 int no_ticketB_max = 200;
 
 int no_ticketG_lower_0 = 130;
-int no_ticketG_upper_0 = 195;
+int no_ticketG_upper_0 = 190;
 int no_ticketG_max = 220;
 
-int no_ticketR_lower_0 = 185;
+int no_ticketR_lower_0 = 195;
 int no_ticketR_upper_0 = 255;
 int no_ticketR_max = 255;
 
 int no_ticketB_lower_1 = 0;
 int no_ticketB_upper_1 = 95;
 
-int no_ticketG_lower_1 = 55;
+int no_ticketG_lower_1 = 65;
 int no_ticketG_upper_1 = 115;
 
 int no_ticketR_lower_1 = 110;
