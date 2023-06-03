@@ -212,16 +212,18 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
 
         if (sortedClusters.size() < numberToReturn) {
 
-            // if (biggerCircles != nullptr) {
-            //     for (const auto& externalCircle : *biggerCircles) {
-            //        bool isInner = isInnerCircle(clusterInfo.cluster, externalCircle);
+            if (biggerCircles != nullptr) {
+                for (const auto& externalCircle : *biggerCircles) {
+                   bool isInner = isInnerCircle(clusterInfo.cluster, externalCircle);
 
-            //        if ((clusterInfo.clusterSize >= thresholdForCluster) && !isInner) {
-            //             std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
-            //             sortedClusters.push_back(clusterInfo.cluster);
-            //         }
-            //     }
-            // } else {
+                   std::cout << (clusterInfo.clusterSize >= thresholdForCluster)  << ", " << isInner << std::endl;
+
+                   if ((clusterInfo.clusterSize >= thresholdForCluster) && !isInner) {
+                        std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
+                        sortedClusters.push_back(clusterInfo.cluster);
+                    }
+                }
+            } else {
                 if (clusterInfo.clusterSize >= thresholdForCluster) {
                     std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
                     sortedClusters.push_back(clusterInfo.cluster);
@@ -230,7 +232,7 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
                     break;
                 }
                 
-            //}
+            }
 
         } else {
             break;

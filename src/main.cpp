@@ -91,9 +91,9 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-// 1 ok
+// 1 ok con riserva
 // 2 ok
-// 3 ok
+// 3 no 4
 // 4 no 2 
 // 5 ok
 // 6 ok
