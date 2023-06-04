@@ -9,8 +9,8 @@ add_executable( ${PROJECT_NAME}
     src/uploadImage.cpp 
     src/prePTester.cpp
     src/imagePreprocessing.cpp 
-    src/firstSegmentator.cpp 
-    src/secondSegmentator.cpp 
+    src/circularBoundingBoxes.cpp 
+    src/rectangularBoundingBoxes.cpp 
     src/thirdSegmentator.cpp
     src/outputCombined.cpp
     src/detector.cpp

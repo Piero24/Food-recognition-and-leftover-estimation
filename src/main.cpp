@@ -13,8 +13,8 @@
 
 #include "../include/imagePreprocessing.h"
 
-#include "../include/firstSegmentator.h"
-#include "../include/secondSegmentator.h"
+#include "../include/circularBoundingBoxes.hpp"
+#include "../include/rectangularBoundingBoxes.hpp"
 #include "../include/thirdSegmentator.h"
 
 #include "../include/detector.h"
@@ -43,6 +43,15 @@
 //     Valore RGB: (139, 69, 19)
 //     Valore BGR: (19, 69, 139)
 
+// Pallino blu:
+//     Codice Unicode: \U0001F535
+//     Valore RGB: (0, 0, 255)
+//     Valore BGR: (255, 0, 0)
+
+
+
+cv::Mat boundingBoxTester(cv::Mat img, std::vector<cv::Vec3f> circlesVector, std::vector<cv::Rect> rectanglesVector);
+
 
 int main(int argc, char** argv) {
 
@@ -59,34 +68,23 @@ int main(int argc, char** argv) {
         std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
 
         cv::Mat img = trayVector[i].clone();
-        cv::Mat iii = testPreProcessing(img);
+        //cv::Mat imagePreprocessedTest = testPreProcessing(img);
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
+        std::vector<cv::Vec3f> circlesVector = findCircularBoundingBoxes(img);
+        std::vector<cv::Rect> rectanglesVector = findRectangularBoundingBoxes(img, imagePreprocessed);
 
-        std::vector<cv::Vec3f> circlesVector = firstSegmentationFunc(img);
-        std::vector<cv::Rect> rectanglesVector = secondSegmentationFunc(img, iii);
+        cv::Mat imgWithBoundingBox = boundingBoxTester(img, circlesVector, rectanglesVector);
 
-        cv::Mat img2 = img.clone();
+        cv::Mat thirdImgOut = thirdSegmentationFunc(imgWithBoundingBox);
 
-        for (const auto& circle : circlesVector) {
-            cv::Point center(cvRound(circle[0]), cvRound(circle[1]));
-            cv::circle(img2, center,  cvRound(circle[2]), cv::Scalar(0, 0, 255), 10);
-        }
+        cv::Mat noBackgroundImg = subjectIsolator(img, circlesVector, rectanglesVector);
 
-        for (const auto& rect : rectanglesVector) {
-            rectangle(img2, rect, cv::Scalar(0, 255, 0), 5);
-        }
-
-
-
-        cv::Mat thirdImgOut = thirdSegmentationFunc(img2);
-
-        //cv::Mat noBackgroundImg = subjectIsolator(img, identifiedRegions);
+        cv::Mat combinedTest;
+        cv::hconcat(img, thirdImgOut, combinedTest);
 
         cv::Mat combined;
-        cv::hconcat(img, thirdImgOut, combined);
-        //cv::imshow("Task" + std::to_string(i), combined);
-        //cv::waitKey(0);
+        cv::hconcat(combinedTest, noBackgroundImg, combined);
         horizontalCombinedVector.push_back(combined);
 
     }
@@ -100,11 +98,25 @@ int main(int argc, char** argv) {
     return 0;
 }
 
-// 1 ok con riserva
-// 2 ok
-// 3 no 4
-// 4 no 2 
-// 5 ok
-// 6 ok
-// 7 ok
-// 8 ok
+
+cv::Mat boundingBoxTester(cv::Mat img, std::vector<cv::Vec3f> circlesVector, std::vector<cv::Rect> rectanglesVector){
+
+    cv::Mat clonedImg = img.clone();
+
+    for (const auto& circle : circlesVector) {
+        cv::Point center(cvRound(circle[0]), cvRound(circle[1]));
+        cv::circle(clonedImg, center,  cvRound(circle[2]), cv::Scalar(0, 255, 255), 10);
+    }
+
+    for (const auto& rect : rectanglesVector) {
+        rectangle(clonedImg, rect, cv::Scalar(0, 255, 0), 10);
+    }
+
+    return clonedImg;
+
+}
+
+
+
+
+

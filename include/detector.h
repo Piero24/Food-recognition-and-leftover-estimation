@@ -7,4 +7,4 @@
 
 
 
-cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Rect> rectVector);
+cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std::vector<cv::Rect>& rectanglesVector);
