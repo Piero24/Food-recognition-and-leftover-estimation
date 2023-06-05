@@ -22,7 +22,7 @@ std::vector<cv::Vec3f> findCircularBoundingBoxes(cv::Mat img) {
     float thresholdSmallerCircles = 180.0;
     int thresholdForCluster = 10;
 
-
+    // Pepara l'immagine per trovare i cerchi di dimensioni maggiori
     cv::Mat imgPrepForBC = biggerCirclesPreprocessing(image);
 
     std::vector<cv::Vec3f> biggerCircles;
@@ -32,7 +32,7 @@ std::vector<cv::Vec3f> findCircularBoundingBoxes(cv::Mat img) {
     // Clustering dei cerchi di dimensioni maggiori utilizzando l'algoritmo k-means
     std::vector<cv::Vec3f> clusteredBiggerCircles = kmeansCircles(biggerCircles, thresholdBiggerCircles, thresholdForCluster, 2);
 
-    
+    // Pepara l'immagine per trovare i cerchi di dimensioni maggiori
     cv::Mat ImgWithoutBC = smallerCirclesPreprocessing(image, clusteredBiggerCircles);
     
     std::vector<cv::Vec3f> smallerCircles;
@@ -45,7 +45,6 @@ std::vector<cv::Vec3f> findCircularBoundingBoxes(cv::Mat img) {
 
     std::copy(clusteredBiggerCircles.begin(), clusteredBiggerCircles.end(), std::back_inserter(finalVector));
     std::copy(clusteredSmallerCircles.begin(), clusteredSmallerCircles.end(), std::back_inserter(finalVector));
-
 
     return finalVector;
 }
@@ -65,7 +64,6 @@ cv::Mat biggerCirclesPreprocessing(cv::Mat img) {
     cv::GaussianBlur(cannyImg, aftGauss, cv::Size(5, 5), 0);
 
     return aftGauss;
-
 }
 
 
@@ -73,6 +71,7 @@ cv::Mat smallerCirclesPreprocessing(cv::Mat img, std::vector<cv::Vec3f>& cluster
 
     cv::Mat clonedImg = img.clone();
 
+    // Copre i cerchi già trovati per non creare conflitti
     for (const auto& circle : clusteredCircles) {
         cv::Point center(circle[0], circle[1]);
         int radius = circle[2];
@@ -112,12 +111,12 @@ bool compareCircles(const cv::Vec3f& circ1, const cv::Vec3f& circ2) {
 
 
 bool isInnerCircle(const cv::Vec3f& innerCircle, const cv::Vec3f& externalCircle, std::vector<cv::Vec3f>& clustersExcluded) {
+
     cv::Point2f center1(innerCircle[0], innerCircle[1]);
     cv::Point2f center2(externalCircle[0], externalCircle[1]);
 
     float radius1 = innerCircle[2];
     float radius2 = externalCircle[2];
-
     float distance = cv::norm(center1 - center2);
 
     return (distance + radius1) <= radius2+ 150;
@@ -148,6 +147,10 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
     cv::Vec3f centroid = circles[0];
     result.push_back(centroid);
 
+    // Per ogni coppia di cerchi calcola la loro distanza e verifica 
+    // essa sia minore di un dato threshold.
+    // E ne calcola la media pesata dei cerchi del cluster.
+    // Se la distanza è maggiore del threshold invece crea un nuovo cluster
     for (int i = 1; i < circles.size(); i++) {
         bool foundCluster = false;
 
@@ -169,6 +172,7 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
         }
     }
     
+    // Conta il numero di cerchi appartenenti ad ogni cluster
     for (const auto& cluster : result) {
         int clusterSize = 0;
 
@@ -187,10 +191,14 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
     for (const auto& clusterInfo : filteredResult) {
         if (sortedClusters.size() < numberToReturn) {
 
+            // Se nullo allora sta operando sui cerchi più grandi
+            // Altrimenti sta operando su quelli più piccoli
             if (biggerCircles != nullptr) {
                 std::vector<cv::Vec3f> clustersExcluded;
                 int flag = 0;
-                
+
+                // Controlla se il cerchio e interno ad uno dei cerchi del vecchio insieme
+                // (Quelli grandi).
                 for (const auto& externalCircle : *biggerCircles) {
                    bool isInner = isInnerCircle(clusterInfo.cluster, externalCircle, clustersExcluded);
 
@@ -198,7 +206,8 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
                     flag ++;
                    }
                 }
-
+                // Se la dimensione è minore del threshold e il cerchio non è interno a uno
+                // di quelli grandi aggiungilo alla lista di quelli da tornare
                 if ((clusterInfo.clusterSize >= thresholdForCluster) && (flag < 1)) {
                         std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
                         sortedClusters.push_back(clusterInfo.cluster);
@@ -206,6 +215,7 @@ std::vector<cv::Vec3f> kmeansCircles(std::vector<cv::Vec3f>& circles, float thre
 
             } else {
 
+                // Se la dimensione è minore del threshold aggiungilo alla lista di quelli da tornare
                 if (clusterInfo.clusterSize >= thresholdForCluster) {
                     std::cout << "\U0001F7E1"  << "  Center: (" << clusterInfo.cluster[0] << ", " << clusterInfo.cluster[1] << "), Radius: " << clusterInfo.cluster[2] << " Cluster Size: " << clusterInfo.clusterSize << std::endl;
                     sortedClusters.push_back(clusterInfo.cluster);

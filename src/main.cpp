@@ -59,6 +59,7 @@ int main(int argc, char** argv) {
     std::vector<cv::Mat> horizontalCombinedVector;
     std::vector<cv::Mat> trayVector = imgUploader(argc, argv);
 
+    //  VALIDO SOLO PER DEBUG
     // hcombinedVec = multipleTestPreProcessing(trayVector);
     // return 0;
    
@@ -68,20 +69,53 @@ int main(int argc, char** argv) {
         std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
 
         cv::Mat img = trayVector[i].clone();
-        //cv::Mat imagePreprocessedTest = testPreProcessing(img);
-        cv::Mat imagePreprocessed = segmentationPreprocessing(img);
+
+        cv::Mat imagePreprocessed = testPreProcessing(img);
+        //cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
         std::vector<cv::Vec3f> circlesVector = findCircularBoundingBoxes(img);
         std::vector<cv::Rect> rectanglesVector = findRectangularBoundingBoxes(img, imagePreprocessed);
+        // TODO (MAYBE)
+        cv::Mat thirdImgOut = thirdSegmentationFunc(img);
 
-        cv::Mat imgWithBoundingBox = boundingBoxTester(img, circlesVector, rectanglesVector);
-
-        cv::Mat thirdImgOut = thirdSegmentationFunc(imgWithBoundingBox);
-
+        // Ricrea la bounding box finale mergiando i metodi precedenti
         cv::Mat noBackgroundImg = subjectIsolator(img, circlesVector, rectanglesVector);
 
+
+
+        /*
+        
+
+                        NON MODIFICARE E CARICARE MAI IL MAIN SU GITHUB SENZA AVVISARE (POSSIBILMENTE EVITARE DI MODIFICARLO
+                                                 -----
+
+
+        */
+        
+
+        // TODO:
+        //  - Segmentare cibo (se non gia fatto nella funzione precedente)
+        //  - Capire la tipologia di cibo (vettore con struttura dati con tipo cibo quantità e forma (posizione dimensione ecc))
+        //  - Disegnare una immagine con bounding box con scritto il tipo di cibo e la quantità (es: 100% 40% ecc o se chiede di farlo in modo specifico seguire indicazioni)
+        //  - Disegnare maschera unica con tutti i cibi dell'immagine
+        //  - Unire le 2 immagini orizzontalmente con quella originale così da avere in output una riga con immagine vuota immagine con bounding box e cibo e immagine con segmentazione
+        //  - Mettere in un vettore (sostanzialmente che output venga come ora)
+        //  -
+        //  - 
+        //  - VERIFICARE CHE BOUNDING BOX, MASCHERE ECC COINCIDANO (IL PIU' POSSIBILE) CON QUELLE FORNITE PER I TEST
+        //  - Scrivere codice più presentabile, eliminare quello che non serve (eccetto cose di debug) e commentare (in inglese) le varie chiamate a funzione
+        //  - Commentare le funzioni negli header
+        //  - meglio file .hpp o .h? Meglio fare classi?
+        //  - Testare con altre immagini non presenti nel dataset fornito
+
+
+
+        // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
+        cv::Mat imgWithBoundingBox = boundingBoxTester(img, circlesVector, rectanglesVector);
+
+
         cv::Mat combinedTest;
-        cv::hconcat(img, thirdImgOut, combinedTest);
+        cv::hconcat(img, imgWithBoundingBox, combinedTest);
 
         cv::Mat combined;
         cv::hconcat(combinedTest, noBackgroundImg, combined);
@@ -99,6 +133,7 @@ int main(int argc, char** argv) {
 }
 
 
+// SPOSTARE QUANDO FINITO TUTTO
 cv::Mat boundingBoxTester(cv::Mat img, std::vector<cv::Vec3f> circlesVector, std::vector<cv::Rect> rectanglesVector){
 
     cv::Mat clonedImg = img.clone();
@@ -113,7 +148,6 @@ cv::Mat boundingBoxTester(cv::Mat img, std::vector<cv::Vec3f> circlesVector, std
     }
 
     return clonedImg;
-
 }
 
 

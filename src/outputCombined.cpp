@@ -7,6 +7,7 @@
 
 #include "../include/outputCombined.h"
 
+
 cv::Mat pushOutTray(std::vector<cv::Mat> hcombinedVec) {
 
     int combinedHeight = 0;
