@@ -93,7 +93,8 @@ int main(int argc, char** argv) {
         */
         
 
-        // TODO:
+        // TODO (QUANDO TUTTO QUELLO SOPRA E' FINITO):
+        //
         //  - Segmentare cibo (se non gia fatto nella funzione precedente)
         //  - Capire la tipologia di cibo (vettore con struttura dati con tipo cibo quantità e forma (posizione dimensione ecc))
         //  - Disegnare una immagine con bounding box con scritto il tipo di cibo e la quantità (es: 100% 40% ecc o se chiede di farlo in modo specifico seguire indicazioni)
@@ -107,6 +108,8 @@ int main(int argc, char** argv) {
         //  - Commentare le funzioni negli header
         //  - meglio file .hpp o .h? Meglio fare classi?
         //  - Testare con altre immagini non presenti nel dataset fornito
+        //  - 
+        //  - 
 
 
 
