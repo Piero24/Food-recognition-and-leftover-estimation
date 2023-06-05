@@ -8,10 +8,11 @@
 
 cv::Mat segmentationPreprocessing(cv::Mat img);
 std::vector<int> imgDimensions(cv::Mat img);
+cv::Mat cannyPreprocessing(cv::Mat img);
+cv::Mat removeWhite(cv::Mat img);
 cv::Mat removeBlue(cv::Mat img);
-cv::Mat removeYellow(cv::Mat img);
-cv::Mat cannyPreprocessing(cv::Mat img, int alpha1, int alpha2);
-cv::Mat removeColor(cv::Mat img, cv::Scalar lowerBound, cv::Scalar upperBound);
-cv::Mat imageDilate(cv::Mat img, int kernelSize);
+cv::Mat removePostit(cv::Mat img);
+
+cv::Mat imageDilate(cv::Mat img);
 
 #endif
