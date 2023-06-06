@@ -14,26 +14,29 @@ cv::Mat segmentationPreprocessing(cv::Mat img) {
     
     cv::Mat postCanny = cannyPreprocessing(img);
     
-    cv::namedWindow("Img with white", cv::WINDOW_NORMAL);
-    cv::imshow("Img with white", postCanny);
-    
     cv::Mat noWhiteImg = removeWhite(postCanny);
-    
-    cv::namedWindow("Img without white", cv::WINDOW_NORMAL);
-    cv::imshow("Img without white", noWhiteImg);
-    
+
     cv::Mat noBlueImg = removeBlue(noWhiteImg);
-    
-    cv::namedWindow("Img without blue", cv::WINDOW_NORMAL);
-    cv::imshow("Img without blue", noBlueImg);
-    
+
     cv::Mat noPostitImg = removePostit(noBlueImg);
-    cv::namedWindow("Img without post-it", cv::WINDOW_NORMAL);
-    cv::imshow("Img without post-it", noPostitImg);
 
     cv::Mat dilatedImg = imageDilate(noPostitImg);
-    cv::namedWindow("Img dil", cv::WINDOW_NORMAL);
-    cv::imshow("Img dil", dilatedImg);
+
+    // DEBUG
+    // cv::namedWindow("Img with white", cv::WINDOW_NORMAL);
+    // cv::imshow("Img with white", postCanny);
+    
+    // cv::namedWindow("Img without white", cv::WINDOW_NORMAL);
+    // cv::imshow("Img without white", noWhiteImg);
+    
+    // cv::namedWindow("Img without blue", cv::WINDOW_NORMAL);
+    // cv::imshow("Img without blue", noBlueImg);
+    
+    // cv::namedWindow("Img without post-it", cv::WINDOW_NORMAL);
+    // cv::imshow("Img without post-it", noPostitImg);
+
+    // cv::namedWindow("Img dil", cv::WINDOW_NORMAL);
+    // cv::imshow("Img dil", dilatedImg);
 
     return dilatedImg;
 }
@@ -63,7 +66,6 @@ cv::Mat cannyPreprocessing(cv::Mat img) {
     cv::Mat newPostCanny;
     img.copyTo(newPostCanny, cannyImg);
     return  newPostCanny;
-
 }
 
 
@@ -97,8 +99,7 @@ cv::Mat removeBlue(cv::Mat img) {
     cv::Mat noBlueImg2;
     cv::inRange(postMask0 , cv::Scalar(120, 95, 69), cv::Scalar(255, 250, 185), noBlueImg2);
     postMask0.copyTo(postMask1, 255 - noBlueImg2);
-    //cv::namedWindow("Img without blue in", cv::WINDOW_NORMAL);
-    //cv::imshow("Img without blue in", postMask);
+    
     return  postMask1;
 }
 

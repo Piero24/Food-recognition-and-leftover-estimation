@@ -128,6 +128,16 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             cv::dilate(afterKernel2, afterKernel3, kernel3);
 
 
+
+
+            // test 3
+            cv::Mat meanShiftImg;
+            cv::pyrMeanShiftFiltering(clonedImg, meanShiftImg, 25, 45);
+            cv::Mat noWhiteMeanShift = noWhiteOnImg(meanShiftImg, 60, 255);
+            cv::Mat noWhiteMeanShift2 = noWhiteOnImg(noWhiteMeanShift, 45, 65);
+
+
+
             // A questo punto abbiamo 4 immagni diverse da 4 divrse tipologie di lavorazioni sull'immagnie.
             // noWhite2
             // result, result2, afterKernel3
@@ -136,9 +146,11 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             // cv::imshow("Original", outputImage);
             // cv::imshow("noWhite", noWhite2);
             // cv::imshow("THRESH_BINARY_INV", result);
-            //cv::imshow("BINARY_INV_E_OTSU", result2);
-            //cv::imshow("BINARY_INV_E_ERODE_DILATE", afterKernel3);
-            //cv::waitKey(0);
+            // cv::imshow("BINARY_INV_E_OTSU", result2);
+            // cv::imshow("BINARY_INV_E_ERODE_DILATE", afterKernel3);
+            cv::imshow("MeanShiftOriginal", meanShiftImg);
+            cv::imshow("MeanShift", noWhiteMeanShift2);
+            cv::waitKey(0);
 
             
             // DA QUI IN POI SERVE PER RICREARE LA MASCHERA E ANDARE AVANTI CON
