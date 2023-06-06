@@ -29,6 +29,7 @@ cv::Mat thirdSegmentationFunc(cv::Mat img) {
     // Uso quel cibo rimasto (solo i pezzi più grossi scarto pixel singoli e pezzi piccoli) per fare dilate e poi tramite maschera prendere da immagine originale 
     // con cibo ben visibile e eventualmente anche porzioni estra di piatto... rifaccio pulizia e dovrei avere una buona immagine di cibo.
     // Da quello detecto le bounding box.
+    // Mean shift può andare?
 
     return img;
 }

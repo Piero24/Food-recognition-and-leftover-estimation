@@ -19,6 +19,7 @@ std::vector<cv::Mat> imgUploader(int argc, char** argv) {
     size_t count = fileInFolderVec.size();
     for (size_t i = 0; i < count; i++) {
         if (fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".jpg" ||
+            fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".JPG" ||
             fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".png" ||
             fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".bmp") {
 
