@@ -133,8 +133,86 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             // test 3
             cv::Mat meanShiftImg;
             cv::pyrMeanShiftFiltering(clonedImg, meanShiftImg, 25, 45);
-            cv::Mat noWhiteMeanShift = noWhiteOnImg(meanShiftImg, 60, 255);
-            cv::Mat noWhiteMeanShift2 = noWhiteOnImg(noWhiteMeanShift, 45, 65);
+            cv::Mat cannyImg;
+            cv::Canny(meanShiftImg, cannyImg, 100, 50);
+            
+            cv::Mat afterKernel1;
+            cv::Mat kernel1 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(21, 21));
+            cv::dilate(cannyImg, afterKernel1, kernel1);
+            //cv::imshow("After dilatation", afterKernel1);
+            
+            cv::Mat colored;
+            clonedImg.copyTo(colored, afterKernel1);
+            //cv::imshow("Colored dilatation", colored);
+            
+            cv::Mat result1(colored.size(), CV_8UC3);
+            
+            for(int i=0; i<colored.rows; i++)
+            {
+                for(int j=0; j<colored.cols; j++)
+                {
+                    cv::Vec3b pixel = colored.at<cv::Vec3b>(i, j);
+                uchar blue = pixel[0];
+                uchar green = pixel[1];
+                uchar red = pixel[2];
+                
+                // Calcola le differenze tra i canali di colore
+                int diffBR = std::abs(blue - red);
+                int diffRG = std::abs(red - green);
+                int diffBG = std::abs(blue - green);
+                
+                // Verifica se le differenze sono maggiori o uguali a 58
+                if (diffBR >= 45 || diffRG >= 45 || diffBG >= 45)
+                {
+                    // Se le differenze sono sufficienti, mantieni il pixel nell'immagine risultante
+                    result1.at<cv::Vec3b>(i, j) = pixel;
+                    //std::cout<<"Sono qua j="<< j << std::endl;
+                }
+                else
+                {
+                    result1.at<cv::Vec3b>(i, j) = cv::Vec3b(0, 0, 0);
+                }
+                }
+            }
+      
+            /*cv::Mat mask_1, mask_2, mask_3, mask_4;
+            cv::inRange(colored, cv::Scalar(0, 0, 0), cv::Scalar(255-58, 255-58, 255-58), mask_1);
+            cv::inRange(colored, cv::Scalar(58, 0, 0), cv::Scalar(255, 255-58, 255-58), mask_2);
+            cv::inRange(colored, cv::Scalar(0, 58, 0), cv::Scalar(255-58, 255, 255-58), mask_3);
+            cv::inRange(colored, cv::Scalar(0, 0, 58), cv::Scalar(255-58, 255-58, 255), mask_4);
+
+            // Combina le maschere
+            cv::Mat coloredMask = mask_1 & mask_2 & mask_3 & mask_4;*/
+
+		  
+		    //cv::imshow("Color Removal", result1);
+		  
+            cv::Mat grayImg;
+            cv::cvtColor(result1, grayImg, cv::COLOR_BGR2GRAY);
+            
+            cv::Mat afterKernel_2;
+            cv::Mat kernel_2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5));
+            cv::dilate(grayImg, afterKernel_2, kernel_2);
+            //cv::imshow("After dilatation2", afterKernel_2);
+            cv::Mat afterBlur;
+            cv::GaussianBlur(afterKernel_2, afterBlur, cv::Size(7,7),0);
+            //cv::imshow("After Blurring", afterBlur);
+            cv::Mat colored_2;
+            clonedImg.copyTo(colored_2, afterBlur);
+            cv::Mat finalMask_1 = colored_2;
+            
+            //cv::imshow("Final?", finalMask_1);
+            //cv::imshow("FinalInter", intersectionMask);
+            //cv::Mat noWhiteMeanShift = noWhiteOnImg(meanShiftImg, 60, 255);
+            //cv::Mat noWhiteMeanShift2 = noWhiteOnImg(noWhiteMeanShift, 45, 65);
+
+
+            cv::Mat clearImg;
+            cv::bitwise_and(finalMask_1, finalMask_1, clearImg, intersectionMask);
+
+            cv::imshow("FinalInter", clearImg);
+
+
 
 
 
@@ -148,8 +226,8 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             // cv::imshow("THRESH_BINARY_INV", result);
             // cv::imshow("BINARY_INV_E_OTSU", result2);
             // cv::imshow("BINARY_INV_E_ERODE_DILATE", afterKernel3);
-            cv::imshow("MeanShiftOriginal", meanShiftImg);
-            cv::imshow("MeanShift", noWhiteMeanShift2);
+            
+            //cv::imshow("MeanShift2", noWhiteMeanShift2);
             cv::waitKey(0);
 
             
@@ -157,7 +235,7 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             // IL CODICE
 
             cv::Mat grayasImage;
-            cv::cvtColor(afterKernel3, grayasImage, cv::COLOR_BGR2GRAY);
+            cv::cvtColor(clearImg, grayasImage, cv::COLOR_BGR2GRAY);
             // Applica la soglia binaria per creare la maschera
             cv::Mat finalMask;
             cv::threshold(grayasImage, finalMask, 1, 255, cv::THRESH_BINARY);
@@ -179,13 +257,14 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
                 // Calcola l'area della forma
                 double area = cv::contourArea(contour);
                 int areaInt = static_cast<int>(area);
-                std::cout << "\n\n########################################################################### Area del contorno: " << areaInt << std::endl;
+                
                 //std::cout << "\n\n########################################################################### AREA: " << currentRect.area() << std::endl;
 
                 // Se l'area è piccola la saltae la mette nel vettore dei residui
                 // altrimenti la unisce alla restante parte come forma unica
-                if (currentRect.area() > 300) {
+                if (currentRect.area() > 400) {
                     boundingRect = boundingRect | currentRect;
+                    std::cout << "\n\n########################################################################### Area del contorno: " << areaInt << std::endl;
                 } else {
                     residuals.push_back(currentRect);
                 }

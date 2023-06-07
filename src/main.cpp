@@ -70,8 +70,8 @@ int main(int argc, char** argv) {
 
         cv::Mat img = trayVector[i].clone();
 
-        cv::Mat imagePreprocessed = testPreProcessing(img);
-        //cv::Mat imagePreprocessed = segmentationPreprocessing(img);
+        //cv::Mat imagePreprocessed = testPreProcessing(img);
+        cv::Mat imagePreprocessed = segmentationPreprocessing(img);
 
         std::vector<cv::Vec3f> circlesVector = findCircularBoundingBoxes(img);
         std::vector<cv::Rect> rectanglesVector = findRectangularBoundingBoxes(img, imagePreprocessed);
