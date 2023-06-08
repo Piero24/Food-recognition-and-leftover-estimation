@@ -190,16 +190,19 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             cv::Mat grayImg;
             cv::cvtColor(result1, grayImg, cv::COLOR_BGR2GRAY);
             
-            cv::Mat afterKernel_2;
-            cv::Mat kernel_2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5, 5));
-            cv::dilate(grayImg, afterKernel_2, kernel_2);
-            //cv::imshow("After dilatation2", afterKernel_2);
-            cv::Mat afterBlur;
-            cv::GaussianBlur(afterKernel_2, afterBlur, cv::Size(7,7),0);
-            //cv::imshow("After Blurring", afterBlur);
-            cv::Mat colored_2;
-            clonedImg.copyTo(colored_2, afterBlur);
-            cv::Mat finalMask_1 = colored_2;
+            cv::Mat afterErode_2, afterDilate_2;
+            cv::Mat kernelEr_2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(13, 13));
+	    cv::Mat kernelDil_2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
+	    cv::erode(grayImg, afterErode_2, kernelEr_2);
+	    //cv::imshow("After erosion2", afterErode_2);
+	    cv::dilate(afterErode_2, afterDilate_2, kernelDil_2);
+	    //cv::imshow("After dilatation2", afterDilate_2);
+	    cv::Mat afterBlur;
+	    cv::GaussianBlur(afterDilate_2, afterBlur, cv::Size(7,7),0);
+	    //cv::imshow("After Blurring", afterBlur);
+	    cv::Mat colored_2;
+	    clonedImg.copyTo(colored_2, afterBlur);
+	    cv::Mat finalMask_1 = colored_2;
             
             //cv::imshow("Final?", finalMask_1);
             //cv::imshow("FinalInter", intersectionMask);
