@@ -93,11 +93,12 @@ cv::Mat removeBlue(cv::Mat img) {
 
 
     cv::Mat noBlueImg1;
-    cv::inRange(img , cv::Scalar(16, 2, 0), cv::Scalar(253, 232, 83), noBlueImg1);
-    cv::Mat postMask0 ,postMask1;
+    cv::inRange(img , cv::Scalar(40, 0, 0), cv::Scalar(230, 165, 80), noBlueImg1);
+    cv::Mat postMask0;
     img.copyTo(postMask0, 255 - noBlueImg1);
     cv::Mat noBlueImg2;
-    cv::inRange(postMask0 , cv::Scalar(120, 95, 69), cv::Scalar(255, 250, 185), noBlueImg2);
+    cv::inRange(postMask0, cv::Scalar(120, 95, 69), cv::Scalar(255, 255, 185), noBlueImg2);
+    cv::Mat postMask1;
     postMask0.copyTo(postMask1, 255 - noBlueImg2);
     
     return  postMask1;
