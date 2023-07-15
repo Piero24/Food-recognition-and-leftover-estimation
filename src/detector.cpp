@@ -8,7 +8,7 @@
 #include "opencv2/ximgproc/segmentation.hpp"
 
 #include "../include/detector.h"
-#include "../include/imagePreprocessing.h"
+#include "../include/imagePreprocessing.h"//VERIFICARE SE POSSIBILE
 
 std::vector<cv::Rect> findRectanglesOutsideCircles(const std::vector<cv::Rect>& rectanglesVector, const std::vector<cv::Vec3f>& circlesVector);
 cv::Scalar findAverageColor(const cv::Mat& img, const cv::Rect& roi);
@@ -17,11 +17,16 @@ cv::Mat noWhiteOnImg(cv::Mat img, int value1, int value2);
 cv::Mat foodDetector(cv::Mat img, std::vector<cv::Rect> rectVector);
 cv::Mat test_3(cv::Mat img);
 cv::Rect rightRectangles(cv::Mat img);
+std::vector<std::vector<cv::Point>> rightContours(cv::Rect boundingRect, cv::Mat img);
 
 // Rinominare in boundingBoxMerger quando finito
 //
 // FORSE MEGLIO CHE QUANDO FINITO RITORNI VETTORE CON FORME VARI CIBI PER FACILITARE PROCESSI SUCCESSIVI
 // ANDREMO A RICREARE I RETTANGOLI CHE LI CONTENGONO QUANDO SERVE
+
+//Togliere stuff e commentare
+
+
 cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std::vector<cv::Rect>& rectanglesVector) {
     
     cv::Mat clonedImg = img.clone();
@@ -31,7 +36,7 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
 
     std::vector<cv::Rect> boundingRectangles;
     std::vector<cv::Rect> bestRectangles;
-    std::vector<cv::Rect> residuals;
+   	std::vector<std::vector<std::vector<cv::Point>>> bestContours;
     std::vector<std::vector<cv::Point>> foodsContours;
 
     // Crea la maschera dell'immagine con tutti i rettangoli
@@ -49,7 +54,7 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
     //cv::imshow("Cerchi", circlesMask);
     
     /*--------------------------------------
-    	LA PARTE SEGUENTE SERVE PER SEGMENTARE IL PANE BENE... SI FANNO MASCHERE SU MASCHERE (METODO UN PO' ROZZO)
+    	LA PARTE SEGUENTE SERVE PER SEGMENTARE IL PANE BENE... SI FANNO MASCHERE SU MASCHERE (METODO UN PO' ROZZO)*/
     
     std::vector<cv::Rect> rectanglesOutsideCircles = findRectanglesOutsideCircles(rectanglesVector, circlesVector);
 
@@ -80,10 +85,9 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
         cv::rectangle(outImgF, rect, cv::Scalar(0, 0, 255), 10);
     }
 
-
 		//Disegna i contorni del cibo dentro il rettangolo nel rettangolo corrente fuori dal cerchio del piatto
 		cv::Mat clonedImgF = clonedImg;
-		for(int i=0; i < rectanglesOutsideCircles.size(); ++i)
+		/*for(int i=0; i < rectanglesOutsideCircles.size(); ++i)
 		{
 			cv::Mat inImg1 = img.clone();
 			cv::Mat outImg1 = cv::Mat::zeros(inImg1.size(), inImg1.type());
@@ -102,20 +106,21 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
 				cv::Mat blurredOutImg1;
 				cv::pyrMeanShiftFiltering(outImg1, blurredOutImg1, 10, 20);
 				cv::imshow("Mean", blurredOutImg1);
-				outImg1 = removeBlue(blurredOutImg1);
+				//outImg1 = removeBlue(blurredOutImg1);
+				blurredOutImg1 = removeBlue(blurredOutImg1);
 				cv::imshow("Mean1", outImg1);
 				cv::Mat noTicketImg1;
 				cv::inRange(blurredOutImg1, cv::Scalar(9, 46, 120), cv::Scalar(35, 70, 160), noTicketImg1);
 				cv::Mat noTrayImg1;
-				cv::inRange(blurredOutImg1, cv::Scalar(37, 53, 83), cv::Scalar(105, 130, 125), noTrayImg1);
+				cv::inRange(blurredOutImg1, cv::Scalar(44, 53, 83), cv::Scalar(105, 130, 125), noTrayImg1);
 				cv::Mat noTrayImg2;
 				cv::inRange(blurredOutImg1, cv::Scalar(0, 0, 51), cv::Scalar(38, 54, 77), noTrayImg2);
 				cv::Mat noTrayImg3;
 				cv::inRange(blurredOutImg1, cv::Scalar(35, 50, 75), cv::Scalar(55, 70, 90), noTrayImg3);
 				cv::Mat noTrayImg4;
-				cv::inRange(blurredOutImg1, cv::Scalar(120, 135, 159), cv::Scalar(210, 215, 230), noTrayImg4);
+				cv::inRange(blurredOutImg1, cv::Scalar(120, 135, 159), cv::Scalar(213, 215, 220), noTrayImg4);
 				cv::Mat noWhiteImg1;
-				cv::inRange(blurredOutImg1, cv::Scalar(95, 125, 145), cv::Scalar(135, 150, 170), noWhiteImg1);
+				cv::inRange(blurredOutImg1, cv::Scalar(92, 108, 120), cv::Scalar(135, 150, 170), noWhiteImg1);
 				cv::Mat noWhiteImg2;
 				cv::inRange(blurredOutImg1, cv::Scalar(220, 220, 220), cv::Scalar(245, 245, 245), noWhiteImg2);
 				cv::Mat noWhiteImg3;
@@ -125,7 +130,7 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
 				cv::Mat noWhiteImg5;
 				cv::inRange(blurredOutImg1, cv::Scalar(170, 170, 170), cv::Scalar(190, 190, 190), noWhiteImg5);
 				cv::Mat noTicketImg2;
-				cv::inRange(blurredOutImg1, cv::Scalar(30, 70, 165), cv::Scalar(63, 110, 199), noTicketImg2);
+				cv::inRange(blurredOutImg1, cv::Scalar(30, 70, 165), cv::Scalar(63, 111, 203), noTicketImg2);
 
 				cv::Mat postMask0, postMask1, postMask2, postMask3, postMask4, postMask5, postMask6, postMask7, postMask8, postMask9, postMask10;
 				
@@ -141,10 +146,12 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
 				postMask8.copyTo(postMask9, 255 - noWhiteImg5);
 				postMask9.copyTo(postMask10, 255 - noTicketImg2);
 				
+				postMask10 = removeBlue(postMask10);
+				
 				cv::imshow("Test_3", postMask10);
 				cv::Mat result2(postMask10.size(), CV_8UC3);
 				cv::Mat result3(postMask10.size(), CV_8UC3);
-				cv::Mat kernel0 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9,9));
+				cv::Mat kernel0 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(5,5));
 				cv::erode(postMask10,result2,kernel0);
 				cv::imshow("Erosione", result2);
 				cv::Mat kernel1 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(19, 19));
@@ -220,76 +227,9 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
 
         // Se ci sono pixel bianchi vuol dire che c'è una porzione da controllare
         if (sum[0] > 0) {
-						//DI QUESTI TEST SOLO IL 3 SERVE
-						
-            //--------------------------------------------------------------------------------#
-            /*
-            Questa parte di codice è dedicata al preprocessing della maschera per una determinata portata (es. primo, secondo)
-            Qui dentro non arrivano cerchi singoli o rettangoli singoli tipo il pane, ma solo quelli che
-            hanno una effettiva intersezione tra un cerchio e uno o più rettangoli.
-
-            Qui sotto ci sono vari metodi mischiati per test.
-
-            OBBIETTIVO: Lavorare la maschera in modo che prenda solo le porzioni di cibo coerenti e non cose extra che ingrandirebbero la bounding box in modo errato.
-
-            POSSIBILI METODI DA IMPLEMENTARE (Aggiungerne se ne vengono in mente altri): 
-                - Possibile usare density function? per calcolare area puù densa (centrale) così cose esterne su cluster separato e prendo solo cluster principale.
-                - Calcolo il centro della forma completa in base al cerchio. Se c'è un gap importante (tanto nero) tra la figura corretta e la parte extra cancello la parte extra.
-                    * ES: Uso distanza dal centro del cerchio per vedere distanza delle figure o dei pixel e vedo se cè un salto importante tra 2 pixel nella stessa traiettoria. se salto importante quello dopo viene coperto.
-
-                - Uso un sistema di cluster (No kmeans non va bene in questo caso) per detectare cosa non fa parte del cibo
-                - Blob? Verificare
-                - Altre tipologie di preprocessing dell'immagine
-                - 
-                -
-                
-            */
 
             cv::Mat outputImage;
             cv::bitwise_and(clonedImg, clonedImg, outputImage, intersectionMask);
-
-
-
-            // TEST 1
-            // Rimuove il colore biancora dall'immagine a colori
-            cv::Mat noWhite = noWhiteOnImg(outputImage, 188, 255);
-            cv::Mat noWhite2 = noWhiteOnImg(noWhite, 50, 185);
-
-
-
-
-
-            // TEST 2
-            cv::Mat grayImage;
-            cv::cvtColor(outputImage, grayImage, cv::COLOR_BGR2GRAY);
-            // Crea una maschera binaria identificando le aree bianche nell'immagine
-
-            // TEST 2.a
-            cv::Mat mask;
-            cv::threshold(grayImage, mask, 115, 255, cv::THRESH_BINARY_INV);
-            // Applica l'operazione bitwise AND tra l'immagine originale e la maschera invertita
-            cv::Mat result;
-            cv::bitwise_and(outputImage, outputImage, result, mask);
-
-
-            // TEST 2.b
-            cv::Mat mask2;
-            cv::threshold(grayImage, mask2, 0, 255, cv::THRESH_BINARY_INV | cv::THRESH_OTSU);
-            cv::Mat result2;
-            cv::bitwise_and(outputImage, outputImage, result2, mask2);
-
-            
-            // test 2.c
-            cv::Mat afterKernel;
-            cv::Mat kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(7, 7));
-            cv::erode(result, afterKernel, kernel);
-            cv::Mat afterKernel2;
-            cv::Mat kernel2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
-            cv::erode(afterKernel, afterKernel2, kernel2);
-            cv::Mat afterKernel3;
-            cv::Mat kernel3 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(15, 15));
-            cv::dilate(afterKernel2, afterKernel3, kernel3);
-
 
 
 
@@ -300,25 +240,26 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             cv::imshow("FinalInter", clearImg);
             
            	cv::Rect boundingRect = rightRectangles(clearImg);
-            bestRectangles.push_back(boundingRect);
-            cv::waitKey(0);
+           	
+						
+											 
+						// Trova tutte le forme presenti nella maschera
+						std::vector<std::vector<cv::Point>> contours = rightContours(boundingRect, clonedImg);
+						
+						cv::Mat clonedImg1 = clonedImg;
+						cv::drawContours(clonedImg1, contours, -1, cv::Scalar(0, 0, 255), 2);
+           		
+           	//cv::imshow("Contorni++++++++", clonedImg1);
+           	
+           	
+		        bestRectangles.push_back(boundingRect);
+		        bestContours.push_back(contours);
+		        
+		        cv::waitKey(0);
         }
 
     }
-
-    // Prende i rettangoli non sovrapposti ad altri cerchi
-    for (const auto& rectangle : rectanglesVector) {
-
-        int center_x = rectangle.x + rectangle.width / 2;
-        int center_y = rectangle.y + rectangle.height / 2;
-
-        uchar valorePixel = circlesMask.at<uchar>(center_y, center_x);
-
-        if (valorePixel == 0) {
-            boundingRectangles.push_back(rectangle);
-        }
-    }
-
+			std::vector<cv::Rect> allDishes;//Questo vettore conterrà i rettangoli del cibo nei piatti e quelli vuoti
      // Prende i cerchi non sovrapposti ad altri rettangoli
      // per ognuno crea il rettangolo che lo contiene
     for (const auto& circle : circlesVector) {
@@ -327,8 +268,26 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
         int radius = circle[2];
 
         uchar valorePixel = rectanglesMask.at<uchar>(center);
-
-        if (valorePixel == 0) {
+				// Costruisci un rettangolo centrato nel centro del cerchio
+        int sideLength = radius; // Puoi impostare la lunghezza del lato come preferisci
+        cv::Rect rectangle(center.x - sideLength / 2, center.y - sideLength / 2, sideLength, sideLength);
+				bool full = false;
+				
+        // Verifica le intersezioni del rettangolo con gli altri rettangoli all'interno del cerchio
+        for (const auto& rect : bestRectangles)
+        {
+            // Verifica se il rettangolo ha un'intersezione con il rettangolo corrente
+            if (rectangle.x < rect.x + rect.width &&
+                rectangle.x + rectangle.width > rect.x &&
+                rectangle.y < rect.y + rect.height &&
+                rectangle.y + rectangle.height > rect.y)
+            {
+                full = true;
+                allDishes.push_back(rect);
+                break;
+            }
+        }
+        if (full == false) {
 
             cv::Mat tmpMask = cv::Mat::zeros(clonedImg.size(), CV_8UC1);
             cv::circle(tmpMask, center, radius, cv::Scalar(255), -1);
@@ -338,99 +297,39 @@ cv::Mat subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std:
             
             for (const auto& contour : contours) {
                 cv::Rect boundingRect = cv::boundingRect(contour);
-                boundingRectangles.push_back(boundingRect);
+                allDishes.push_back(boundingRect);
             }
-        } 
+        }
     }
-
+    //Se ha saltato qualche bounding box questo ciclo la aggiunge
+		for (const auto& rect : bestRectangles)
+    	{
+      	auto it = std::find(allDishes.begin(), allDishes.end(), rect);
+      	bool present= (it != allDishes.end());
+        if(present==false){allDishes.push_back(rect);}
+    	}
     // Disegna i rettangoli sull'immagine
     cv::Mat outImg = img.clone();
-    for (const auto& rect : boundingRectangles) {
+    
+    for (const auto& rect : allDishes) {
         cv::rectangle(outImg, rect, cv::Scalar(0, 0, 255), 10);
     }
-
-
-		//Disegna i contorni del cibo dentro il rettangolo nel cerchio corrente
-		std::vector<cv::Mat> foodContours;
-		cv::Mat clonedImg1 = clonedImg;
-		for(int i=0; i < bestRectangles.size(); ++i)
-		{
-			cv::Mat inImg1 = img.clone();
-			cv::Mat outImg1 = cv::Mat::zeros(inImg1.size(), inImg1.type());
-		  int x = bestRectangles[i].x;
-		  int y = bestRectangles[i].y;
-		  int width = bestRectangles[i].width;
-		  int height = bestRectangles[i].height;
-
-		  //std::cout << "Rettangolo " << i + 1 << ": x=" << x << ", y=" << y << ", width=" << width << ", height=" << height << std::endl;
-		  
-				for(int row = y; row < y + height; ++row)
-				{
-				    for(int col = x; col < x + width; ++col)
-				    {
-				        outImg1.at<cv::Vec3b>(row, col) = inImg1.at<cv::Vec3b>(row, col);
-				    }
-				}
-				cv::Mat finalIMG = test_3(outImg1);
-				cv::Mat result2(finalIMG.size(), CV_8UC3);
-				cv::Mat result3(finalIMG.size(), CV_8UC3);
-				cv::Mat kernelDil0 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(21, 21));
-				
-				cv::dilate(finalIMG, result3, kernelDil0);
-				//cv::dilate(result2, result3, kernelDil0);
-				clonedImg.copyTo(result3, result3);
-				cv::pyrMeanShiftFiltering(result3, result3, 25, 45);
-				cv::imshow("Mean", result3);
-				cv::Mat result4 = noWhiteOnImg(result3, 75, 255);
-				cv::Mat kernelDil1 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(13,13));
-				cv::dilate(result4, result4, kernelDil1);
-				clonedImg.copyTo(result4, result4);
-				//cv::imshow("Final????", result4);
-				
-				//cv::imwrite("TrayMask.jpg", result4);
-				
-				foodDetector(img, rectanglesVector);
-				//return outImg;
-				
-				cv::Mat grayasImage;
-				cv::cvtColor(result4, grayasImage, cv::COLOR_BGR2GRAY);
-				// Applica la soglia binaria per creare la maschera
-				cv::Mat finalMask;
-				cv::threshold(grayasImage, finalMask, 1, 255, cv::THRESH_BINARY);
-						     
-				// Trova tutte le forme presenti nella maschera
-				std::vector<std::vector<cv::Point>> contours;
-				//cv::findContours(intersectionMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-				cv::findContours(finalMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-				
-				// Crea un'immagine vuota per disegnare i contorni
-				//cv::Mat contourImage = cv::Mat::zeros(result4.size(), CV_8UC3);
-				
-				// Disegna i contorni sull'immagine originale
-				//cv::Mat clonedImg1 = clonedImg;
-				cv::drawContours(clonedImg1, contours, -1, cv::Scalar(0, 0, 255), 2);
-				
-				
-				// Mostra l'immagine dei contorni
-				cv::imshow("Contorni", clonedImg1);
-				cv::waitKey(0);
-				foodContours.push_back(clonedImg1);
-				
-		}
-    
+		cv::imshow("FinalI", outImg);
 		
-
-    // Disegna i cerchi sull'immagine
-    // RIMUOVERE QUANDO FINITO
-    for (const cv::Vec3f& circle : circlesVector) {
-        cv::Point center(circle[0], circle[1]);
-        int radius = circle[2];
-        cv::circle(outImg, center, radius, cv::Scalar(0, 255, 0), 15);
-    }    
-		          
-		cv::imshow("Final", clonedImg1);
-		cv::waitKey(0);
-    return clonedImg1;
+		// Disegna i rettangoli fuori dai piatti sull'immagine
+    for (const auto& rect : rectanglesOutsideCircles) {
+        cv::rectangle(outImg, rect, cv::Scalar(0, 0, 255), 10);
+    }
+		
+    for (int i = 0; i < bestContours.size(); i++)
+    {
+			for (const auto& contour : bestContours)
+		  {
+		      cv::drawContours(outImg, contour, -1, cv::Scalar(0, 255, 0), 2);
+		  }
+		}
+    cv::imshow("FinalII", outImg);
+		return outImg;
 }
 
 //Metodo per trovare i rettangoli fuori dai piatti
@@ -581,12 +480,12 @@ cv::Mat test_3(cv::Mat img)
   cv::Mat kernelEr_2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9, 9));
 	cv::Mat kernelDil_2 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9, 9));
 	cv::erode(grayImg, afterErode_2, kernelEr_2);
-	//cv::imshow("After erosion2", afterErode_2);
+	
 	cv::dilate(afterErode_2, afterDilate_2, kernelDil_2);
-	//cv::imshow("After dilatation2", afterDilate_2);
+	
 	cv::Mat afterBlur;
 	cv::GaussianBlur(afterDilate_2, afterBlur, cv::Size(7,7),0);
-	//cv::imshow("After Blurring", afterBlur);
+	
 	cv::Mat colored_2;
 	img.copyTo(colored_2, afterBlur);
   return colored_2;
@@ -603,11 +502,11 @@ cv::Rect rightRectangles(cv::Mat img)
            
   // Trova tutte le forme presenti nella maschera
   std::vector<std::vector<cv::Point>> contours;
-  //cv::findContours(intersectionMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+  
   cv::findContours(finalMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
             
             
-  std::vector<cv::Rect> selectedContours;
+  std::vector<cv::Rect> selectedRects;
             
 	for (const auto& contour : contours)
 	{
@@ -619,20 +518,20 @@ cv::Rect rightRectangles(cv::Mat img)
 
 		// Se l'area è piccola salta l'area
 		if (currentRect.area() > 400){
-		   selectedContours.push_back(currentRect);
+		   selectedRects.push_back(currentRect);
 			//std::cout << "\n\n###### Area del contorno: " << areaInt << std::endl;
 		}
 	}
 									
 	// Crea un rettangolo intorno alla prima forma più estesa
 	cv::Rect boundingRect;
-	for(int i=0; i<selectedContours.size(); ++i)
+	for(int i=0; i<selectedRects.size(); ++i)
 	{
-		double area = selectedContours.at(i).area();
+		double area = selectedRects.at(i).area();
 		int areaInt = static_cast<int>(area);
 		//std::cout << "\n\n!!!!!!!!!!!!!!!!!! Area del contorno: " << areaInt << std::endl;
 		if(area > boundingRect.area())
-			{boundingRect = selectedContours.at(i);}
+			{boundingRect = selectedRects.at(i);}
 	}
   //std::cout << "\n\n Area del contorno massimo: " << static_cast<int>(boundingRect.area()) << std::endl;
   // Calcola il centro del bounding rectangle principale
@@ -640,7 +539,7 @@ cv::Rect rightRectangles(cv::Mat img)
 
 	// Definisci una soglia di distanza
 	double maxDistance = 240.0; // Soglia di distanza massima tra il centro del bounding rectangle principale e un'area per considerarla parte del corpo principale
-	for (const auto& contour : selectedContours) {
+	for (const auto& contour : selectedRects) {
 						
 		// Calcola il centro dell'area corrente
 		cv::Point currentRectCenter = cv::Point(contour.x + contour.width / 2, contour.y + contour.height / 2);
@@ -657,6 +556,75 @@ cv::Rect rightRectangles(cv::Mat img)
 
   return boundingRect;
 
+}
+
+//Dati i giusti bounding boxes, trova i giusti contorni nella maschera
+std::vector<std::vector<cv::Point>> rightContours(cv::Rect boundingRect, cv::Mat img)
+{
+	cv::Mat cloned = cv::Mat::zeros(img.size(), img.type());
+	int x = boundingRect.x;
+	int y = boundingRect.y;
+	int width = boundingRect.width;
+	int height = boundingRect.height;
+						
+	for(int row = y; row < y + height; ++row)
+	{
+		for(int col = x; col < x + width; ++col)
+		{
+		  cloned.at<cv::Vec3b>(row, col) = img.at<cv::Vec3b>(row, col);
+		}
+	}
+	cv::Mat finalIMG = test_3(cloned);
+	cv::Mat result(img.size(), CV_8UC3);
+	cv::Mat kernelDil0 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(21, 21));
+					
+	cv::dilate(finalIMG, result, kernelDil0);
+					
+	img.copyTo(result, result);
+	cv::pyrMeanShiftFiltering(result, result, 25, 45);
+	
+	cv::Mat result0 = noWhiteOnImg(result, 75, 255);
+	cv::Mat kernelDil1 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(15,15));
+	cv::dilate(result0, result0, kernelDil1);
+	img.copyTo(result0, result0);							
+							
+	cv::Mat grayasImage;
+	cv::cvtColor(result0, grayasImage, cv::COLOR_BGR2GRAY);
+	// Applica la soglia binaria per creare la maschera
+	cv::Mat finalMask;
+	cv::threshold(grayasImage, finalMask, 1, 255, cv::THRESH_BINARY);
+										 
+	// Trova tutte le forme presenti nella maschera
+	std::vector<std::vector<cv::Point>> contours;
+							
+	cv::findContours(finalMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+	
+	//Tutte le prossime operazioni sono fatte per eliminare il problema di avere contorni che sono formati da più aree separate (nel caso del piatto vuoto salta l'operazione e passa direttamente a dare il vettore dei contorni vuoto)
+	if (contours.size()>0)
+	{
+		std::vector<std::vector<cv::Point>> selectedContours;
+		cv::Rect biggestRect = cv::boundingRect(contours[0]);
+		
+		selectedContours.push_back(contours[0]);
+		for (const auto& contour : contours)
+		{
+			cv::Rect currentRect = cv::boundingRect(contour);
+
+			// Calcola l'area della forma
+			double area = cv::contourArea(contour);
+			int areaInt = static_cast<int>(area);
+			
+			// Se l'area è più grande della prima incontrata, allora la si mette al suo posto, altrimenti tiene quella già nel vettore selectedContours
+			if (currentRect.area() > biggestRect.area()){
+				selectedContours.clear();
+				selectedContours.push_back(contour);
+				
+			}
+		}
+		return selectedContours;
+	}
+	else{return contours;}
+  
 }
 
 cv::Mat foodDetector(cv::Mat img, std::vector<cv::Rect> rectVector)  {
