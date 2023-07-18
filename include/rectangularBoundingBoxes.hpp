@@ -24,9 +24,10 @@
 * Finds rectangular bounding boxes in the given image.
 * @param img The input image.
 * @param img2 The cloned image.
+* @param num An indicator for wat to print in the terminal.
 * @return A vector of cv::Rect representing the rectangular bounding boxes found in the image.
 */
-std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2);
+std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2, int num);
 /**
 * Compares two rectangles based on their areas.
 * @param rect1 The first rectangle.

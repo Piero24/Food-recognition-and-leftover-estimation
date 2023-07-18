@@ -9,7 +9,7 @@
 #include "../include/rectangularBoundingBoxes.hpp"
 
 
-std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2) {
+std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2, int num) {
 
     std::vector<cv::Rect> finalVector;
     cv::Mat clonedImg = img2.clone();
@@ -45,17 +45,25 @@ std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2) {
             double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
 
             if (density > 0.22) {
-                std::cout << "\U0001F7E2" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                if (num == 0){
+                    std::cout << "\U0001F7E2" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                }
                 finalVector.push_back(outerRectangles[j]);
 
             } else {
-                std::cout << "\U0001F534" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                if (num == 0){
+                    std::cout << "\U0001F534" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                }
             }
             
         }
         else {
             break;
         }
+    }
+
+    if (num != 0) {
+        std::cout << "\nThe total number of box for this tray is: " << finalVector.size() << std::endl;
     }
 
     return finalVector;

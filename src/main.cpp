@@ -50,7 +50,7 @@
 
 
 
-cv::Mat boundingBoxTester(cv::Mat img, std::vector<cv::Vec3f> circlesVector, std::vector<cv::Rect> rectanglesVector);
+cv::Mat boundingBoxSegmentationTester(cv::Mat img, Detector detectorVec, std::vector<cv::Rect> finalBBoxVec);
 
 
 int main(int argc, char** argv) {
@@ -63,10 +63,10 @@ int main(int argc, char** argv) {
     // hcombinedVec = multipleTestPreProcessing(trayVector);
     // return 0;
     cv::Mat image0Preprocessed = segmentationPreprocessing(trayVector[0]);
-    int numOfBoxes = findRectangularBoundingBoxes(trayVector[0], image0Preprocessed).size();
+    int numOfBoxes = findRectangularBoundingBoxes(trayVector[0], image0Preprocessed, 1).size();
     
     size_t trayVectorSize = trayVector.size();
-    for (size_t i = 3; i < 4; i++) {
+    for (size_t i = 0; i < trayVectorSize; i++) {
 
         std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
 	
@@ -74,55 +74,18 @@ int main(int argc, char** argv) {
 
         //cv::Mat imagePreprocessed = testPreProcessing(img);
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
-	//cv::imshow("Prep",imagePreprocessed);
+	    //cv::imshow("Prep",imagePreprocessed);
         std::vector<cv::Vec3f> circlesVector = findCircularBoundingBoxes(img);
-        std::vector<cv::Rect> rectanglesVector = findRectangularBoundingBoxes(img, imagePreprocessed);
+        std::vector<cv::Rect> rectanglesVector = findRectangularBoundingBoxes(img, imagePreprocessed, 0);
         
         // TODO (MAYBE)
         cv::Mat thirdImgOut = thirdSegmentationFunc(img);
 
         // Ricrea la bounding box finale mergiando i metodi precedenti
         Detector detector;
-        Detector detector1;
-        detector1 = detector.subjectIsolator(img, circlesVector, rectanglesVector);
-	
-	std::vector<cv::Rect> rectsVector = detector1.getRectanglesVector();
-	int currNumOfBoxes = rectsVector.size();
-	cv::Mat noBackgroundImg;
-	
-        if(currNumOfBoxes>numOfBoxes)
-	{
-		int index;
-        	int minArea = rectsVector.at(0).area();
-		for(int j=0; j < rectsVector.size(); j++)
-		{
-			int area = rectsVector.at(j).area();
-			
-			if(area<minArea)
-			{
-				minArea = area;				
-				index = j;
-			}
-		}
-		// Ottenere l'iteratore corrispondente all'elemento da eliminare
-		std::vector<cv::Rect>::iterator it = rectsVector.begin() + index;
-		// Eliminare l'elemento utilizzando il metodo erase()
-		rectsVector.erase(it);
-		noBackgroundImg = img.clone();
-		for (int k = 0; k < detector1.getContours().size(); k++)
-		{
-			for (const auto& contour : detector1.getContours())
-			{
-				cv::drawContours(noBackgroundImg, contour, -1, cv::Scalar(0, 255, 0), 2);
-			}
-		}
-		for (const auto& rect : rectsVector)
-		{
-			cv::rectangle(noBackgroundImg, rect, cv::Scalar(0, 0, 255), 10);
-		}
-	}
-	
-	else{noBackgroundImg = detector1.getImage();}
+        Detector detectorVec;
+        detectorVec = detector.subjectIsolator(img, circlesVector, rectanglesVector);
+        std::vector<cv::Rect> finalBBoxVec = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
 	
         /*
         
@@ -136,7 +99,6 @@ int main(int argc, char** argv) {
 
         // TODO (QUANDO TUTTO QUELLO SOPRA E' FINITO):
         //
-        //  - Segmentare cibo (se non gia fatto nella funzione precedente)
         //  - Capire la tipologia di cibo (vettore con struttura dati con tipo cibo quantità e forma (posizione dimensione ecc))
         //  - Disegnare una immagine con bounding box con scritto il tipo di cibo e la quantità (es: 100% 40% ecc o se chiede di farlo in modo specifico seguire indicazioni)
         //  - Disegnare maschera unica con tutti i cibi dell'immagine
@@ -155,16 +117,11 @@ int main(int argc, char** argv) {
 
 
         // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
-        cv::Mat imgWithBoundingBox = boundingBoxTester(img, circlesVector, rectanglesVector);
-
-
-        cv::Mat combinedTest;
-        cv::hconcat(img, imgWithBoundingBox, combinedTest);
+        cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, detectorVec, finalBBoxVec);
 
         cv::Mat combined;
-        cv::hconcat(combinedTest, noBackgroundImg, combined);
+        cv::hconcat(img, imgWithBoundingBoxandSeg, combined);
         horizontalCombinedVector.push_back(combined);
-
     }
 
     cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
@@ -178,20 +135,26 @@ int main(int argc, char** argv) {
 
 
 // SPOSTARE QUANDO FINITO TUTTO
-cv::Mat boundingBoxTester(cv::Mat img, std::vector<cv::Vec3f> circlesVector, std::vector<cv::Rect> rectanglesVector){
+cv::Mat boundingBoxSegmentationTester(cv::Mat img, Detector detectorVec, std::vector<cv::Rect> finalBBoxVec) {
 
-    cv::Mat clonedImg = img.clone();
+    cv::Mat clonedImgBBox = img.clone();
+    cv::Mat clonedImgSeg = img.clone();
+   
+    for (int k = 0; k < detectorVec.getContours().size(); k++) {
+        for (const auto& contour : detectorVec.getContours()) {
 
-    for (const auto& circle : circlesVector) {
-        cv::Point center(cvRound(circle[0]), cvRound(circle[1]));
-        cv::circle(clonedImg, center,  cvRound(circle[2]), cv::Scalar(0, 255, 255), 10);
+            cv::drawContours(clonedImgSeg, contour, -1, cv::Scalar(0, 255, 0), 5);
+        }
     }
 
-    for (const auto& rect : rectanglesVector) {
-        rectangle(clonedImg, rect, cv::Scalar(0, 255, 0), 10);
+    for (const auto& rect : finalBBoxVec) {
+        cv::rectangle(clonedImgBBox, rect, cv::Scalar(0, 0, 255), 10);
     }
 
-    return clonedImg;
+    cv::Mat combined;
+    cv::hconcat(clonedImgBBox, clonedImgSeg, combined);
+
+    return combined;
 }
 
 
