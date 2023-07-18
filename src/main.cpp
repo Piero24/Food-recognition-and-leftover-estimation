@@ -62,27 +62,68 @@ int main(int argc, char** argv) {
     // VALIDO SOLO PER DEBUG
     // hcombinedVec = multipleTestPreProcessing(trayVector);
     // return 0;
-   
+    cv::Mat image0Preprocessed = segmentationPreprocessing(trayVector[0]);
+    int numOfBoxes = findRectangularBoundingBoxes(trayVector[0], image0Preprocessed).size();
+    
     size_t trayVectorSize = trayVector.size();
-    for (size_t i = 0; i < trayVectorSize; i++) {
+    for (size_t i = 3; i < 4; i++) {
 
         std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
-
+	
         cv::Mat img = trayVector[i].clone();
 
         //cv::Mat imagePreprocessed = testPreProcessing(img);
         cv::Mat imagePreprocessed = segmentationPreprocessing(img);
-
+	//cv::imshow("Prep",imagePreprocessed);
         std::vector<cv::Vec3f> circlesVector = findCircularBoundingBoxes(img);
         std::vector<cv::Rect> rectanglesVector = findRectangularBoundingBoxes(img, imagePreprocessed);
+        
         // TODO (MAYBE)
         cv::Mat thirdImgOut = thirdSegmentationFunc(img);
 
         // Ricrea la bounding box finale mergiando i metodi precedenti
-        cv::Mat noBackgroundImg = subjectIsolator(img, circlesVector, rectanglesVector);
-
-
-
+        Detector detector;
+        Detector detector1;
+        detector1 = detector.subjectIsolator(img, circlesVector, rectanglesVector);
+	
+	std::vector<cv::Rect> rectsVector = detector1.getRectanglesVector();
+	int currNumOfBoxes = rectsVector.size();
+	cv::Mat noBackgroundImg;
+	
+        if(currNumOfBoxes>numOfBoxes)
+	{
+		int index;
+        	int minArea = rectsVector.at(0).area();
+		for(int j=0; j < rectsVector.size(); j++)
+		{
+			int area = rectsVector.at(j).area();
+			
+			if(area<minArea)
+			{
+				minArea = area;				
+				index = j;
+			}
+		}
+		// Ottenere l'iteratore corrispondente all'elemento da eliminare
+		std::vector<cv::Rect>::iterator it = rectsVector.begin() + index;
+		// Eliminare l'elemento utilizzando il metodo erase()
+		rectsVector.erase(it);
+		noBackgroundImg = img.clone();
+		for (int k = 0; k < detector1.getContours().size(); k++)
+		{
+			for (const auto& contour : detector1.getContours())
+			{
+				cv::drawContours(noBackgroundImg, contour, -1, cv::Scalar(0, 255, 0), 2);
+			}
+		}
+		for (const auto& rect : rectsVector)
+		{
+			cv::rectangle(noBackgroundImg, rect, cv::Scalar(0, 0, 255), 10);
+		}
+	}
+	
+	else{noBackgroundImg = detector1.getImage();}
+	
         /*
         
 
