@@ -59,6 +59,20 @@ int main(int argc, char** argv) {
     std::vector<cv::Mat> horizontalCombinedVector;
     std::vector<cv::Mat> trayVector = imgUploader(argc, argv);
 
+    //Parte Ame
+    
+    //imgL contiene le immagini totali che dopo andranno tolte
+    //imageNames contiente i nomi
+    //imgM contiene le immagini ritagliate al momento da contour
+    //n parametro per sapere quante sono le classi iniziali
+    
+    std::vector<cv::Mat> imgM;
+    std::vector<std::string> imageNames;
+    std::vector<cv::Mat> imgL = loadImage(imageNames);
+    int n=0;
+    
+    //fine parte Ame
+
     // VALIDO SOLO PER DEBUG
     // hcombinedVec = multipleTestPreProcessing(trayVector);
     // return 0;
@@ -86,6 +100,25 @@ int main(int argc, char** argv) {
         Detector detectorVec;
         detectorVec = detector.subjectIsolator(img, circlesVector, rectanglesVector);
         std::vector<cv::Rect> finalBBoxVec = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
+
+
+        //parte Ame
+	cv::Mat img1;
+	for (const auto& contour : detectorVec.getContours())
+	{
+		img1=img.clone();
+		cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2);
+		cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1);
+		cv::fillPoly(imgMask, contour, cv::Scalar(255,255,255));
+		cv::Mat imgFull = cv::Mat::zeros(img.size(), CV_8UC1);
+		cv::bitwise_and(img, img, imgFull, imgMask);
+		imgM.push_back(imgFull);
+		if(i==0)
+		{n++;}
+	}
+
+	
+	//fine parte Ame
 	
         /*
         
@@ -124,6 +157,37 @@ int main(int argc, char** argv) {
         horizontalCombinedVector.push_back(combined);
     }
 
+    //parte Ame
+    //in imgM ci saranno le immagini tagliate, 
+    //imgL solo le immagini matchate al primo giro
+    //in imageNames i nomi rispetto alle imgM
+    imgMatching(imgM,imgL,imageNames,n);
+    
+    
+    /* se volete provare
+    for (const auto& a : imgM)
+		{
+
+		     cv::imshow("A", a);
+		     cv::waitKey();
+		
+		}	
+		for (const auto& a : imgL)
+		{
+		     //cout << "Nome: " << imageNames[x] << endl;
+		     cv::imshow("A", a);
+		     cv::waitKey();
+		
+		}
+		
+		for (const auto& a : imageNames)
+		{
+		     std::cout << "Nome: " << a << std::endl;
+		
+		}
+	*/
+    
+    //fine parte Ame
     cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
 
     cv::imwrite("Comple Tray.jpg", combinedImage);
