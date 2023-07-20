@@ -361,7 +361,7 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
 							}
 						}
 						
-						cv::imshow("BoundingRect", cloned);
+						//cv::imshow("BoundingRect", cloned);
 						
 						// Trova tutte le forme presenti nella maschera
 						
@@ -405,7 +405,7 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
 		        bestRectangles.push_back(boundingRect);
 		        bestContours.push_back(contours);
 		        
-		        cv::waitKey(0);
+		        //cv::waitKey(0);
         }
 
     }
@@ -542,7 +542,7 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
 		
 		allDishes.insert(allDishes.end(), rectanglesOutsideCircles.begin(), rectanglesOutsideCircles.end());
 		
-    cv::imshow("FinalII", outImg);
+    //cv::imshow("FinalII", outImg);
     Detector finalDetector(outImg, allDishes, bestContours);
     return finalDetector;
 }
@@ -583,3 +583,32 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
 	  }
   }
 }*/
+
+std::vector<cv::Rect> Detector::fromSegmentationToBBox(cv::Mat img, Detector detectorVec, int numOfBoxes) {
+
+  std::vector<cv::Rect> rectsVector = detectorVec.getRectanglesVector();
+  int currNumOfBoxes = rectsVector.size();
+  cv::Mat noBackgroundImg;
+
+  if(currNumOfBoxes > numOfBoxes) {
+      int index;
+          int minArea = rectsVector.at(0).area();
+
+      for(int j = 0; j < rectsVector.size(); j++) {
+          int area = rectsVector.at(j).area();
+          
+          if(area < minArea) {
+              minArea = area;				
+              index = j;
+          }
+      }
+      // Ottenere l'iteratore corrispondente all'elemento da eliminare
+      std::vector<cv::Rect>::iterator it = rectsVector.begin() + index;
+      // Eliminare l'elemento utilizzando il metodo erase()
+      rectsVector.erase(it);
+      noBackgroundImg = img.clone();
+  }
+
+  return rectsVector;
+
+}

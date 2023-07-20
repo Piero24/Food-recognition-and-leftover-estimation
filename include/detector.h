@@ -30,7 +30,6 @@ public:
 	cv::Rect rightRectangles(cv::Mat img);
 	std::vector<std::vector<cv::Point>> rightContours(cv::Rect boundingRect, cv::Mat img);
     std::vector<cv::Rect> fromSegmentationToBBox(cv::Mat img, Detector detectorVec, int numOfBoxes);
-    
 };
 
 #endif
