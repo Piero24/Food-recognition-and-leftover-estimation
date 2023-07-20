@@ -21,7 +21,7 @@
 
 #include "../include/outputCombined.h"
 
-
+#include "../include/matchImage.h"
 
 // Pallino arancione:
 //     Codice Unicode: \U0001F7E0
@@ -59,15 +59,10 @@ int main(int argc, char** argv) {
         std::cerr << "Usage: " << argv[0] << " <input_string>" << std::endl;
         return 1;
     }
-    if (argc < 2) {
-        std::cerr << "Usage: " << argv[0] << " <input_string>" << std::endl;
-        return 1;
-    }
 
     for (int trayNumber = 1; trayNumber < 9; trayNumber++) {
 
         //Parte Ame
-    
         //imgL contiene le immagini totali che dopo andranno tolte
         //imageNames contiente i nomi
         //imgM contiene le immagini ritagliate al momento da contour
@@ -77,8 +72,8 @@ int main(int argc, char** argv) {
         std::vector<std::string> imageNames;
         std::vector<cv::Mat> imgL = loadImage(imageNames);
         int n=0;
-        
         //fine parte Ame
+
 
         std::vector<cv::Mat> horizontalCombinedVector;
         std::string trayPath = argv[1];
@@ -96,18 +91,7 @@ int main(int argc, char** argv) {
         
         size_t trayVectorSize = trayVector.size();
         for (size_t i = 0; i < trayVectorSize; i++) {
-        // VALIDO SOLO PER DEBUG
-        // hcombinedVec = multipleTestPreProcessing(trayVector);
-        // return 0;
-        cv::Mat image0Preprocessed = segmentationPreprocessing(trayVector[0]);
-        int numOfBoxes = findRectangularBoundingBoxes(trayVector[0], image0Preprocessed, 1).size();
-        
-        size_t trayVectorSize = trayVector.size();
-        for (size_t i = 0; i < trayVectorSize; i++) {
 
-            std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
-        
-            cv::Mat img = trayVector[i].clone();
             std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
         
             cv::Mat img = trayVector[i].clone();
@@ -139,66 +123,19 @@ int main(int argc, char** argv) {
                 if(i==0)
                 {n++;}
             }
-
-            
             //fine parte Ame
-        // Ricrea la bounding box finale mergiando i metodi precedenti
-        Detector detector;
-        Detector detectorVec;
-        detectorVec = detector.subjectIsolator(img, circlesVector, rectanglesVector);
-        std::vector<cv::Rect> finalBBoxVec = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
-
-
-        //parte Ame
-	cv::Mat img1;
-	for (const auto& contour : detectorVec.getContours())
-	{
-		img1=img.clone();
-		cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2);
-		cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1);
-		cv::fillPoly(imgMask, contour, cv::Scalar(255,255,255));
-		cv::Mat imgFull = cv::Mat::zeros(img.size(), CV_8UC1);
-		cv::bitwise_and(img, img, imgFull, imgMask);
-		imgM.push_back(imgFull);
-		if(i==0)
-		{n++;}
-	}
-
-	
-	//fine parte Ame
-	
-        /*
         
+
             /*
             
 
                             NON MODIFICARE E CARICARE MAI IL MAIN SU GITHUB SENZA AVVISARE (POSSIBILMENTE EVITARE DI MODIFICARLO
                                                     -----
-                            NON MODIFICARE E CARICARE MAI IL MAIN SU GITHUB SENZA AVVISARE (POSSIBILMENTE EVITARE DI MODIFICARLO
-                                                    -----
 
 
             */
             
-            */
-            
 
-            // TODO (QUANDO TUTTO QUELLO SOPRA E' FINITO):
-            //
-            //  - Capire la tipologia di cibo (vettore con struttura dati con tipo cibo quantità e forma (posizione dimensione ecc))
-            //  - Disegnare una immagine con bounding box con scritto il tipo di cibo e la quantità (es: 100% 40% ecc o se chiede di farlo in modo specifico seguire indicazioni)
-            //  - Disegnare maschera unica con tutti i cibi dell'immagine
-            //  - Unire le 2 immagini orizzontalmente con quella originale così da avere in output una riga con immagine vuota immagine con bounding box e cibo e immagine con segmentazione
-            //  - Mettere in un vettore (sostanzialmente che output venga come ora)
-            //  -
-            //  - 
-            //  - VERIFICARE CHE BOUNDING BOX, MASCHERE ECC COINCIDANO (IL PIU' POSSIBILE) CON QUELLE FORNITE PER I TEST
-            //  - Scrivere codice più presentabile, eliminare quello che non serve (eccetto cose di debug) e commentare (in inglese) le varie chiamate a funzione
-            //  - Commentare le funzioni negli header
-            //  - meglio file .hpp o .h? Meglio fare classi?
-            //  - Testare con altre immagini non presenti nel dataset fornito
-            //  - 
-            //  - 
             // TODO (QUANDO TUTTO QUELLO SOPRA E' FINITO):
             //
             //  - Capire la tipologia di cibo (vettore con struttura dati con tipo cibo quantità e forma (posizione dimensione ecc))
@@ -220,28 +157,12 @@ int main(int argc, char** argv) {
 
             // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
             cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, detectorVec, finalBBoxVec);
-            // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
-            cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, detectorVec, finalBBoxVec);
 
             cv::Mat combined;
             cv::hconcat(img, imgWithBoundingBoxandSeg, combined);
             horizontalCombinedVector.push_back(combined);
         }
-            cv::Mat combined;
-            cv::hconcat(img, imgWithBoundingBoxandSeg, combined);
-            horizontalCombinedVector.push_back(combined);
-        }
 
-        //parte Ame
-        //in imgM ci saranno le immagini tagliate, 
-        //imgL solo le immagini matchate al primo giro
-        //in imageNames i nomi rispetto alle imgM
-        imgMatching(imgM,imgL,imageNames,n);
-        
-        
-        /* se volete provare
-        for (const auto& a : imgM)
-            {
         //parte Ame
         //in imgM ci saranno le immagini tagliate, 
         //imgL solo le immagini matchate al primo giro
@@ -274,38 +195,6 @@ int main(int argc, char** argv) {
         
         //fine parte Ame
 
-    //parte Ame
-    //in imgM ci saranno le immagini tagliate, 
-    //imgL solo le immagini matchate al primo giro
-    //in imageNames i nomi rispetto alle imgM
-    imgMatching(imgM,imgL,imageNames,n);
-    
-    
-    /* se volete provare
-    for (const auto& a : imgM)
-		{
-
-		     cv::imshow("A", a);
-		     cv::waitKey();
-		
-		}	
-		for (const auto& a : imgL)
-		{
-		     //cout << "Nome: " << imageNames[x] << endl;
-		     cv::imshow("A", a);
-		     cv::waitKey();
-		
-		}
-		
-		for (const auto& a : imageNames)
-		{
-		     std::cout << "Nome: " << a << std::endl;
-		
-		}
-	*/
-    
-    //fine parte Ame
-    cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
         cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
 
         std::string trayName = "Complete Tray " + std::to_string(trayNumber);
@@ -334,9 +223,6 @@ cv::Mat boundingBoxSegmentationTester(cv::Mat img, Detector detectorVec, std::ve
         }
     }
 
-    std::cout << "\n\n############## CORNER OF THE BOUNDING BOX" << std::endl;
-    
-    int i = 0;
     std::cout << "\n\n############## CORNER OF THE BOUNDING BOX" << std::endl;
     
     int i = 0;
