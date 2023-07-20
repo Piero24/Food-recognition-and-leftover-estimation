@@ -1,4 +1,4 @@
-// clear && make && ./Food-Recognition ./Food-recognition-and-leftover-estimation/dataset/tray1/
+// clear && make && ./Food-Recognition ./Food-recognition-and-leftover-estimation/dataset
 
 #include <iostream>
 #include "opencv2/core.hpp"
@@ -59,6 +59,10 @@ int main(int argc, char** argv) {
         std::cerr << "Usage: " << argv[0] << " <input_string>" << std::endl;
         return 1;
     }
+    if (argc < 2) {
+        std::cerr << "Usage: " << argv[0] << " <input_string>" << std::endl;
+        return 1;
+    }
 
     for (int trayNumber = 1; trayNumber < 9; trayNumber++) {
 
@@ -92,7 +96,18 @@ int main(int argc, char** argv) {
         
         size_t trayVectorSize = trayVector.size();
         for (size_t i = 0; i < trayVectorSize; i++) {
+        // VALIDO SOLO PER DEBUG
+        // hcombinedVec = multipleTestPreProcessing(trayVector);
+        // return 0;
+        cv::Mat image0Preprocessed = segmentationPreprocessing(trayVector[0]);
+        int numOfBoxes = findRectangularBoundingBoxes(trayVector[0], image0Preprocessed, 1).size();
+        
+        size_t trayVectorSize = trayVector.size();
+        for (size_t i = 0; i < trayVectorSize; i++) {
 
+            std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
+        
+            cv::Mat img = trayVector[i].clone();
             std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
         
             cv::Mat img = trayVector[i].clone();
@@ -159,11 +174,31 @@ int main(int argc, char** argv) {
 
                             NON MODIFICARE E CARICARE MAI IL MAIN SU GITHUB SENZA AVVISARE (POSSIBILMENTE EVITARE DI MODIFICARLO
                                                     -----
+                            NON MODIFICARE E CARICARE MAI IL MAIN SU GITHUB SENZA AVVISARE (POSSIBILMENTE EVITARE DI MODIFICARLO
+                                                    -----
 
 
             */
             
+            */
+            
 
+            // TODO (QUANDO TUTTO QUELLO SOPRA E' FINITO):
+            //
+            //  - Capire la tipologia di cibo (vettore con struttura dati con tipo cibo quantità e forma (posizione dimensione ecc))
+            //  - Disegnare una immagine con bounding box con scritto il tipo di cibo e la quantità (es: 100% 40% ecc o se chiede di farlo in modo specifico seguire indicazioni)
+            //  - Disegnare maschera unica con tutti i cibi dell'immagine
+            //  - Unire le 2 immagini orizzontalmente con quella originale così da avere in output una riga con immagine vuota immagine con bounding box e cibo e immagine con segmentazione
+            //  - Mettere in un vettore (sostanzialmente che output venga come ora)
+            //  -
+            //  - 
+            //  - VERIFICARE CHE BOUNDING BOX, MASCHERE ECC COINCIDANO (IL PIU' POSSIBILE) CON QUELLE FORNITE PER I TEST
+            //  - Scrivere codice più presentabile, eliminare quello che non serve (eccetto cose di debug) e commentare (in inglese) le varie chiamate a funzione
+            //  - Commentare le funzioni negli header
+            //  - meglio file .hpp o .h? Meglio fare classi?
+            //  - Testare con altre immagini non presenti nel dataset fornito
+            //  - 
+            //  - 
             // TODO (QUANDO TUTTO QUELLO SOPRA E' FINITO):
             //
             //  - Capire la tipologia di cibo (vettore con struttura dati con tipo cibo quantità e forma (posizione dimensione ecc))
@@ -185,12 +220,28 @@ int main(int argc, char** argv) {
 
             // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
             cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, detectorVec, finalBBoxVec);
+            // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
+            cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, detectorVec, finalBBoxVec);
 
             cv::Mat combined;
             cv::hconcat(img, imgWithBoundingBoxandSeg, combined);
             horizontalCombinedVector.push_back(combined);
         }
+            cv::Mat combined;
+            cv::hconcat(img, imgWithBoundingBoxandSeg, combined);
+            horizontalCombinedVector.push_back(combined);
+        }
 
+        //parte Ame
+        //in imgM ci saranno le immagini tagliate, 
+        //imgL solo le immagini matchate al primo giro
+        //in imageNames i nomi rispetto alle imgM
+        imgMatching(imgM,imgL,imageNames,n);
+        
+        
+        /* se volete provare
+        for (const auto& a : imgM)
+            {
         //parte Ame
         //in imgM ci saranno le immagini tagliate, 
         //imgL solo le immagini matchate al primo giro
@@ -257,9 +308,14 @@ int main(int argc, char** argv) {
     cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
         cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
 
-    cv::imwrite("Comple Tray.jpg", combinedImage);
-    cv::imshow("Comple Tray", combinedImage);
-    cv::waitKey(0);
+        std::string trayName = "Complete Tray " + std::to_string(trayNumber);
+        std::string trayNameForSave = trayName + ".jpg";
+
+        cv::imwrite(trayNameForSave, combinedImage);
+        cv::imshow(trayName, combinedImage);
+        //cv::waitKey(0);
+
+    }
 
     return 0;
 }
@@ -278,6 +334,9 @@ cv::Mat boundingBoxSegmentationTester(cv::Mat img, Detector detectorVec, std::ve
         }
     }
 
+    std::cout << "\n\n############## CORNER OF THE BOUNDING BOX" << std::endl;
+    
+    int i = 0;
     std::cout << "\n\n############## CORNER OF THE BOUNDING BOX" << std::endl;
     
     int i = 0;
