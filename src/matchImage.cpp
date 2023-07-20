@@ -47,6 +47,108 @@ std::vector<cv::Mat> loadImage(std::string pathPatch, std::vector<std::string>& 
     return images;
 }
 
+/*
+void leftFood(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n)
+{
+
+    std::vector<size_t> indices(imageNames.size()); 
+    for (size_t i = 0; i < indices.size(); i++) { 
+        indices[i] = i; 
+    } 
+ 
+    // Ordina l'array1 in base all'ordine alfabetico utilizzando l'array di indici 
+    std::sort(indices.begin(), indices.end(), [&](size_t a, size_t b) { 
+        return imageNames[a] < imageNames[b]; 
+    }); 
+ 
+    // Usa l'array di indici ordinato per riordinare anche array2 
+    std::vector<std::string> sortedArray1(imageNames.size()); 
+    std::vector<cv::Mat> sortedArray2(imgM.size()); 
+    for (size_t i = 0; i < indices.size(); i++) { 
+        sortedArray1[i] = imageNames[indices[i]]; 
+        sortedArray2[i] = imgM[indices[i]]; 
+    }
+    
+
+    std::copy(sortedArray2.begin(),sortedArray2.end(),imgM.begin());
+    std::copy(sortedArray1.begin(),sortedArray1.end(),imageNames.begin());
+    
+    
+    for (size_t i = 0; i < imageNames.size(); i++) { 
+    std::string currentName = imageNames[i]; 
+    cv::Mat currentImage = imgM[i]; 
+ 
+    // Controllo se l'elemento corrente è uguale all'elemento precedente 
+    if (i > 0 && currentName == imageNames[i - 1]) { 
+        continue; // Salta l'iterazione se l'elemento è uguale al precedente 
+    } 
+ 
+    // Ciclo for nidificato per confrontare l'elemento corrente con tutti gli altri dello stesso tipo 
+    for (size_t j = i + 1; j < imageNames.size(); j++) { 
+        if (currentName == imageNames[j]) { 
+        cv::Mat greyImage1,greyImage2;
+        cv::cvtColor(currentImage, greyImage1, cv::COLOR_BGR2GRAY);
+        cv::cvtColor(imgM[j], greyImage2, cv::COLOR_BGR2GRAY);
+            int diff = cv::countNonZero(greyImage2) / cv::countNonZero(greyImage1);
+
+            std::cout << "Divido l'immagine " << imageNames[j] << " con l'immagine " << currentName << std::endl;
+            std::cout << "Differenza pixel " << diff << std::endl;
+ 
+
+        } 
+    } 
+}
+    
+*/
+
+void leftFood(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n) 
+{ 
+    std::vector<size_t> indices(imageNames.size()); 
+    for (size_t i = 0; i < indices.size(); i++) { 
+        indices[i] = i; 
+    } 
+ 
+    // Ordina l'array1 in base all'ordine alfabetico utilizzando l'array di indici 
+    std::sort(indices.begin(), indices.end(), [&](size_t a, size_t b) { 
+        return imageNames[a] < imageNames[b]; 
+    }); 
+ 
+    // Usa l'array di indici ordinato per riordinare anche array2 
+    std::vector<std::string> sortedArray1(imageNames.size()); 
+    std::vector<cv::Mat> sortedArray2(imgM.size()); 
+    for (size_t i = 0; i < indices.size(); i++) { 
+        sortedArray1[i] = imageNames[indices[i]]; 
+        sortedArray2[i] = imgM[indices[i]]; 
+    } 
+ 
+    // Copia gli array ordinati nell'originale 
+    imgM = sortedArray2; 
+    imageNames = sortedArray1; 
+ 
+    for (size_t i = 0; i < imageNames.size(); i++) { 
+        std::string currentName = imageNames[i]; 
+        cv::Mat currentImage = imgM[i]; 
+ 
+        // Controllo se l'elemento corrente è uguale all'elemento precedente 
+        if (i > 0 && currentName == imageNames[i - 1]) { 
+            continue; // Salta l'iterazione se l'elemento è uguale al precedente 
+        } 
+ 
+        // Ciclo for nidificato per confrontare l'elemento corrente con tutti gli altri dello stesso tipo 
+        for (size_t j = i + 1; j < imageNames.size(); j++) { 
+            if (currentName == imageNames[j]) { 
+                cv::Mat greyImage1, greyImage2; 
+                cv::cvtColor(currentImage, greyImage1, cv::COLOR_BGR2GRAY); 
+                cv::cvtColor(imgM[j], greyImage2, cv::COLOR_BGR2GRAY); 
+ 
+                int diff = cv::countNonZero(greyImage2) / cv::countNonZero(greyImage1); 
+                std::cout << "Divido l'immagine " << imageNames[j] << " con l'immagine " << currentName << std::endl; 
+                std::cout << "Differenza pixel " << diff << std::endl; 
+            } 
+        } 
+    } 
+}
+
 
 void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n) {
 
@@ -107,7 +209,10 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
 	
 				imageNamesReturn.push_back(imageNames[x]);
 				imgMReturn.push_back(imgL[x]);
-	
+				
+				imgL=imgMReturn;
+				imageNames=imageNamesReturn;
+				/*
 				imgL.clear();
 				imgL.resize(imgMReturn.size());//qua è 2
 				std::copy(imgMReturn.begin(),imgMReturn.end(),imgL.begin());
@@ -115,6 +220,7 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
 				imageNames.clear();
 				imageNames.resize(imageNamesReturn.size());
 				std::copy(imageNamesReturn.begin(),imageNamesReturn.end(),imageNames.begin());
+				*/
     				m--;
     			
     				} else {
