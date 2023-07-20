@@ -70,8 +70,8 @@ int main(int argc, char** argv) {
         
         std::vector<cv::Mat> imgM;
         std::vector<std::string> imageNames;
-        std::vector<cv::Mat> imgL = loadImage(imageNames);
-        int n=0;
+        std::vector<cv::Mat> imgL = loadImage(argv[1], imageNames);
+        int n = 0;
         //fine parte Ame
 
 
@@ -124,7 +124,6 @@ int main(int argc, char** argv) {
                 {n++;}
             }
             //fine parte Ame
-        
 
             /*
             
@@ -134,7 +133,6 @@ int main(int argc, char** argv) {
 
 
             */
-            
 
             // TODO (QUANDO TUTTO QUELLO SOPRA E' FINITO):
             //
@@ -153,8 +151,6 @@ int main(int argc, char** argv) {
             //  - 
             //  - 
 
-
-
             // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
             cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, detectorVec, finalBBoxVec);
 
@@ -162,6 +158,8 @@ int main(int argc, char** argv) {
             cv::hconcat(img, imgWithBoundingBoxandSeg, combined);
             horizontalCombinedVector.push_back(combined);
         }
+
+        std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++QUI" << std::endl;
 
         //parte Ame
         //in imgM ci saranno le immagini tagliate, 

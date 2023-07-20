@@ -5,31 +5,33 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/ximgproc/segmentation.hpp"
 
-
-
 #include <opencv2/features2d.hpp>
-#include <filesystem> 
-
 
 #include "../include/matchImage.h"
 
 
 
-std::vector<cv::Mat> loadImage(std::vector<std::string>& imageNames){
+std::vector<cv::Mat> loadImage(std::string pathPatch, std::vector<std::string>& imageNames){
 
 // Percorso della cartella contenente le immagini 
-    std::string folderPath = "../dataset/imageBase"; 
+    std::string folderPath = pathPatch + "/imageBase/"; 
     //nome
     //std::vector<std::string> imageNames;
     // Vettore per memorizzare le immagini 
-    std::vector<cv::Mat> images; 
+    std::vector<cv::Mat> images;
+
+    std::vector<cv::String> fileInFolderVec;
+    cv::glob(folderPath, fileInFolderVec, false);
     
-       // Ciclo attraverso tutti i file nella cartella 
-    for (const auto& entry : std::filesystem::directory_iterator(folderPath)) { 
+    size_t count = fileInFolderVec.size();
+    for (size_t i = 0; i < count; i++) {
         // Verifica se il file è un'immagine 
-        if (entry.is_regular_file() && entry.path().extension() == ".jpg") { 
+        if (fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".jpg" ||
+            fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".JPG" ||
+            fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".png" ||
+            fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".bmp") { 
             // Carica l'immagine e la aggiunge al vettore 
-            std::string imageName= entry.path().string();
+            std::string imageName = fileInFolderVec[i];
             cv::Mat image = cv::imread(imageName); 
             if (!image.empty()) { 
                 images.push_back(image);
