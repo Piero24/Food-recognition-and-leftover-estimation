@@ -178,6 +178,7 @@ int main(int argc, char** argv) {
         leftFood(imgM,imgL,imageNames,n);
         //a questo punto imgM conterrà le immagini in ordine per tipo( prima tutte di es pasta poi di un altro
         //però è casuale quale sia l'ordine dei tipi
+        //imageNames uguale coi nomi
         /*
         for (const auto& a : imgM)
             {
