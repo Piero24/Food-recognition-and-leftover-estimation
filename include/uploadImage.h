@@ -6,6 +6,6 @@
 #include <opencv2/imgcodecs.hpp>
 #include <opencv2/core/types.hpp>
 
-std::vector<cv::Mat> imgUploader(int argc, char** argv);
+std::vector<cv::Mat> imgUploader(std::string trayPath);
 
 #endif
