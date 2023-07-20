@@ -162,7 +162,7 @@ cv::Rect Detector::rightRectangles(cv::Mat img)
 		// Se l'area è piccola salta l'area
 		if (currentRect.area() > 400){
 		   selectedRects.push_back(currentRect);
-			//std::cout << "\n\n###### Area del contorno: " << areaInt << std::endl;
+		   
 		}
 	}
 									
@@ -260,6 +260,7 @@ std::vector<std::vector<cv::Point>> Detector::rightContours(cv::Rect boundingRec
 			
 			// Se l'area è più grande della prima incontrata, allora la si mette al suo posto, altrimenti tiene quella già nel vettore selectedContours
 			if (currentRect.area() > biggestRect.area()){
+				biggestRect = currentRect;
 				selectedContours.clear();
 				selectedContours.push_back(contour);
 				
@@ -360,7 +361,8 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
 							}
 						}
 						
-						//cv::imshow("BoundingRect", cloned);		 
+						cv::imshow("BoundingRect", cloned);
+						
 						// Trova tutte le forme presenti nella maschera
 						
 						std::vector<std::vector<cv::Point>> contours = detector.rightContours(boundingRect, clonedImg);
@@ -373,13 +375,37 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
            	cv::imshow("Maschera", newVoid);
            	cv::Mat newVoid1 = cv::Mat::zeros(clonedImg.size(), CV_8UC1);
            	cv::bitwise_and(clonedImg1, clonedImg1, newVoid1, newVoid);
-           	cv::imshow("Contorni++++++++", newVoid1);*/
-           	
+           	cv::imshow("Contorni++++++++", newVoid1);
+           	cv::Mat blurredImage;
+						cv::Size kernelSize(21, 21);
+
+						cv::blur(newVoid1, blurredImage, kernelSize);
+						cv::imshow("Blurring", blurredImage);
+						// Calcola il threshold per i canali BGR per separare le due classi
+						int blueThreshold = 70;   // Imposta il threshold per il canale B (blu)
+						int greenThreshold = 80;  // Imposta il threshold per il canale G (verde)
+						int redThreshold = 100;    // Imposta il threshold per il canale R (rosso)
+
+						cv::Mat mask;
+						cv::inRange(blurredImage, cv::Scalar(blueThreshold, greenThreshold, redThreshold),
+								        cv::Scalar(255, 255, 255), mask);
+
+						// Etichetta i pixel di classe 1 (regione colorata) con il colore (0, 255, 0) (verde) nell'immagine originale
+						cv::Mat labeledImage;
+						img.copyTo(labeledImage, mask);
+						
+						// Imposta tutto il resto dei pixel (escludendo quelli nella regione colorata) a nero nell'immagine di output
+						cv::Mat outIMGG = cv::Mat::zeros(img.size(), img.type());
+						labeledImage.copyTo(outIMGG, mask);
+						cv::imshow("Divided", outIMGG);*/
+           
+						//applyWatershed(img,boundingRect,outIMGG);
+						//cv::imshow("Water", outIMGG);
            	
 		        bestRectangles.push_back(boundingRect);
 		        bestContours.push_back(contours);
 		        
-		        //cv::waitKey(0);
+		        cv::waitKey(0);
         }
 
     }
@@ -443,9 +469,69 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
 		
 		// Disegna i rettangoli fuori dai piatti sull'immagine
     for (const auto& rect : rectanglesOutsideCircles) {
+    		cv::Mat empty = cv::Mat::zeros(img.size(), img.type());
+				cv::Mat empty1 = segmentationPreprocessing(img);
+				cv::Mat result(img.size(), CV_8UC3);
+				cv::Mat result0(img.size(), CV_8UC3);
+				cv::Mat result1(img.size(), CV_8UC3);
+				cv::Mat result2(img.size(), CV_8UC3);
         cv::rectangle(outImg, rect, cv::Scalar(0, 0, 255), 10);
+				int x = rect.x;
+				int y = rect.y;
+				int width = rect.width;
+				int height = rect.height;
+									
+				for(int row = y; row < y + height; ++row)
+				{
+					for(int col = x; col < x + width; ++col)
+					{
+						empty.at<cv::Vec3b>(row, col) = empty1.at<cv::Vec3b>(row, col);
+						
+					}
+				}
+				//Find contours for foods in bounding boxes outside dishes
+				cv::Mat kernel0 = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(9,9));
+				cv::erode(empty, result, kernel0);
+				cv::erode(result, result0, kernel0);
+				cv::dilate(result, result1, kernel0);
+				cv::dilate(result1, result2, kernel0);
+				cv::Mat grayasImage;
+				cv::cvtColor(result2, grayasImage, cv::COLOR_BGR2GRAY);
+				// Applica la soglia binaria per creare la maschera
+				cv::Mat finalMask;
+				cv::threshold(grayasImage, finalMask, 1, 255, cv::THRESH_BINARY);
+				std::vector<std::vector<cv::Point>> contours;
+				
+				cv::findContours(finalMask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+				std::vector<std::vector<cv::Point>> selectedContours;
+				if (contours.size()>0)
+				{
+					std::vector<std::vector<cv::Point>> selectedContours;
+					cv::Rect biggestRect = cv::boundingRect(contours[0]);
+					
+					selectedContours.push_back(contours[0]);
+					for (const auto& contour : contours)
+					{
+						cv::Rect currentRect = cv::boundingRect(contour);
+						
+						// Calcola l'area della forma
+						double area = cv::contourArea(contour);
+						int areaInt = static_cast<int>(area);
+						
+						// Se l'area è più grande della prima incontrata, allora la si mette al suo posto, altrimenti tiene quella già nel vettore selectedContours
+						if (currentRect.area() > biggestRect.area()){
+						biggestRect = currentRect;
+						selectedContours.clear();
+						selectedContours.push_back(contour);
+						
+						}
+					}
+					bestContours.push_back(selectedContours);
+				}
+				else{bestContours.push_back(contours);}
     }
-		//cv::imshow("FinalI", outImg);
+    
+		
     for (int i = 0; i < bestContours.size(); i++)
     {
 			for (const auto& contour : bestContours)
@@ -456,36 +542,44 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
 		
 		allDishes.insert(allDishes.end(), rectanglesOutsideCircles.begin(), rectanglesOutsideCircles.end());
 		
-    //cv::imshow("FinalII", outImg);
+    cv::imshow("FinalII", outImg);
     Detector finalDetector(outImg, allDishes, bestContours);
     return finalDetector;
 }
 
-std::vector<cv::Rect> Detector::fromSegmentationToBBox(cv::Mat img, Detector detectorVec, int numOfBoxes) {
-
-  std::vector<cv::Rect> rectsVector = detectorVec.getRectanglesVector();
-  int currNumOfBoxes = rectsVector.size();
-  cv::Mat noBackgroundImg;
-
-  if(currNumOfBoxes > numOfBoxes) {
-      int index;
-          int minArea = rectsVector.at(0).area();
-
-      for(int j = 0; j < rectsVector.size(); j++) {
-          int area = rectsVector.at(j).area();
-          
-          if(area < minArea) {
-              minArea = area;				
-              index = j;
-          }
-      }
-      // Ottenere l'iteratore corrispondente all'elemento da eliminare
-      std::vector<cv::Rect>::iterator it = rectsVector.begin() + index;
-      // Eliminare l'elemento utilizzando il metodo erase()
-      rectsVector.erase(it);
-      noBackgroundImg = img.clone();
+/*void Detector::applyWatershed(const cv::Mat& img, const cv::Rect& boundingRect, cv::Mat& output)
+{
+	cv::Mat mask = cv::Mat::zeros(img.size(), img.type());
+	int x = boundingRect.x;
+	int y = boundingRect.y;
+	int width = boundingRect.width;
+	int height = boundingRect.height;
+									
+	for(int row = y; row < y + height; ++row)
+	{
+		for(int col = x; col < x + width; ++col)
+		{
+			mask.at<cv::Vec3b>(row, col) = img.at<cv::Vec3b>(row, col);
+		}
+	}
+	cv::Mat cloned;
+	img.copyTo(cloned);
+	// Applicazione dell'algoritmo di segmentazione (Watershed) per dividere gli elementi
+  cv::Mat markers(img.size(), CV_32SC1, cv::Scalar(0));
+  cloned.setTo(cv::Scalar(0), ~mask);
+  cv::cvtColor(dividedImage, dividedImage, cv::COLOR_GRAY2BGR);  // Converti l'immagine in formato BGR per il Watershed
+  cv::watershed(dividedImage, markers);
+  
+  // Assegnazione delle etichette ai pixel nell'output
+  output.create(img.size(), CV_8UC1);
+  for (int y = 0; y < output.rows; ++y) {
+  	for (int x = 0; x < output.cols; ++x) {
+  		if (mask.at<uchar>(y, x) == 255) {
+    		output.at<uchar>(y, x) = markers.at<int>(y, x) > 0 ? 255 : 0;
+    	}
+    	else {
+	  	  output.at<uchar>(y, x) = 0;
+	  	}
+	  }
   }
-
-  return rectsVector;
-
-}
+}*/
