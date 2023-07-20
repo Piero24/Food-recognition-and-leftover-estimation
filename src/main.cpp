@@ -110,30 +110,29 @@ int main(int argc, char** argv) {
             std::vector<cv::Rect> finalBBoxVec = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
 
             //parte Ame
-            for (const auto& contour : detectorVec.getContours()) 
-{ 
-    img1 = img.clone(); 
-    cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2); 
- 
-    //canale RGBAlpha 
-    cv::Mat imgRgba = cv::Mat::zeros(img.size(), CV_8UC4); 
-    cv::cvtColor(img1, imgRgba, cv::COLOR_BGR2BGRA); 
-    cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1); 
-    cv::fillPoly(imgMask, contour, cv::Scalar(255)); 
- 
-    // Imposta il canale alfa dell'immagine RGBA utilizzando la maschera 
-    std::vector<cv::Mat> channels; 
-    cv::split(imgRgba, channels); 
-    channels[3] = imgMask;
-    cv::merge(channels, imgRgba);
-    cv::Scalar black(0, 0, 0, 0);
-    imgRgba.setTo(black, imgMask == 0);
- 
-    // Aggiungi l'immagine RGBA risultante al vettore 
-    imgM.push_back(imgRgba);
-    if(i==0)
-    {n++;}
-}
+            for (const auto& contour : detectorVec.getContours()) { 
+                cv::Mat img1 = img.clone(); 
+                cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2); 
+            
+                //canale RGBAlpha 
+                cv::Mat imgRgba = cv::Mat::zeros(img.size(), CV_8UC4); 
+                cv::cvtColor(img1, imgRgba, cv::COLOR_BGR2BGRA); 
+                cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1); 
+                cv::fillPoly(imgMask, contour, cv::Scalar(255)); 
+            
+                // Imposta il canale alfa dell'immagine RGBA utilizzando la maschera 
+                std::vector<cv::Mat> channels; 
+                cv::split(imgRgba, channels); 
+                channels[3] = imgMask;
+                cv::merge(channels, imgRgba);
+                cv::Scalar black(0, 0, 0, 0);
+                imgRgba.setTo(black, imgMask == 0);
+            
+                // Aggiungi l'immagine RGBA risultante al vettore 
+                imgM.push_back(imgRgba);
+                if(i==0)
+                {n++;}
+            }
             //fine parte Ame
 
             /*
@@ -178,7 +177,6 @@ int main(int argc, char** argv) {
 
         //leftFood(imgM,imgL,imageNames,n);
         
-        /* se volete provare
         for (const auto& a : imgM)
             {
 
