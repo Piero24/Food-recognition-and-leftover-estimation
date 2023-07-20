@@ -115,13 +115,13 @@ int main(int argc, char** argv) {
                 cv::Mat img1 = img.clone(); 
                 cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2); 
             
-                //canale RGBAlpha 
+                //channel RGBAlpha 
                 cv::Mat imgRgba = cv::Mat::zeros(img.size(), CV_8UC4); 
                 cv::cvtColor(img1, imgRgba, cv::COLOR_BGR2BGRA); 
                 cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1); 
                 cv::fillPoly(imgMask, contour, cv::Scalar(255)); 
             
-                // Imposta il canale alfa dell'immagine RGBA utilizzando la maschera 
+                //Set the alpha channel of the RGBA image using the mask.
                 std::vector<cv::Mat> channels; 
                 cv::split(imgRgba, channels); 
                 channels[3] = imgMask;
@@ -129,7 +129,7 @@ int main(int argc, char** argv) {
                 cv::Scalar black(0, 0, 0, 0);
                 imgRgba.setTo(black, imgMask == 0);
             
-                // Aggiungi l'immagine RGBA risultante al vettore 
+                // load the image RGBA to the vector 
                 imgM.push_back(imgRgba);
                 if(i==0)
                 {n++;}
@@ -200,13 +200,12 @@ int main(int argc, char** argv) {
         
         */
         
-        /*
+        
         leftFood(imgM,imageNames,diff);
-        //leftFood(imgM,imgL,imageNames,n);
         //a questo punto imgM conterrà le immagini in ordine per tipo
         //imageNames uguale coi nomi
         //in diff la differenza tra i vari tray e quello iniziale
-        
+        /*
         
         for (const auto& a : imgM)
             {
