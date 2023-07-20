@@ -8,5 +8,6 @@
 
 void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n);
 std::vector<cv::Mat> loadImage(std::string pathPatch, std::vector<std::string>& imageNames);
+void leftFood(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n);
 
 #endif
