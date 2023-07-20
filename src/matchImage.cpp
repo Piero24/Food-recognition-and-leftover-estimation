@@ -64,20 +64,20 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
    {
     img1=imgM[k];
     v=0; x=0;
-     
+    
     for(size_t i=0; i< imgL.size(); i++)
     {
      
     img2=imgL[i];
     // Initiate SIFT detector 
-    cv::Ptr<cv::SIFT> sift = cv::SIFT::create(); 
- 
+    cv::Ptr<cv::SIFT> sift = cv::SIFT::create();
 
     // find the keypoints and descriptors with SIFT 
     std::vector<cv::KeyPoint> kp1, kp2; 
-    cv::Mat des1, des2; 
-    sift->detectAndCompute(img1, cv::noArray(), kp1, des1); 
-    sift->detectAndCompute(img2, cv::noArray(), kp2, des2); 
+    cv::Mat des1, des2;
+
+    sift -> detectAndCompute(img1, cv::noArray(), kp1, des1); 
+    sift -> detectAndCompute(img2, cv::noArray(), kp2, des2); 
 
     // FLANN parameters 
     cv::Ptr<cv::FlannBasedMatcher> flann = cv::FlannBasedMatcher::create(); 
@@ -91,7 +91,7 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
             goodMatches.push_back(matches[t][0]); 
         } 
     }
-    
+
     if (goodMatches.size() >v){
 
 		v=goodMatches.size();

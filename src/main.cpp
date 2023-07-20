@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    for (int trayNumber = 1; trayNumber < 9; trayNumber++) {
+    for (int trayNumber = 1; trayNumber < 2; trayNumber++) {
 
         //Parte Ame
         //imgL contiene le immagini totali che dopo andranno tolte
@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
         int numOfBoxes = findRectangularBoundingBoxes(trayVector[0], image0Preprocessed, 1).size();
         
         size_t trayVectorSize = trayVector.size();
-        for (size_t i = 0; i < trayVectorSize; i++) {
+        for (size_t i = 0; i < 1 ; i++) { //trayVectorSize; i++) {
 
             std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
         
@@ -159,16 +159,13 @@ int main(int argc, char** argv) {
             horizontalCombinedVector.push_back(combined);
         }
 
-        std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++QUI" << std::endl;
-
         //parte Ame
         //in imgM ci saranno le immagini tagliate, 
         //imgL solo le immagini matchate al primo giro
         //in imageNames i nomi rispetto alle imgM
-        imgMatching(imgM,imgL,imageNames,n);
+        imgMatching(imgM, imgL, imageNames, n);     
         
-        
-        /* se volete provare
+        //se volete provare
         for (const auto& a : imgM)
             {
 
@@ -189,7 +186,7 @@ int main(int argc, char** argv) {
                 std::cout << "Nome: " << a << std::endl;
             
             }
-        */
+        
         
         //fine parte Ame
 
