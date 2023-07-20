@@ -9,12 +9,12 @@
 #include "../include/uploadImage.h"
 
 
-std::vector<cv::Mat> imgUploader(int argc, char** argv) {
+std::vector<cv::Mat> imgUploader(std::string trayPath) {
 
     std::vector<cv::Mat> trayVector;
 	std::vector<cv::String> fileInFolderVec;
 
-    cv::glob(argv[1], fileInFolderVec, false);
+    cv::glob(trayPath, fileInFolderVec, false);
 
     size_t count = fileInFolderVec.size();
     for (size_t i = 0; i < count; i++) {
