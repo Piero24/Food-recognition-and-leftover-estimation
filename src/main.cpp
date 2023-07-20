@@ -170,7 +170,7 @@ int main(int argc, char** argv) {
         }
 
         //parte Ame
-        imgMatching(imgM,imgL,imageNames,n);
+        imgMatching(imgM, imgL, imageNames, n);
         //in imgM ci sono le immagini tagliate
         //in imageNames i nomi rispetto alle imgM
         //imgL solo le immagini matchate del tray0 al primo giro
