@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    for (int trayNumber = 5; trayNumber < 6; trayNumber++) {
+    for (int trayNumber = 1; trayNumber < 9; trayNumber++) {
 
         //Parte Ame
         //imgL contiene le immagini totali che dopo andranno tolte
