@@ -71,6 +71,7 @@ int main(int argc, char** argv) {
         std::vector<cv::Mat> imgM;
         std::vector<std::string> imageNames;
         std::vector<cv::Mat> imgL = loadImage(argv[1], imageNames);
+        std::vector<double>diff;
         int n = 0;
         //fine parte Ame
 
@@ -170,13 +171,12 @@ int main(int argc, char** argv) {
         }
 
         //parte Ame
-        imgMatching(imgM, imgL, imageNames, n);
+        imgMatching(imgM,imgL,imageNames,n);	
         //in imgM ci sono le immagini tagliate
         //in imageNames i nomi rispetto alle imgM
         //imgL solo le immagini matchate del tray0 al primo giro
-
-        //leftFood(imgM,imgL,imageNames,n);
         
+        /*
         for (const auto& a : imgM)
             {
 
@@ -184,10 +184,10 @@ int main(int argc, char** argv) {
                 cv::waitKey();
             
             }	
-            for (const auto& a : imgL)
+            for (const auto& b : imgL)
             {
                 //cout << "Nome: " << imageNames[x] << endl;
-                cv::imshow("A", a);
+                cv::imshow("B", b);
                 cv::waitKey();
             
             }
@@ -198,8 +198,36 @@ int main(int argc, char** argv) {
             
             }
         
+        */
         
-        //fine parte Ame
+        /*
+        leftFood(imgM,imageNames,diff);
+        //leftFood(imgM,imgL,imageNames,n);
+        //a questo punto imgM conterrà le immagini in ordine per tipo
+        //imageNames uguale coi nomi
+        //in diff la differenza tra i vari tray e quello iniziale
+        
+        
+        for (const auto& a : imgM)
+            {
+
+                cv::imshow("A", a);
+                cv::waitKey();
+            
+            }	
+            for (const auto& b : diff)
+            {
+                //cout << "Nome: " << imageNames[x] << endl;
+                std::cout << "quanto manca ad essere vuoto: " << b << "%"<< std::endl;
+            
+            }
+            
+            for (const auto& a : imageNames)
+            {
+                std::cout << "Nome: " << a << std::endl;
+            
+            }
+        */
 
         cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
 

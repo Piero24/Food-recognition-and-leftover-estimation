@@ -47,8 +47,8 @@ std::vector<cv::Mat> loadImage(std::string pathPatch, std::vector<std::string>& 
     return images;
 }
 
-/*
-void leftFood(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n)
+
+void leftFood(std::vector<cv::Mat>& imgM, std::vector<std::string>& imageNames,std::vector<double>& diff)
 {
 
     std::vector<size_t> indices(imageNames.size()); 
@@ -62,93 +62,59 @@ void leftFood(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector
     }); 
  
     // Usa l'array di indici ordinato per riordinare anche array2 
-    std::vector<std::string> sortedArray1(imageNames.size()); 
-    std::vector<cv::Mat> sortedArray2(imgM.size()); 
+    std::vector<std::string> sortedImageNames(imageNames.size()); 
+    std::vector<cv::Mat> sortedimgM(imgM.size()); 
     for (size_t i = 0; i < indices.size(); i++) { 
-        sortedArray1[i] = imageNames[indices[i]]; 
-        sortedArray2[i] = imgM[indices[i]]; 
+        sortedImageNames[i] = imageNames[indices[i]]; 
+        sortedimgM[i] = imgM[indices[i]]; 
     }
     
+    imgM=sortedimgM;
+    imageNames=sortedImageNames;   
+    std::string currentName = imageNames[0];
+     cv::Mat currentImage = imgM[0]; 
+    for (size_t i = 0; i < imageNames.size()-1; i++) { 
+    std::string nextName = imageNames[i+1]; 
+    cv::Mat nextImage = imgM[i+1]; 
+ 
+    if(currentName!=nextName)
+    {
+    	currentName=nextName;
+    	currentImage=nextImage;
+    }
+    else{
+    if(currentName==nextName)
+    {  
+        cv::Mat alpha; 
+    	cv::extractChannel(currentImage, alpha, 3); 
+ 
+    	// Crea una maschera per selezionare solo i pixel con alpha diverso da 0 (non trasparenti) 
+    	cv::Mat mask; 
+    	cv::compare(alpha, 0, mask, cv::CMP_GT); 
+ 
+    	// Conta i pixel non trasparenti 
+    	int count = cv::countNonZero(mask);
+        
+        
+        cv::Mat alpha1; 
+    	cv::extractChannel(nextImage, alpha1, 3); 
+ 
+    	// Crea una maschera per selezionare solo i pixel con alpha diverso da 0 (non trasparenti) 
+    	cv::Mat mask1; 
+    	cv::compare(alpha1, 0, mask1, cv::CMP_GT); 
 
-    std::copy(sortedArray2.begin(),sortedArray2.end(),imgM.begin());
-    std::copy(sortedArray1.begin(),sortedArray1.end(),imageNames.begin());
+            double diff1 = (static_cast<double>(cv::countNonZero(mask1)) / static_cast<double>(cv::countNonZero(mask)))*100;
+            if(diff1>100)
+            diff1=100;
+            diff.push_back(diff1);
+      }
+      }
+ 
+
+   }
+   
     
-    
-    for (size_t i = 0; i < imageNames.size(); i++) { 
-    std::string currentName = imageNames[i]; 
-    cv::Mat currentImage = imgM[i]; 
- 
-    // Controllo se l'elemento corrente è uguale all'elemento precedente 
-    if (i > 0 && currentName == imageNames[i - 1]) { 
-        continue; // Salta l'iterazione se l'elemento è uguale al precedente 
-    } 
- 
-    // Ciclo for nidificato per confrontare l'elemento corrente con tutti gli altri dello stesso tipo 
-    for (size_t j = i + 1; j < imageNames.size(); j++) { 
-        if (currentName == imageNames[j]) { 
-        cv::Mat greyImage1,greyImage2;
-        cv::cvtColor(currentImage, greyImage1, cv::COLOR_BGR2GRAY);
-        cv::cvtColor(imgM[j], greyImage2, cv::COLOR_BGR2GRAY);
-            int diff = cv::countNonZero(greyImage2) / cv::countNonZero(greyImage1);
-
-            std::cout << "Divido l'immagine " << imageNames[j] << " con l'immagine " << currentName << std::endl;
-            std::cout << "Differenza pixel " << diff << std::endl;
- 
-
-        } 
-    } 
 }
-    
-*/
-
-void leftFood(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n) 
-{ 
-    std::vector<size_t> indices(imageNames.size()); 
-    for (size_t i = 0; i < indices.size(); i++) { 
-        indices[i] = i; 
-    } 
- 
-    // Ordina l'array1 in base all'ordine alfabetico utilizzando l'array di indici 
-    std::sort(indices.begin(), indices.end(), [&](size_t a, size_t b) { 
-        return imageNames[a] < imageNames[b]; 
-    }); 
- 
-    // Usa l'array di indici ordinato per riordinare anche array2 
-    std::vector<std::string> sortedArray1(imageNames.size()); 
-    std::vector<cv::Mat> sortedArray2(imgM.size()); 
-    for (size_t i = 0; i < indices.size(); i++) { 
-        sortedArray1[i] = imageNames[indices[i]]; 
-        sortedArray2[i] = imgM[indices[i]]; 
-    } 
- 
-    // Copia gli array ordinati nell'originale 
-    imgM = sortedArray2; 
-    imageNames = sortedArray1; 
- 
-    for (size_t i = 0; i < imageNames.size(); i++) { 
-        std::string currentName = imageNames[i]; 
-        cv::Mat currentImage = imgM[i]; 
- 
-        // Controllo se l'elemento corrente è uguale all'elemento precedente 
-        if (i > 0 && currentName == imageNames[i - 1]) { 
-            continue; // Salta l'iterazione se l'elemento è uguale al precedente 
-        } 
- 
-        // Ciclo for nidificato per confrontare l'elemento corrente con tutti gli altri dello stesso tipo 
-        for (size_t j = i + 1; j < imageNames.size(); j++) { 
-            if (currentName == imageNames[j]) { 
-                cv::Mat greyImage1, greyImage2; 
-                cv::cvtColor(currentImage, greyImage1, cv::COLOR_BGR2GRAY); 
-                cv::cvtColor(imgM[j], greyImage2, cv::COLOR_BGR2GRAY); 
- 
-                int diff = cv::countNonZero(greyImage2) / cv::countNonZero(greyImage1); 
-                std::cout << "Divido l'immagine " << imageNames[j] << " con l'immagine " << currentName << std::endl; 
-                std::cout << "Differenza pixel " << diff << std::endl; 
-            } 
-        } 
-    } 
-}
-
 
 void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n) {
 
@@ -166,20 +132,20 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
    {
     img1=imgM[k];
     v=0; x=0;
-    
+     
     for(size_t i=0; i< imgL.size(); i++)
     {
      
     img2=imgL[i];
     // Initiate SIFT detector 
-    cv::Ptr<cv::SIFT> sift = cv::SIFT::create();
+    cv::Ptr<cv::SIFT> sift = cv::SIFT::create(); 
+ 
 
     // find the keypoints and descriptors with SIFT 
     std::vector<cv::KeyPoint> kp1, kp2; 
-    cv::Mat des1, des2;
-
-    sift -> detectAndCompute(img1, cv::noArray(), kp1, des1); 
-    sift -> detectAndCompute(img2, cv::noArray(), kp2, des2); 
+    cv::Mat des1, des2; 
+    sift->detectAndCompute(img1, cv::noArray(), kp1, des1); 
+    sift->detectAndCompute(img2, cv::noArray(), kp2, des2); 
 
     // FLANN parameters 
     cv::Ptr<cv::FlannBasedMatcher> flann = cv::FlannBasedMatcher::create(); 
@@ -193,7 +159,7 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
             goodMatches.push_back(matches[t][0]); 
         } 
     }
-
+    
     if (goodMatches.size() >v){
 
 		v=goodMatches.size();
