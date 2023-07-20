@@ -13,11 +13,10 @@
 
 std::vector<cv::Mat> loadImage(std::string pathPatch, std::vector<std::string>& imageNames){
 
-// Percorso della cartella contenente le immagini 
+// Path of the images 
     std::string folderPath = pathPatch + "/imageBase/"; 
-    //nome
-    //std::vector<std::string> imageNames;
-    // Vettore per memorizzare le immagini 
+
+    // Vector for load the images
     std::vector<cv::Mat> images;
 
     std::vector<cv::String> fileInFolderVec;
@@ -25,7 +24,7 @@ std::vector<cv::Mat> loadImage(std::string pathPatch, std::vector<std::string>& 
     
     size_t count = fileInFolderVec.size();
     for (size_t i = 0; i < count; i++) {
-        // Verifica se il file è un'immagine 
+        // Verify if it is an images
         if (fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".jpg" ||
             fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".JPG" ||
             fileInFolderVec[i].substr(fileInFolderVec[i].size() - 4) == ".png" ||
@@ -56,12 +55,12 @@ void leftFood(std::vector<cv::Mat>& imgM, std::vector<std::string>& imageNames,s
         indices[i] = i; 
     } 
  
-    // Ordina l'array1 in base all'ordine alfabetico utilizzando l'array di indici 
+    // Sort imageNames based on alphabetical order using the translated index array.
     std::sort(indices.begin(), indices.end(), [&](size_t a, size_t b) { 
         return imageNames[a] < imageNames[b]; 
     }); 
  
-    // Usa l'array di indici ordinato per riordinare anche array2 
+    // // Use the sorted index array to reorder imgM as well
     std::vector<std::string> sortedImageNames(imageNames.size()); 
     std::vector<cv::Mat> sortedimgM(imgM.size()); 
     for (size_t i = 0; i < indices.size(); i++) { 
@@ -85,21 +84,16 @@ void leftFood(std::vector<cv::Mat>& imgM, std::vector<std::string>& imageNames,s
     else{
     if(currentName==nextName)
     {  
+    	// Create two masks to select only the pixels with alpha different from 0.
         cv::Mat alpha; 
     	cv::extractChannel(currentImage, alpha, 3); 
  
-    	// Crea una maschera per selezionare solo i pixel con alpha diverso da 0 (non trasparenti) 
     	cv::Mat mask; 
     	cv::compare(alpha, 0, mask, cv::CMP_GT); 
- 
-    	// Conta i pixel non trasparenti 
-    	int count = cv::countNonZero(mask);
-        
-        
+      
         cv::Mat alpha1; 
     	cv::extractChannel(nextImage, alpha1, 3); 
  
-    	// Crea una maschera per selezionare solo i pixel con alpha diverso da 0 (non trasparenti) 
     	cv::Mat mask1; 
     	cv::compare(alpha1, 0, mask1, cv::CMP_GT); 
 
@@ -116,6 +110,11 @@ void leftFood(std::vector<cv::Mat>& imgM, std::vector<std::string>& imageNames,s
     
 }
 
+
+
+   //imgM contiene le immagini tagliate
+   //imageNames contiente i nomi tutti all'inizio tutti quelli caricati, poi resetta e aggiunge solo quelli di interesse(n)
+   //ImgL le immagini tuttiutti all'inizio tutti quelli caricati, poi resetta e aggiunge solo quelli di interesse(n)
 void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vector<std::string>& imageNames, int n) {
 
    std::vector<cv::Mat> imgMReturn;
@@ -124,9 +123,6 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
    double v=0; int x=0;
    int m=n-1;
    
-   //imgM contiene le immagini tagliate
-   //imageNames contiente i nomi tutti all'inizio tutti quelli caricati, poi resetta e aggiunge solo quelli di interesse(n)
-   //ImgL le immagini tuttiutti all'inizio tutti quelli caricati, poi resetta e aggiunge solo quelli di interesse(n)
 
    for(int k=0; k<imgM.size();k++)
    {
@@ -140,7 +136,6 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
     // Initiate SIFT detector 
     cv::Ptr<cv::SIFT> sift = cv::SIFT::create(); 
  
-
     // find the keypoints and descriptors with SIFT 
     std::vector<cv::KeyPoint> kp1, kp2; 
     cv::Mat des1, des2; 
@@ -152,16 +147,17 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
     std::vector<std::vector<cv::DMatch>> matches; 
     flann->knnMatch(des1, des2, matches, 2); 
  
-    // Need to draw only good matches, so create a mask 
+    // keep only the good matches
     std::vector<cv::DMatch> goodMatches; 
     for (size_t t = 0; t < matches.size(); t++) { 
-        if (matches[t][0].distance < 0.67 * matches[t][1].distance) { //ottimale tra 0,67 e 0,7
+    //optimal beetween 0,67 e 0,7
+        if (matches[t][0].distance < 0.67 * matches[t][1].distance) { 
             goodMatches.push_back(matches[t][0]); 
         } 
     }
     
     if (goodMatches.size() >v){
-
+		//keep track of the best matches
 		v=goodMatches.size();
 		x=i;
     }
@@ -172,24 +168,16 @@ void imgMatching(std::vector<cv::Mat> imgM, std::vector<cv::Mat>& imgL, std::vec
 		imgMReturn.push_back(imgL[x]);
 		m--;
 		} else if(m==0) {
-	
+				//find the match of the first tray, and save it
 				imageNamesReturn.push_back(imageNames[x]);
 				imgMReturn.push_back(imgL[x]);
 				
 				imgL=imgMReturn;
 				imageNames=imageNamesReturn;
-				/*
-				imgL.clear();
-				imgL.resize(imgMReturn.size());//qua è 2
-				std::copy(imgMReturn.begin(),imgMReturn.end(),imgL.begin());
-
-				imageNames.clear();
-				imageNames.resize(imageNamesReturn.size());
-				std::copy(imageNamesReturn.begin(),imageNamesReturn.end(),imageNames.begin());
-				*/
     				m--;
     			
     				} else {
+    				//push the other
     			imageNames.push_back(imageNames[x]);
 		}
     	}
