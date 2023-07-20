@@ -175,8 +175,10 @@ int main(int argc, char** argv) {
         //in imageNames i nomi rispetto alle imgM
         //imgL solo le immagini matchate del tray0 al primo giro
 
-        //leftFood(imgM,imgL,imageNames,n);
-        
+        leftFood(imgM,imgL,imageNames,n);
+        //a questo punto imgM conterrà le immagini in ordine per tipo( prima tutte di es pasta poi di un altro
+        //però è casuale quale sia l'ordine dei tipi
+        /*
         for (const auto& a : imgM)
             {
 
@@ -197,6 +199,7 @@ int main(int argc, char** argv) {
                 std::cout << "Nome: " << a << std::endl;
             
             }
+        */
         
         
         //fine parte Ame
