@@ -23,13 +23,14 @@ public:
     const cv::Mat getImage() const;
     const std::vector<cv::Rect> getRectanglesVector() const;
     const std::vector<std::vector<std::vector<cv::Point>>> getContours() const;
-    Detector subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std::vector<cv::Rect>& rectanglesVector);
+    Detector subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std::vector<cv::Rect>& rectanglesVector, int numOfBoxes);
     std::vector<cv::Rect> findRectanglesOutsideCircles(const std::vector<cv::Rect>& rectanglesVector, const std::vector<cv::Vec3f>& circlesVector);
 	cv::Mat noWhiteOnImg(cv::Mat img, int value1, int value2);
 	cv::Mat test_2(cv::Mat img);
 	cv::Rect rightRectangles(cv::Mat img);
 	std::vector<std::vector<cv::Point>> rightContours(cv::Rect boundingRect, cv::Mat img);
-    std::vector<cv::Rect> fromSegmentationToBBox(cv::Mat img, Detector detectorVec, int numOfBoxes);
+    std::vector<std::vector<std::vector<cv::Point>>> removeExtra(cv::Mat img, std::vector<std::vector<std::vector<cv::Point>>> detectorVec, int numOfBoxes);
+    Detector fromSegmentationToBBox(cv::Mat img, Detector detectorVec, int numOfBoxes);
 };
 
 #endif

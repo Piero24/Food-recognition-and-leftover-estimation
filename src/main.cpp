@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    for (int trayNumber = 1; trayNumber < 9; trayNumber++) {
+    for (int trayNumber = 5; trayNumber < 6; trayNumber++) {
 
         //Parte Ame
         //imgL contiene le immagini totali che dopo andranno tolte
@@ -106,11 +106,11 @@ int main(int argc, char** argv) {
             // Ricrea la bounding box finale mergiando i metodi precedenti
             Detector detector;
             Detector detectorVec;
-            detectorVec = detector.subjectIsolator(img, circlesVector, rectanglesVector);
-            std::vector<cv::Rect> finalBBoxVec = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
+            detectorVec = detector.subjectIsolator(img, circlesVector, rectanglesVector, numOfBoxes);
+            Detector finalBBoxDetect = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
 
             //parte Ame
-            for (const auto& contour : detectorVec.getContours()) { 
+            for (const auto& contour : finalBBoxDetect.getContours()) { 
                 cv::Mat img1 = img.clone(); 
                 cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2); 
             
@@ -162,7 +162,7 @@ int main(int argc, char** argv) {
             //  - 
 
             // DA COMMENTARE FINITO TUTTO VALIDO SOLO PER DEBUG
-            cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, detectorVec, finalBBoxVec);
+            cv::Mat imgWithBoundingBoxandSeg = boundingBoxSegmentationTester(img, finalBBoxDetect, finalBBoxDetect.getRectanglesVector());
 
             cv::Mat combined;
             cv::hconcat(img, imgWithBoundingBoxandSeg, combined);

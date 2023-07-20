@@ -1,4 +1,5 @@
 #include <iostream>
+#include <vector>
 
 #include "opencv2/core.hpp"
 #include <opencv2/highgui.hpp>
@@ -272,7 +273,7 @@ std::vector<std::vector<cv::Point>> Detector::rightContours(cv::Rect boundingRec
   
 }
 
-Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std::vector<cv::Rect>& rectanglesVector) {
+Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesVector, std::vector<cv::Rect>& rectanglesVector, int numOfBoxes) {
     
     cv::Mat clonedImg = img.clone();
     cv::Mat rectanglesMask = cv::Mat::zeros(clonedImg.size(), CV_8UC1);
@@ -584,9 +585,11 @@ Detector Detector::subjectIsolator(cv::Mat img, std::vector<cv::Vec3f>& circlesV
   }
 }*/
 
-std::vector<cv::Rect> Detector::fromSegmentationToBBox(cv::Mat img, Detector detectorVec, int numOfBoxes) {
+
+Detector Detector::fromSegmentationToBBox(cv::Mat img, Detector detectorVec, int numOfBoxes) {
 
   std::vector<cv::Rect> rectsVector = detectorVec.getRectanglesVector();
+  std::vector<std::vector<std::vector<cv::Point>>> contoursVector = detectorVec.getContours();
   int currNumOfBoxes = rectsVector.size();
   cv::Mat noBackgroundImg;
 
@@ -606,9 +609,19 @@ std::vector<cv::Rect> Detector::fromSegmentationToBBox(cv::Mat img, Detector det
       std::vector<cv::Rect>::iterator it = rectsVector.begin() + index;
       // Eliminare l'elemento utilizzando il metodo erase()
       rectsVector.erase(it);
+
+	  std::vector<std::vector<cv::Point>>& contourGroupToRemove = contoursVector[index];
+	  std::vector<std::vector<std::vector<cv::Point>>>::iterator itt = std::find(contoursVector.begin(), contoursVector.end(), contourGroupToRemove);
+	  
+	  if (itt != contoursVector.end()) {
+		contoursVector.erase(itt);
+		}
+
       noBackgroundImg = img.clone();
   }
 
-  return rectsVector;
+  Detector detector1(img, rectsVector, contoursVector);
+
+  return detector1;
 
 }
