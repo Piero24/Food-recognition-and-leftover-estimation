@@ -1,4 +1,4 @@
-// clear && make && ./Food-Recognition ./Food-recognition-and-leftover-estimation/dataset
+// clear && make && ./Food-Recognition ./Food-recognition-and-leftover-estimation/dataset/tray1/
 
 #include <iostream>
 #include "opencv2/core.hpp"
@@ -127,6 +127,32 @@ int main(int argc, char** argv) {
 
             
             //fine parte Ame
+        // Ricrea la bounding box finale mergiando i metodi precedenti
+        Detector detector;
+        Detector detectorVec;
+        detectorVec = detector.subjectIsolator(img, circlesVector, rectanglesVector);
+        std::vector<cv::Rect> finalBBoxVec = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
+
+
+        //parte Ame
+	cv::Mat img1;
+	for (const auto& contour : detectorVec.getContours())
+	{
+		img1=img.clone();
+		cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2);
+		cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1);
+		cv::fillPoly(imgMask, contour, cv::Scalar(255,255,255));
+		cv::Mat imgFull = cv::Mat::zeros(img.size(), CV_8UC1);
+		cv::bitwise_and(img, img, imgFull, imgMask);
+		imgM.push_back(imgFull);
+		if(i==0)
+		{n++;}
+	}
+
+	
+	//fine parte Ame
+	
+        /*
         
             /*
             
@@ -197,16 +223,43 @@ int main(int argc, char** argv) {
         
         //fine parte Ame
 
+    //parte Ame
+    //in imgM ci saranno le immagini tagliate, 
+    //imgL solo le immagini matchate al primo giro
+    //in imageNames i nomi rispetto alle imgM
+    imgMatching(imgM,imgL,imageNames,n);
+    
+    
+    /* se volete provare
+    for (const auto& a : imgM)
+		{
+
+		     cv::imshow("A", a);
+		     cv::waitKey();
+		
+		}	
+		for (const auto& a : imgL)
+		{
+		     //cout << "Nome: " << imageNames[x] << endl;
+		     cv::imshow("A", a);
+		     cv::waitKey();
+		
+		}
+		
+		for (const auto& a : imageNames)
+		{
+		     std::cout << "Nome: " << a << std::endl;
+		
+		}
+	*/
+    
+    //fine parte Ame
+    cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
         cv::Mat combinedImage = pushOutTray(horizontalCombinedVector);
 
-        std::string trayName = "Complete Tray " + std::to_string(trayNumber);
-        std::string trayNameForSave = trayName + ".jpg";
-
-        cv::imwrite(trayNameForSave, combinedImage);
-        cv::imshow(trayName, combinedImage);
-        //cv::waitKey(0);
-
-    }
+    cv::imwrite("Comple Tray.jpg", combinedImage);
+    cv::imshow("Comple Tray", combinedImage);
+    cv::waitKey(0);
 
     return 0;
 }
