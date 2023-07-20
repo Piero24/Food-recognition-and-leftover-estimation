@@ -60,7 +60,7 @@ int main(int argc, char** argv) {
         return 1;
     }
 
-    for (int trayNumber = 1; trayNumber < 2; trayNumber++) {
+    for (int trayNumber = 1; trayNumber < 9; trayNumber++) {
 
         //Parte Ame
         //imgL contiene le immagini totali che dopo andranno tolte
@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
         int numOfBoxes = findRectangularBoundingBoxes(trayVector[0], image0Preprocessed, 1).size();
         
         size_t trayVectorSize = trayVector.size();
-        for (size_t i = 0; i < 1 ; i++) { //trayVectorSize; i++) {
+        for (size_t i = 0; i < trayVectorSize; i++) {
 
             std::cout << "\n\n######################################## START IMAGE N: " << i + 1 << std::endl;
         
