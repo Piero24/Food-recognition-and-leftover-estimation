@@ -171,7 +171,7 @@ int main(int argc, char** argv) {
         }
 
         //parte Ame
-        imgMatching(imgM,imgL,imageNames,n);	
+        imgMatching(imgM, imgL, imageNames, n);	
         //in imgM ci sono le immagini tagliate
         //in imageNames i nomi rispetto alle imgM
         //imgL solo le immagini matchate del tray0 al primo giro
@@ -201,7 +201,7 @@ int main(int argc, char** argv) {
         */
         
         
-        leftFood(imgM,imageNames,diff);
+        leftFood(imgM, imageNames, diff);
         //a questo punto imgM conterrà le immagini in ordine per tipo
         //imageNames uguale coi nomi
         //in diff la differenza tra i vari tray e quello iniziale
