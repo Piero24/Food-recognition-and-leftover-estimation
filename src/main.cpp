@@ -110,19 +110,30 @@ int main(int argc, char** argv) {
             std::vector<cv::Rect> finalBBoxVec = detector.fromSegmentationToBBox(img, detectorVec, numOfBoxes);
 
             //parte Ame
-            cv::Mat img1;
-            for (const auto& contour : detectorVec.getContours())
-            {
-                img1=img.clone();
-                cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2);
-                cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1);
-                cv::fillPoly(imgMask, contour, cv::Scalar(255,255,255));
-                cv::Mat imgFull = cv::Mat::zeros(img.size(), CV_8UC1);
-                cv::bitwise_and(img, img, imgFull, imgMask);
-                imgM.push_back(imgFull);
-                if(i==0)
-                {n++;}
-            }
+            for (const auto& contour : detectorVec.getContours()) 
+{ 
+    img1 = img.clone(); 
+    cv::drawContours(img1, contour, -1, cv::Scalar(0, 0, 0), 2); 
+ 
+    //canale RGBAlpha 
+    cv::Mat imgRgba = cv::Mat::zeros(img.size(), CV_8UC4); 
+    cv::cvtColor(img1, imgRgba, cv::COLOR_BGR2BGRA); 
+    cv::Mat imgMask = cv::Mat::zeros(img.size(), CV_8UC1); 
+    cv::fillPoly(imgMask, contour, cv::Scalar(255)); 
+ 
+    // Imposta il canale alfa dell'immagine RGBA utilizzando la maschera 
+    std::vector<cv::Mat> channels; 
+    cv::split(imgRgba, channels); 
+    channels[3] = imgMask;
+    cv::merge(channels, imgRgba);
+    cv::Scalar black(0, 0, 0, 0);
+    imgRgba.setTo(black, imgMask == 0);
+ 
+    // Aggiungi l'immagine RGBA risultante al vettore 
+    imgM.push_back(imgRgba);
+    if(i==0)
+    {n++;}
+}
             //fine parte Ame
 
             /*
@@ -162,11 +173,12 @@ int main(int argc, char** argv) {
         std::cout << "++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++QUI" << std::endl;
 
         //parte Ame
-        //in imgM ci saranno le immagini tagliate, 
-        //imgL solo le immagini matchate al primo giro
-        //in imageNames i nomi rispetto alle imgM
         imgMatching(imgM,imgL,imageNames,n);
-        
+        //in imgM ci sono le immagini tagliate
+        //in imageNames i nomi rispetto alle imgM
+        //imgL solo le immagini matchate del tray0 al primo giro
+
+        //leftFood(imgM,imgL,imageNames,n);
         
         /* se volete provare
         for (const auto& a : imgM)
