@@ -16,14 +16,15 @@ typedef std::tuple<std::string, cv::Mat> StringMatTuple;
 class Food {
 public:
     std::string name;
+    int foodNumber;
     std::vector<cv::Point> contour;
     std::vector<cv::DMatch> matches;
     cv::Scalar color;
 
 
     // Class constructor
-    Food(const std::string& str,  const std::vector<cv::Point>& points, const cv::Scalar& clrs, const std::vector<cv::DMatch>& dmatches = std::vector<cv::DMatch>())
-        : name(str), contour(points), matches(dmatches), color(clrs) {
+    Food(const std::string& str, const int& num, const std::vector<cv::Point>& points, const cv::Scalar& clrs, const std::vector<cv::DMatch>& dmatches = std::vector<cv::DMatch>())
+        : name(str), foodNumber(num), contour(points), matches(dmatches), color(clrs) {
     }
 };
 /**

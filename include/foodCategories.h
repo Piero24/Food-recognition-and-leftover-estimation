@@ -15,6 +15,7 @@
 
 struct FoodResult {
     std::string foodName;
+    int foodNumber;
     cv::Scalar foodColor;
 };
 /**

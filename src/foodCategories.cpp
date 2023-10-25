@@ -19,81 +19,95 @@ FoodResult foodSelection(cv::Mat img, cv::Mat clusteredImg, cv::Mat labels, cv::
 
     if (pastaWithPesto(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Pasta with pesto";
+        result.foodNumber = 1;
         result.foodColor = cv::Scalar(0, 0, 255);   // Red
         return result;
 
     } else if (pastaWithTomatoSauce(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Pasta with tomato sauce";
+        result.foodNumber = 2;
         result.foodColor = cv::Scalar(0, 255, 0);   // Green
         return result;
 
     } else if (pastaWithMeatSauce(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Pasta with meat sauce";
+        result.foodNumber = 3;
         result.foodColor = cv::Scalar(255, 0, 0);   // Blue
         return result;
 
     } else if (pastaWithClamsMussels(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Pasta with clams and mussels";
+        result.foodNumber = 4;
         result.foodColor = cv::Scalar(255, 0, 255); // Magenta
         return result;
 
 
     } else if (pilawRice(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Pilaw rice with peppers and peas";
+        result.foodNumber = 5;
         result.foodColor = cv::Scalar(0, 255, 255); // Cyan
         return result;
 
 
     } else if (grilledPorkCutlet(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Grilled pork cutlet";
+        result.foodNumber = 6;
         result.foodColor = cv::Scalar(255, 255, 0); // Yellow
         return result;
 
 
     } else if (fishCutlet(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Fish cutlet";
+        result.foodNumber = 7;
         result.foodColor = cv::Scalar(128, 0, 128); // Viola
         return result;
 
 
     } else if (rabbit(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Rabbit";
+        result.foodNumber = 8;
         result.foodColor = cv::Scalar(0, 128, 128); // Dark green
         return result;
 
 
     } else if (seafoodSalad(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Seafood salad";
+        result.foodNumber = 9;
         result.foodColor = cv::Scalar(128, 128, 0); // Orange
         return result;
 
 
     } else if (beans(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Beans";
+        result.foodNumber = 10;
         result.foodColor = cv::Scalar(255, 165, 0); // Dark orange
         return result;
 
 
     } else if (basilPotatoes(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Basil potatoes";
+        result.foodNumber = 11;
         result.foodColor = cv::Scalar(0, 128, 255); // Light blue
         return result;
 
 
     } else if (salad(img, clusteredImg, pixelColorVector)) {
         result.foodName = "Salad";
+        result.foodNumber = 12;
         result.foodColor = cv::Scalar(255, 128, 0); // Light red
         return result;
 
 
     } else if (bread(img, clusteredImg, pixelColorVector)) {  
         result.foodName = "Bread";
+        result.foodNumber = 13;
         result.foodColor = cv::Scalar(128, 128, 128); // Grey
         return result;
 
 
     } else {
         result.foodName = "None";
+        result.foodNumber = 0;
         result.foodColor = cv::Scalar(0, 0, 0); // Black
         return result;
 

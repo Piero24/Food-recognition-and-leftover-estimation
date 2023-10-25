@@ -186,7 +186,7 @@ std::vector<Food> imgMatching(cv::Mat img, std::vector<StringMatTuple>& patchVec
                 }
             }
 
-            Food detectedFood(nameBestFoodDetected, cnt, cv::Scalar(0, 0, 255), BestGoodMatches);
+            Food detectedFood(nameBestFoodDetected, 0, cnt, cv::Scalar(0, 0, 255), BestGoodMatches);
             foodFounded.push_back(detectedFood);
 
         }
@@ -240,7 +240,7 @@ std::vector<Food> foodIdentifier(cv::Mat img, std::vector<std::vector<cv::Point>
         }
 
         FoodResult strOuput = foodSelection(contoursImg, clusteredImage, labels, centers);
-        Food detectedFood(strOuput.foodName, foodContours[i], strOuput.foodColor);
+        Food detectedFood(strOuput.foodName, strOuput.foodNumber, foodContours[i], strOuput.foodColor);
         foodFounded.push_back(detectedFood);
     }
     
