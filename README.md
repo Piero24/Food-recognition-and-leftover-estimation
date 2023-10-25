@@ -38,7 +38,7 @@
 
 </p>
 <br/>
-<img src="./LaTex/Images/IntroPhoto.png">
+<img src="https://github.com/Piero24/Food-recognition-and-leftover-estimation/blob/main/LaTex/Images/IntroPhoto.png">
 <br/>
 <br/>
 
