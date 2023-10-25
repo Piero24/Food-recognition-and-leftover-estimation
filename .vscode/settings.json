@@ -85,5 +85,8 @@
         "utility": "cpp",
         "stop_token": "cpp",
         "cinttypes": "cpp"
-    }
+    },
+    "cSpell.words": [
+        "itroduction"
+    ]
 }
