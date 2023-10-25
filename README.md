@@ -47,7 +47,11 @@
 <p>
     The project was developed in C++ using the OpenCV library and employing image processing techniques learned during the Computer Vision course.
 
-    It's important to note that the code could have been written using Deep Learning approaches (Not Machine Learning), which would have significantly simplified and improved food detection. However, I chose to develop the project exclusively with the knowledge acquired during the course to apply what I've learned and directly tackle the challenges and problems.
+    It's important to note that the code could have been written using Deep Learning 
+    approaches (Not Machine Learning), which would have significantly simplified and 
+    improved food detection. However, I chose to develop the project exclusively with 
+    the knowledge acquired during the course to apply what I've learned and directly 
+    tackle the challenges and problems.
 </p>
 <br/>
 <p align="center">
