@@ -6,7 +6,7 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/ximgproc/segmentation.hpp"
 
-#include "../include/rectangularBoundingBoxes.hpp"
+#include "../include/rectangularBoundingBoxes.h"
 
 
 std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2, int num) {
@@ -17,6 +17,7 @@ std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2, in
 
     std::vector<cv::Rect> rects = recSegmentation(clonedImg, "f");
 
+    // DEBUGGING
     //std::cout << "Total Number of Region Proposals: " << rects.size() << std::endl;
     
     std::sort(rects.begin(), rects.end(), compareRectangles);
@@ -45,16 +46,21 @@ std::vector<cv::Rect> findRectangularBoundingBoxes(cv::Mat img, cv::Mat img2, in
             double density = static_cast<double>(nonBlackPixelCount) / (roi.width * roi.height);
 
             if (density > 0.22) {
-                if (num == 0){
-                    std::cout << "\U0001F7E2" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
-                }
+                // DEBUGGING
+                // if (num == 0){
+                //     std::cout << "\U0001F7E2" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " 
+                //     Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+                // }
                 finalVector.push_back(outerRectangles[j]);
 
-            } else {
-                if (num == 0){
-                    std::cout << "\U0001F534" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
-                }
             }
+            // DEBUGGING
+            // else {
+            //     if (num == 0){
+            //         std::cout << "\U0001F534" << "  Rect: " << outerRectangles[j] << " Area: " << roi.width * roi.height << " 
+            //         Density: " << density << " Non Black Pixel: " << nonBlackPixelCount << std::endl;
+            //     }
+            // }
             
         }
         else {
@@ -110,7 +116,7 @@ std::vector<cv::Rect> pushOut(const std::vector<cv::Rect>& rectangles) {
 
     for (const cv::Rect& rect : rectangles) {
         int areaRect = rect.width * rect.width;
-        //if ((areaRect > 50800) && (areaRect  < 428800)) {
+        
         if ((areaRect > 20800) && (areaRect < 428800)) {
             result.push_back(rect);
         }

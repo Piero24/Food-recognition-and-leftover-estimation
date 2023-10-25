@@ -14,25 +14,25 @@ cv::Mat pushOutTray(std::vector<cv::Mat> hcombinedVec) {
     int combinedWidth = hcombinedVec[0].cols;
     int spacing = 15;
 
-    // Calcola la larghezza totale dell'immagine combinata
+    // Calculate the total width of the combined image
     for (const cv::Mat& image : hcombinedVec) {
         combinedHeight += image.rows + spacing;
         combinedWidth = std::max(combinedWidth, image.cols);
     }
 
-    // Crea l'immagine combinata
+   // Create the combined image
     cv::Mat combinedImage(combinedHeight, combinedWidth, CV_8UC3, cv::Scalar(0, 0, 0));
 
-    // Posizione y corrente nell'immagine combinata
+    // Current y position in the combined image
     int currentY = 0;
 
-    // Combinazione delle immagini
+    // Combining images
     for (const cv::Mat& image : hcombinedVec) {
-        // Copia l'immagine nella posizione corrente nell'immagine combinata
+        // Copy the image to the current position in the combined image
         cv::Rect roi(0, currentY, image.cols, image.rows);
         image.copyTo(combinedImage(roi));
 
-        // Aggiorna la posizione y corrente
+        // Update the current y position
         currentY += image.rows + spacing;
     }
 

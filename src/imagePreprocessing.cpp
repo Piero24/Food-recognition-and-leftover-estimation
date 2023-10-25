@@ -13,13 +13,9 @@ cv::Mat segmentationPreprocessing(cv::Mat img) {
     std::vector<int> dimensions = imgDimensions(img);
     
     cv::Mat postCanny = cannyPreprocessing(img);
-    
     cv::Mat noWhiteImg = removeWhite(postCanny);
-
     cv::Mat noBlueImg = removeBlue(noWhiteImg);
-
     cv::Mat noPostitImg = removePostit(noBlueImg);
-
     cv::Mat dilatedImg = imageDilate(noPostitImg);
 
     // DEBUG
@@ -43,6 +39,7 @@ cv::Mat segmentationPreprocessing(cv::Mat img) {
 
 
 std::vector<int> imgDimensions(cv::Mat img) {
+
     std::vector<int> dimensions;
     int area = img.cols * img.rows;
 
@@ -56,7 +53,6 @@ std::vector<int> imgDimensions(cv::Mat img) {
 
     return dimensions;
 }
-
 
 
 cv::Mat cannyPreprocessing(cv::Mat img) {
@@ -89,8 +85,8 @@ cv::Mat removeWhite(cv::Mat img) {
     return  postMask5;
 }
 
-cv::Mat removeBlue(cv::Mat img) {
 
+cv::Mat removeBlue(cv::Mat img) {
 
     cv::Mat noBlueImg1;
     cv::inRange(img , cv::Scalar(40, 0, 0), cv::Scalar(230, 165, 80), noBlueImg1);
@@ -104,8 +100,8 @@ cv::Mat removeBlue(cv::Mat img) {
     return  postMask1;
 }
 
-cv::Mat removePostit(cv::Mat img) {
 
+cv::Mat removePostit(cv::Mat img) {
 
     cv::Mat noPostitImg1;
     cv::inRange(img , cv::Scalar(0, 115, 115), cv::Scalar(110, 255, 255), noPostitImg1);
@@ -117,6 +113,7 @@ cv::Mat removePostit(cv::Mat img) {
     postMask0.copyTo(postMask1, 255 - noPostitImg2);
     return  postMask1;
 }
+
 
 cv::Mat imageDilate(cv::Mat img) {
 
