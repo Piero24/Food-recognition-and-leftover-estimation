@@ -8,6 +8,9 @@
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/ximgproc/segmentation.hpp"
 
+// https://learnopencv.com/mean-average-precision-map-object-detection-model-evaluation-metric/
+// https://towardsdatascience.com/metrics-to-evaluate-your-semantic-segmentation-model-6bcb99639aa2
+
 /**
 *
 * @param img
