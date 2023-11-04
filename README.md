@@ -44,11 +44,10 @@
     <img src="https://github.com/Piero24/Food-recognition-and-leftover-estimation/blob/main/LaTex/Images/IntroPhoto.png" width="600" >
 </p>
 <br/>
-<strong>NOTE: As indicated by the professor, the trays used represent the entire available world and no limitations have been imposed on temporal and spatial complexity</strong></a>
+<strong>NOTE: As indicated by the professor, the trays used represent the entire available world and no limitations have been imposed on temporal and spatial complexity</strong>
 <br/>
 
-The code structure for identifying food and estimating leftovers is quite simple and it is
-mainly divided into 4 macro sections that are:
+The code structure for identifying food and estimating leftovers is quite simple and it is mainly divided into 4 macro sections that are:
 
 1. ### Food Localization
 
