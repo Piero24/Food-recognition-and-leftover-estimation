@@ -19,7 +19,7 @@
 std::vector<Food> foodClassificator(cv::Mat img, std::vector<std::vector<cv::Point>>& foodContours, int type, std::string pathPatch, std::vector<StringMatTuple>& VecFoodsFirstImage)  {
 
     // Two Different method that can be chosen by the user.
-    // 1) By Sift (NOT)
+    // 1) By Sift (NOT COMPLETE YET)
     // 2) Euristic algorithm based on some charatteristic
 
     std::vector<Food> VecFoodDetected;
