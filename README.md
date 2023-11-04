@@ -45,6 +45,7 @@
 </p>
 <br/>
 <strong>NOTE: As indicated by the professor, the trays used represent the entire available world and no limitations have been imposed on temporal and spatial complexity</strong></a>
+<br/>
 
 The code structure for identifying food and estimating leftovers is quite simple and it is
 mainly divided into 4 macro sections that are:
