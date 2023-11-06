@@ -34,5 +34,4 @@ double meanIntersectionOverUnion(cv::Mat img, cv::Mat mask);
 double leftoverEstimator(cv::Mat img, cv::Mat mask);
 
 
-
 #endif

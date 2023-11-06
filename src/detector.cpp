@@ -1315,7 +1315,7 @@ std::vector<std::vector<cv::Point>> sideDishSeparator(cv::Mat image) {
                             cv::Mat luminosityMask;
                             cv::threshold(grayscaleImage, luminosityMask, luminosityThreshold, 255, cv::THRESH_BINARY);
 
-                            // Applica la maschera all'immagine originale
+                            // Apply the mask to the original image
                             cv::Mat postLuminosityMask;
                             image.copyTo(postLuminosityMask, luminosityMask);
 
