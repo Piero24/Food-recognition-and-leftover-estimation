@@ -1161,7 +1161,7 @@ std::vector<std::vector<cv::Point>> sideDishSeparator(cv::Mat image) {
                                         erosionSize = 3;
                                         elementEro = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(2 * erosionSize + 1, 2 * erosionSize + 1), cv::Point(erosionSize, erosionSize));
 
-                                        // Applica l'erosione all'immagine
+                                        // Apply the erosion to the image
                                         cv::Mat erodedImage_2;
                                         cv::erode(mask_2, erodedImage_2, elementEro);
 
