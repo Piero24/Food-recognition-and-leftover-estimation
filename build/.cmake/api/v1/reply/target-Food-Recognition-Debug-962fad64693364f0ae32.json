@@ -20,9 +20,9 @@
 		"files" : 
 		[
 			"CMakeLists.txt",
-			"/usr/local/lib/cmake/boost_filesystem-1.82.0/boost_filesystem-config.cmake",
-			"/usr/local/lib/cmake/Boost-1.82.0/BoostConfig.cmake",
-			"/usr/local/Cellar/cmake/3.27.5/share/cmake/Modules/FindBoost.cmake"
+			"/opt/homebrew/lib/cmake/boost_filesystem-1.83.0/boost_filesystem-config.cmake",
+			"/opt/homebrew/lib/cmake/Boost-1.83.0/BoostConfig.cmake",
+			"/opt/homebrew/Cellar/cmake/3.27.7/share/cmake/Modules/FindBoost.cmake"
 		],
 		"nodes" : 
 		[
@@ -103,7 +103,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g"
+					"fragment" : "-g -std=gnu++11 -arch arm64 -isysroot /Library/Developer/CommandLineTools/SDKs/MacOSX14.0.sdk"
 				}
 			],
 			"defines" : 
@@ -130,15 +130,23 @@
 				{
 					"backtrace" : 11,
 					"isSystem" : true,
-					"path" : "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4"
+					"path" : "/opt/homebrew/Cellar/opencv/4.8.1_2/include/opencv4"
 				},
 				{
 					"backtrace" : 12,
 					"isSystem" : true,
-					"path" : "/usr/local/include"
+					"path" : "/opt/homebrew/include"
 				}
 			],
 			"language" : "CXX",
+			"languageStandard" : 
+			{
+				"backtraces" : 
+				[
+					2
+				],
+				"standard" : "11"
+			},
 			"sourceIndexes" : 
 			[
 				0,
@@ -169,292 +177,292 @@
 				"role" : "flags"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/usr/local/lib",
+				"fragment" : "-Wl,-rpath,/opt/homebrew/lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_gapi.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_gapi.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_stitching.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_stitching.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_alphamat.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_alphamat.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_aruco.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_aruco.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_bgsegm.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_bgsegm.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_bioinspired.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_bioinspired.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_ccalib.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_ccalib.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_dnn_objdetect.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_dnn_objdetect.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_dnn_superres.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_dnn_superres.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_dpm.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_dpm.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_face.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_face.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_freetype.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_freetype.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_fuzzy.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_fuzzy.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_hfs.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_hfs.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_img_hash.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_img_hash.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_intensity_transform.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_intensity_transform.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_line_descriptor.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_line_descriptor.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_mcc.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_mcc.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_quality.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_quality.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_rapid.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_rapid.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_reg.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_reg.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_rgbd.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_rgbd.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_saliency.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_saliency.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_sfm.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_sfm.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_stereo.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_stereo.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_structured_light.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_structured_light.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_superres.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_superres.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_surface_matching.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_surface_matching.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_tracking.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_tracking.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_videostab.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_videostab.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_viz.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_viz.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_wechat_qrcode.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_wechat_qrcode.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_xfeatures2d.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_xfeatures2d.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_xobjdetect.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_xobjdetect.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_xphoto.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_xphoto.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libboost_filesystem-mt.dylib",
+				"fragment" : "/opt/homebrew/lib/libboost_filesystem-mt.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_shape.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_shape.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_highgui.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_highgui.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_datasets.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_datasets.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_plot.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_plot.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_text.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_text.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_ml.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_ml.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_phase_unwrapping.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_phase_unwrapping.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_optflow.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_optflow.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_ximgproc.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_ximgproc.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_video.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_video.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_videoio.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_videoio.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_imgcodecs.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_imgcodecs.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_objdetect.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_objdetect.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_calib3d.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_calib3d.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_dnn.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_dnn.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_features2d.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_features2d.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_flann.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_flann.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_photo.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_photo.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_imgproc.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_imgproc.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "/usr/local/lib/libopencv_core.4.8.0.dylib",
+				"fragment" : "/opt/homebrew/lib/libopencv_core.4.8.1.dylib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 10,
-				"fragment" : "/usr/local/lib/libboost_atomic-mt.dylib",
+				"fragment" : "/opt/homebrew/lib/libboost_atomic-mt.dylib",
 				"role" : "libraries"
 			}
 		],

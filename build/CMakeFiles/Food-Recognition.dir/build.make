@@ -44,10 +44,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/local/Cellar/cmake/3.27.5/bin/cmake
+CMAKE_COMMAND = /opt/homebrew/Cellar/cmake/3.27.7/bin/cmake
 
 # The command to remove a file.
-RM = /usr/local/Cellar/cmake/3.27.5/bin/cmake -E rm -f
+RM = /opt/homebrew/Cellar/cmake/3.27.7/bin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -73,155 +73,155 @@ CMakeFiles/Food-Recognition.dir/src/main.cpp.o: CMakeFiles/Food-Recognition.dir/
 CMakeFiles/Food-Recognition.dir/src/main.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/main.cpp
 CMakeFiles/Food-Recognition.dir/src/main.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Food-Recognition.dir/src/main.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/main.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/main.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/main.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/main.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/main.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/main.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/main.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/main.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/main.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/main.cpp" > CMakeFiles/Food-Recognition.dir/src/main.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/main.cpp" > CMakeFiles/Food-Recognition.dir/src/main.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/main.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/main.cpp" -o CMakeFiles/Food-Recognition.dir/src/main.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/main.cpp" -o CMakeFiles/Food-Recognition.dir/src/main.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/uploadImage.cpp
 CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/uploadImage.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/uploadImage.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/uploadImage.cpp" > CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/uploadImage.cpp" > CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/uploadImage.cpp" -o CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/uploadImage.cpp" -o CMakeFiles/Food-Recognition.dir/src/uploadImage.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/imagePreprocessing.cpp
 CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/imagePreprocessing.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/imagePreprocessing.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/imagePreprocessing.cpp" > CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/imagePreprocessing.cpp" > CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/imagePreprocessing.cpp" -o CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/imagePreprocessing.cpp" -o CMakeFiles/Food-Recognition.dir/src/imagePreprocessing.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/circularBoundingBoxes.cpp
 CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/circularBoundingBoxes.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/circularBoundingBoxes.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/circularBoundingBoxes.cpp" > CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/circularBoundingBoxes.cpp" > CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/circularBoundingBoxes.cpp" -o CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/circularBoundingBoxes.cpp" -o CMakeFiles/Food-Recognition.dir/src/circularBoundingBoxes.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/rectangularBoundingBoxes.cpp
 CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/rectangularBoundingBoxes.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/rectangularBoundingBoxes.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/rectangularBoundingBoxes.cpp" > CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/rectangularBoundingBoxes.cpp" > CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/rectangularBoundingBoxes.cpp" -o CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/rectangularBoundingBoxes.cpp" -o CMakeFiles/Food-Recognition.dir/src/rectangularBoundingBoxes.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/outputCombined.cpp
 CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/outputCombined.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/outputCombined.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/outputCombined.cpp" > CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/outputCombined.cpp" > CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/outputCombined.cpp" -o CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/outputCombined.cpp" -o CMakeFiles/Food-Recognition.dir/src/outputCombined.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/detector.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/detector.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/detector.cpp
 CMakeFiles/Food-Recognition.dir/src/detector.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/Food-Recognition.dir/src/detector.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/detector.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/detector.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/detector.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/detector.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/detector.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/detector.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/detector.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/detector.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/detector.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/detector.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/detector.cpp" > CMakeFiles/Food-Recognition.dir/src/detector.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/detector.cpp" > CMakeFiles/Food-Recognition.dir/src/detector.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/detector.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/detector.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/detector.cpp" -o CMakeFiles/Food-Recognition.dir/src/detector.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/detector.cpp" -o CMakeFiles/Food-Recognition.dir/src/detector.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/classificator.cpp
 CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/classificator.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/classificator.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/classificator.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/classificator.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/classificator.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/classificator.cpp" > CMakeFiles/Food-Recognition.dir/src/classificator.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/classificator.cpp" > CMakeFiles/Food-Recognition.dir/src/classificator.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/classificator.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/classificator.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/classificator.cpp" -o CMakeFiles/Food-Recognition.dir/src/classificator.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/classificator.cpp" -o CMakeFiles/Food-Recognition.dir/src/classificator.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/drawerAndTester.cpp
 CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/drawerAndTester.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/drawerAndTester.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/drawerAndTester.cpp" > CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/drawerAndTester.cpp" > CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/drawerAndTester.cpp" -o CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/drawerAndTester.cpp" -o CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/foodCategories.cpp
 CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/foodCategories.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/foodCategories.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/foodCategories.cpp" > CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/foodCategories.cpp" > CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/foodCategories.cpp" -o CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/foodCategories.cpp" -o CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.s
 
 CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o: CMakeFiles/Food-Recognition.dir/flags.make
 CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o: /Users/pietrobon/Library/Mobile\ Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1°\ Anno/COMPUTER\ VISION/2022-2023/Project\ V2/Food-recognition-and-leftover-estimation/src/performanceIndicators.cpp
 CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o: CMakeFiles/Food-Recognition.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/performanceIndicators.cpp"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o -MF CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o.d -o CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o -c "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/performanceIndicators.cpp"
 
 CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.i"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/performanceIndicators.cpp" > CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.i
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/performanceIndicators.cpp" > CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.i
 
 CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.s"
-	/usr/local/bin/g++-13 $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/performanceIndicators.cpp" -o CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.s
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S "/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/src/performanceIndicators.cpp" -o CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.s
 
 # Object files for target Food-Recognition
 Food__Recognition_OBJECTS = \
@@ -252,63 +252,63 @@ Food-Recognition: CMakeFiles/Food-Recognition.dir/src/drawerAndTester.cpp.o
 Food-Recognition: CMakeFiles/Food-Recognition.dir/src/foodCategories.cpp.o
 Food-Recognition: CMakeFiles/Food-Recognition.dir/src/performanceIndicators.cpp.o
 Food-Recognition: CMakeFiles/Food-Recognition.dir/build.make
-Food-Recognition: /usr/local/lib/libopencv_gapi.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_stitching.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_alphamat.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_aruco.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_bgsegm.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_bioinspired.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_ccalib.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_dnn_objdetect.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_dnn_superres.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_dpm.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_face.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_freetype.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_fuzzy.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_hfs.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_img_hash.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_intensity_transform.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_line_descriptor.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_mcc.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_quality.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_rapid.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_reg.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_rgbd.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_saliency.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_sfm.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_stereo.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_structured_light.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_superres.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_surface_matching.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_tracking.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_videostab.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_viz.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_wechat_qrcode.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_xfeatures2d.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_xobjdetect.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_xphoto.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libboost_filesystem-mt.dylib
-Food-Recognition: /usr/local/lib/libopencv_shape.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_highgui.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_datasets.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_plot.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_text.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_ml.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_phase_unwrapping.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_optflow.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_ximgproc.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_video.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_videoio.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_imgcodecs.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_objdetect.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_calib3d.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_dnn.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_features2d.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_flann.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_photo.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_imgproc.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libopencv_core.4.8.0.dylib
-Food-Recognition: /usr/local/lib/libboost_atomic-mt.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_gapi.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_stitching.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_alphamat.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_aruco.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_bgsegm.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_bioinspired.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_ccalib.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_dnn_objdetect.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_dnn_superres.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_dpm.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_face.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_freetype.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_fuzzy.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_hfs.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_img_hash.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_intensity_transform.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_line_descriptor.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_mcc.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_quality.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_rapid.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_reg.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_rgbd.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_saliency.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_sfm.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_stereo.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_structured_light.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_superres.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_surface_matching.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_tracking.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_videostab.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_viz.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_wechat_qrcode.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_xfeatures2d.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_xobjdetect.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_xphoto.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libboost_filesystem-mt.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_shape.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_highgui.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_datasets.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_plot.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_text.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_ml.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_phase_unwrapping.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_optflow.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_ximgproc.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_video.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_videoio.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_imgcodecs.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_objdetect.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_calib3d.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_dnn.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_features2d.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_flann.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_photo.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_imgproc.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libopencv_core.4.8.1.dylib
+Food-Recognition: /opt/homebrew/lib/libboost_atomic-mt.dylib
 Food-Recognition: CMakeFiles/Food-Recognition.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir="/Users/pietrobon/Library/Mobile Documents/3L68KQB4HG~com~readdle~CommonDocuments/Documents/UNIPD/Magistrale/1° Anno/COMPUTER VISION/2022-2023/Project V2/Food-recognition-and-leftover-estimation/build/CMakeFiles" --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable Food-Recognition"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Food-Recognition.dir/link.txt --verbose=$(VERBOSE)

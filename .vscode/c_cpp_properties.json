@@ -4,31 +4,16 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "/usr/local/Cellar/boost/1.82.0_1/include",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4",
-                "/usr/local/Cellar/opencv/4.8.0_6/include/opencv4"
+                "/opt/homebrew/opt/opencv/include/opencv4"
             ],
             "defines": [],
             "macFrameworkPath": [
                 "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk/System/Library/Frameworks"
             ],
-            "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "macos-clang-x64",
-            "configurationProvider": "ms-vscode.cmake-tools"
+            "intelliSenseMode": "macos-clang-arm64",
+            "compilerPath": "/usr/bin/clang"
         }
     ],
     "version": 4
